@@ -27,22 +27,27 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 app.post("/registration", function (req, res) {
     const { first, last, email, password } = req.body;
     console.log(first, last, email, password);
-    hash(password)
-        .then((hash) => {
-            db.insertDetails(first, last, email, hash)
-                .then(({ rows }) => {
-                    // console.log("rows[0].id", rows, rows[0].id, rows);
-                    req.session.userId = rows[0].id;
-                    res.json(rows);
-                })
-                .catch(function (err) {
-                    console.log("error in db.insertDetails", err);
-                    res.json({ sucess: false });
-                });
-        })
-        .catch((err) => {
-            console.log("there is an error in hash", err);
-        });
+    if ((first, last, email, password)) {
+        //console.log("ja");
+        hash(password)
+            .then((hash) => {
+                db.insertDetails(first, last, email, hash)
+                    .then(({ rows }) => {
+                        // console.log("rows[0].id", rows, rows[0].id, rows);
+                        req.session.userId = rows[0].id;
+                        res.json(rows);
+                    })
+                    .catch(function (err) {
+                        console.log("error in db.insertDetails", err);
+                    });
+            })
+            .catch((err) => {
+                console.log("there is an error in hash", err);
+            });
+    } else {
+        console.log("no insert");
+        res.json({ sucess: false });
+    }
 });
 
 //redirecting

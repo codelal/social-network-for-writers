@@ -4,7 +4,9 @@ import axios from "axios";
 export default class Registration extends Component {
     constructor() {
         super();
-        this.state = {};
+        this.state = {
+            error: false,
+        };
     }
 
     handleChange(e) {
@@ -27,11 +29,14 @@ export default class Registration extends Component {
 
         axios
             .post("/registration", formData)
-            .then(function () {
-                location.replace("/");
+            .then((res) => {
+                if (res.data[0].id) {
+                    console.log("yes", res);
+                    // location.replace("/");
+                } 
             })
-            .catch(function (err) {
-                console.log(err);
+            .catch((err) => {
+                console.log("error in post/registration", err);
                 this.setState({
                     error: true,
                 });
