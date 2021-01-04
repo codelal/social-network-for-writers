@@ -31,9 +31,8 @@ export default class Registration extends Component {
             .post("/registration", formData)
             .then((res) => {
                 if (res.data[0].id) {
-                    console.log("yes", res);
-                    // location.replace("/");
-                } 
+                    location.replace("/");
+                }
             })
             .catch((err) => {
                 console.log("error in post/registration", err);
@@ -70,7 +69,7 @@ export default class Registration extends Component {
                     onChange={(e) => this.handleChange(e)}
                     name="password"
                     placeholder="password"
-                    type="password"
+                    type="password" 
                 />
                 <button onClick={() => this.handleClick()}>Submit</button>
             </div>
