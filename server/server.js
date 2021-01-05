@@ -6,6 +6,8 @@ const path = require("path");
 const { hash, compare } = require("./bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
+const ses = require("./ses");
+const cryptoRandomString = require("crypto-random-string");
 
 app.use(compression());
 
@@ -35,7 +37,7 @@ app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post("/registration", function (req, res) {
     const { first, last, email, password } = req.body;
-    console.log(first, last, email, password);
+    //console.log(first, last, email, password);
 
     //console.log("ja");
     hash(password)
@@ -84,6 +86,78 @@ app.post("/login", (req, res) => {
         })
         .catch((err) => {
             console.log("error in getHashAndIdByEmail", err);
+            res.json({ sucess: false });
+        });
+});
+
+app.post("/reset/password", (req, res) => {
+    const { email } = req.body;
+    console.log("post/ reset-password", email);
+    db.verifyEmail(email)
+        .then(({ rows }) => {
+            // console.log(rows);
+            if (rows[0].email === email) {
+                console.log("email exists");
+                const secretCode = cryptoRandomString({
+                    length: 6,
+                });
+                console.log("secretCode", secretCode);
+                db.insertResetCode(email, secretCode)
+                    .then(() => {
+                        //console.log("insertResetCode", res);
+                        ses.sendEmail(
+                            "al.klein@posteo.de",
+                            `Please enter the following Code: ${secretCode}`,
+                            "here is the code to reset your password"
+                        );
+                        res.json(rows);
+                    })
+                    .catch((err) => {
+                        console.log("error in insertResetCode", err);
+                        res.json({ sucess: false });
+                    });
+            } else {
+                res.json({ sucess: false });
+            }
+        })
+        .catch((err) => {
+            console.log("error in verifyEmail", err);
+            res.json({ sucess: false });
+        });
+});
+
+app.post("/reset/password/verify", (req, res) => {
+    const { code, password } = req.body;
+    console.log("post/ reset/password/verify", code, password);
+    db.verifyCode(code)
+        .then(({ rows }) => {
+            console.log("res verifyCode", rows, rows[0].code);
+            if (rows[0].code === code) {
+                console.log("code matched");
+                console.log("email + pw", rows[0].email, password);
+                hash(password)
+                    .then((hash) => {
+                        db.updatePassword(hash, rows[0].email)
+                            .then(({ rows }) => {
+                                console.log("pw updated", rows);
+                                res.json(rows);
+                            })
+                            .catch((err) => {
+                                console.log("error in updatePassword", err);
+                                res.json({ sucess: false });
+                            });
+                    })
+                    .catch((err) => {
+                        console.log("error in hash PW", err);
+                        res.json({ sucess: false });
+                    });
+            } else {
+                console.group("no code matched");
+                res.json({ sucess: false });
+            }
+        })
+        .catch((err) => {
+            console.log("error in verifyEmail", err);
             res.json({ sucess: false });
         });
 });

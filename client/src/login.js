@@ -1,10 +1,13 @@
 import { Component } from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
-export default class login extends Component {
+export default class Login extends Component {
     constructor() {
         super();
         this.state = {
+            email: "",
+            password: "",
             error: false,
         };
     }
@@ -61,6 +64,7 @@ export default class login extends Component {
                     required=""
                 />
                 <button onClick={() => this.handleSubmit()}>Submit</button>
+                <Link to="/reset-password">click here if you forgot your password!</Link>
             </>
         );
     }

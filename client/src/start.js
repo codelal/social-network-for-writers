@@ -5,7 +5,12 @@ let elem;
 if(location.pathname === "/welcome") {
     elem = <Welcome />;
 } else {
-    elem = <p>Home page !</p>;
+    elem = (
+        <>
+            <div>LOGO</div>
+            <p>Home page !</p>
+        </>
+    );
 }
 
 ReactDOM.render(elem, document.querySelector("main"));

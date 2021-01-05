@@ -7,6 +7,10 @@ export default class Registration extends Component {
     constructor() {
         super();
         this.state = {
+            first:"",
+            last:"",
+            email: "",
+            password: "",
             error: false,
         };
     }
@@ -35,6 +39,7 @@ export default class Registration extends Component {
         axios
             .post("/registration", formData)
             .then((res) => {
+                //console.log(res.data.sucess);
                 if (res.data[0].id) {
                     location.replace("/");
                 }
