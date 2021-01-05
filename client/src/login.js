@@ -28,8 +28,8 @@ export default class login extends Component {
         axios
             .post("/login", formData)
             .then((res) => {
-                console.log(res);
-                if (res.data[0].id) {
+                console.log("res.data.sucess", res, res.data, res.data.sucess);
+                if (res.data.id) {
                     location.replace("/");
                 }
             })

@@ -63,20 +63,28 @@ app.post("/login", (req, res) => {
     console.log("post/ login", email, password);
     db.getHashAndIdByEmail(email)
         .then((hash) => {
-            console.log("hash", hash);
-            // compare(password, hash.rows[0].password)
-            //     .then(({ rows }) => {
-            //         console.log("rows", rows);
-            //         res.json(rows);
-            //     })
-            //     .catch((err) => {
-            //         console.log("error in compare", err);
-            //         res.json({ sucess: false });
-            //     });
+            //console.log("hash", hash.rows[0].password);
+
+            compare(password, hash.rows[0].password)
+                .then((response) => {
+                    if (response) {
+                        //console.log("success");
+                        req.session.userId = hash.rows[0].id;
+                        //console.log("req.session.userId", req.session.userId);
+                        res.json(hash.rows[0]);
+                    } else {
+                        console.log("no success");
+                        res.json({ sucess: false });
+                    }
+                })
+                .catch((err) => {
+                    console.log("error in compare", err);
+                    res.json({ sucess: false });
+                });
         })
         .catch((err) => {
             console.log("error in getHashAndIdByEmail", err);
-            res.json({ error: true });
+            res.json({ sucess: false });
         });
 });
 
