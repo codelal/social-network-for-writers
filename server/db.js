@@ -12,3 +12,9 @@ module.exports.insertDetails = (firstName, lastName, emailadress, hashedPW) => {
         [firstName, lastName, emailadress, hashedPW]
     );
 };
+
+module.exports.getHashAndIdByEmail = (email) => {
+    return db.query(`SELECT password, id FROM users WHERE email = ($1)`, [
+        email,
+    ]);
+};

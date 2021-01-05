@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const compression = require("compression");
+const csurf = require("csurf");
 const path = require("path");
 const { hash, compare } = require("./bc");
 const cookieSession = require("cookie-session");
@@ -22,6 +23,14 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 );
+
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
+
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
 app.post("/registration", function (req, res) {
@@ -44,8 +53,30 @@ app.post("/registration", function (req, res) {
                 });
         })
         .catch((err) => {
-            console.log("there is an error in hash", err);
+            console.log("error in hash", err);
             res.json({ sucess: false });
+        });
+});
+
+app.post("/login", (req, res) => {
+    const { email, password } = req.body;
+    console.log("post/ login", email, password);
+    db.getHashAndIdByEmail(email)
+        .then((hash) => {
+            console.log("hash", hash);
+            // compare(password, hash.rows[0].password)
+            //     .then(({ rows }) => {
+            //         console.log("rows", rows);
+            //         res.json(rows);
+            //     })
+            //     .catch((err) => {
+            //         console.log("error in compare", err);
+            //         res.json({ sucess: false });
+            //     });
+        })
+        .catch((err) => {
+            console.log("error in getHashAndIdByEmail", err);
+            res.json({ error: true });
         });
 });
 
