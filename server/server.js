@@ -46,12 +46,12 @@ app.post("/registration", function (req, res) {
                 .then(({ rows }) => {
                     // console.log("rows[0].id", rows, rows[0].id, rows);
                     req.session.userId = rows[0].id;
-                    res.json(rows);
+                    res.json({ sucess: true });
                 })
                 .catch(function (err) {
+                    res.json({ sucess: false });
                     console.log("error in db.insertDetails", err);
                     console.log("no insert");
-                    res.json({ sucess: false });
                 });
         })
         .catch((err) => {
@@ -158,6 +158,18 @@ app.post("/reset/password/verify", (req, res) => {
         })
         .catch((err) => {
             console.log("error in verifyEmail", err);
+            res.json({ sucess: false });
+        });
+});
+
+app.get("/profile", (req, res) => {
+    db.getProfileData(req.session.userId)
+        .then(({ rows }) => {
+            // console.log("rows in getProfileData", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in getProfileData", err);
             res.json({ sucess: false });
         });
 });

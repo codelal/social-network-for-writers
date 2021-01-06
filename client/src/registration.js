@@ -2,13 +2,12 @@ import { Component } from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
 
-
 export default class Registration extends Component {
     constructor() {
         super();
         this.state = {
-            first:"",
-            last:"",
+            first: "",
+            last: "",
             email: "",
             password: "",
             error: false,
@@ -40,12 +39,20 @@ export default class Registration extends Component {
             .post("/registration", formData)
             .then((res) => {
                 //console.log(res.data.sucess);
-                if (res.data[0].id) {
+                console.log(res);
+
+                if (res.data.sucess) {
+                    console.log(res.data.sucess);
                     location.replace("/");
+                } else {
+                    console.log("error in then() of post/registration");
+                    this.setState({
+                        error: true,
+                    });
                 }
             })
             .catch((err) => {
-                console.log("error in post/registration", err);
+                console.log("error catch of post/registration", err);
                 this.setState({
                     error: true,
                 });
@@ -87,10 +94,11 @@ export default class Registration extends Component {
                     required=""
                 />
                 <button onClick={() => this.handleSubmit()}>Submit</button>
-                <Link to="/login"> Already a member? Click here to Log in!</Link>
+                <Link to="/login">
+                    {" "}
+                    Already a member? Click here to Log in!
+                </Link>
             </>
         );
     }
 }
-
-

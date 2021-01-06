@@ -4,6 +4,7 @@ import Registration from "./registration";
 import Login from "./login";
 import ResetPassword from "./resetpassword";
 
+
 export default function Welcome() {
     return (
         <div>

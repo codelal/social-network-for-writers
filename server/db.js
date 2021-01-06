@@ -47,3 +47,10 @@ WHERE email = ($2)
         [hash, email]
     );
 };
+
+
+module.exports.getProfileData = (id) => {
+    return db.query(
+        `SELECT id, first, last, email, url FROM users WHERE id=($1)`,[id]
+    );
+};
