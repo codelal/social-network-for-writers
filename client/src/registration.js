@@ -42,7 +42,7 @@ export default class Registration extends Component {
                 console.log(res);
 
                 if (res.data.sucess) {
-                    console.log(res.data.sucess);
+                    //console.log(res.data.sucess);
                     location.replace("/");
                 } else {
                     console.log("error in then() of post/registration");

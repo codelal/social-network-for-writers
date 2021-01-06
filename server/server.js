@@ -7,6 +7,10 @@ const { hash, compare } = require("./bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const ses = require("./ses");
+const s3 = require("./s3");
+const multer = require("multer");
+const config = require("./config.json");
+const uidSafe = require("uid-safe");
 const cryptoRandomString = require("crypto-random-string");
 
 app.use(compression());
@@ -31,6 +35,24 @@ app.use(csurf());
 app.use(function (req, res, next) {
     res.cookie("mytoken", req.csrfToken());
     next();
+});
+
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152, //1Mb
+    },
 });
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
@@ -170,6 +192,21 @@ app.get("/profile", (req, res) => {
         })
         .catch((err) => {
             console.log("error in getProfileData", err);
+            res.json({ sucess: false });
+        });
+});
+
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    //console.log("post upload");
+    const url = `${config.s3Url}${req.file.filename}`;
+    //console.log(url);
+    db.updateProfilPicture(url, req.session.userId)
+        .then(() => {
+            console.log("updateProfilPicture is done");
+            res.json({ sucess: true, url: url });
+        })
+        .catch((err) => {
+            console.log("error in updateProfilPicture", err);
             res.json({ sucess: false });
         });
 });

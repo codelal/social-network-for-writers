@@ -9,37 +9,34 @@ export default class App extends Component {
         this.state = {
             first: "",
             last: "",
-            email:"",
-            url:"",
+            email: "",
+            url: "",
             uploaderIsVisible: false,
         };
     }
     componentDidMount() {
         console.log("componentDidMount runs");
         axios.get("/profile").then(({ data }) => {
-            console.log(
-                "res from get /profile",
-                data
-            );
+            console.log("res from get /profile", data);
             this.setState({
                 first: data[0].first,
                 last: data[0].last,
                 email: data[0].email,
-                url: data[0].url
+                url: data[0].url,
             });
         });
     }
     toggleUploader() {
-        //console.log("toggleUploader runs");
+        console.log("toggleUploader runs");
         this.setState({
             uploaderIsVisible: !this.state.uploaderIsVisible,
         });
     }
 
-    setImage(image) {
-        console.log("in App image from uploader", image);
+    setImage(url) {
+        console.log("in App image from uploader", url);
         this.setState({
-            profilePic: image,
+            url: url,
         });
     }
 
@@ -47,18 +44,19 @@ export default class App extends Component {
         return (
             <div>
                 <h1>App</h1>
+                {this.state.uploaderIsVisible && (
+                    <Uploader
+                        setImage={(url) => this.setImage(url)}
+                        toggleUploader={() => this.toggleUploader()}
+                    />
+                )}
                 <Profilepic
                     url={this.state.url}
                     first={this.state.first}
                     last={this.state.last}
                     email={this.state.email}
+                    toggleUploader={() => this.toggleUploader()}
                 />
-                <h2 onClick={() => this.toggleUploader()}>
-                    click for demo purpose
-                </h2>
-                {this.state.uploaderIsVisible && (
-                    <Uploader uploadImage={(image) => this.setImage(image)} />
-                )}
             </div>
         );
     }

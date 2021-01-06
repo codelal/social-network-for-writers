@@ -2,6 +2,9 @@ body {
     background-color: ghostwhite;
 }
 
-.newClass{
-    color: red;
+.uploader{
+    height: 10rem;
+    width:30rem;
+    border: 0.1rem solid black;
 }
+

@@ -7,7 +7,7 @@ const db = spicedPg(
 module.exports.insertDetails = (firstName, lastName, emailadress, hashedPW) => {
     return db.query(
         `INSERT INTO users (first, last, email, password)
-        VALUES($1, $2, $3, $4)
+        VALUES($1, $2, $3, $4, $5)
         RETURNING id`,
         [firstName, lastName, emailadress, hashedPW]
     );
@@ -48,9 +48,16 @@ WHERE email = ($2)
     );
 };
 
-
 module.exports.getProfileData = (id) => {
     return db.query(
-        `SELECT id, first, last, email, url FROM users WHERE id=($1)`,[id]
+        `SELECT id, first, last, email, url FROM users WHERE id=($1)`,
+        [id]
     );
+};
+
+module.exports.updateProfilPicture = (url, id) => {
+    return db.query(`UPDATE users SET url=($1) WHERE id =($2)`, [
+        url,
+        id,
+    ]);
 };
