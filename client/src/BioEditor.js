@@ -25,11 +25,11 @@ export default class BioEditor extends Component {
 
     render() {
         return (
-            <>
+            <div div className ="bio-editor-container">
                 <h1>BioEditor</h1>
                 {this.state.textareaIsVisible && <textarea />}
                 <button onClick={() => this.toggleTextarea()}>Edit Bio</button>
-            </>
+            </div>
         );
     }
 }

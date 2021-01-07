@@ -1,45 +1,73 @@
 body {
     background-color: ghostwhite;
-    margin:0;
+    margin: 0;
+    box-sizing: border-box;
 }
 
-.uploader{
+.uploader {
     height: 10rem;
-    width:30rem;
+    width: 30rem;
     border: 0.1rem solid black;
 }
 
-header{
+.app-container{
+    display: grid;
+    grid-template-areas: "head head"
+                          "main main"
+                          "footer footer";
+    grid-template-rows: 15rem 1fr 5rem;
+    
+}
+
+header {
     border: 0.1rem solid black;
-    height: 7rem;
+    grid-area: head;
+    display: grid;
+    grid-template-columns: 20% 60% 20%;
+    grid-template-rows: 1;
+    
 }
-
-header div{
-    margin-top:0;
-    height:5rem;
-    width: 5rem;
-    margin-left: 80%;
-    margin-bottom: 0;
-}
-
-header img{
-   height:5rem;
-   margin-top:0;
-   z-index:  2;
-}
-
-
-header p {
-    height:5rem;
+ #header-profile-pic{
     width: 10rem;
-    border: 0.1rem solid black;
+    grid-column: 3 / span 4;
 }
 
-div img{
+ #header-profile-pic img {
+    border: 0.2rem solid red;
+    height:10rem;
+    width: 10rem;
+}
+
+.logo {
+    border: 0.2rem solid black;
+    background-color: lightseagreen;
+    width: 10rem;
+    height: 5rem;
+    margin-left: 2rem;
+}
+
+.profile-container{
+    border: 0.2rem solid seagreen;
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+
+.profile-container .profile-pic-container {
+    border: 0.2rem solid blue;
+    height: 20rem;
+    width: 20rem;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.profile-pic-container img{
     height: 15rem;
     width: 15rem;
 }
 
-.profile-pic{
-    border: 1rem solid blue;
+.bio-editor-container{
+      border: 0.2rem solid blue;
+         grid-column-start: 2;
 }

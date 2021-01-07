@@ -46,23 +46,25 @@ export default class App extends Component {
 
     render() {
         return (
-            <div>
+            <div className ="app-container">
                 <header>
                     <p className="logo">Logo</p>
-                    <Profilepic
-                        first={this.state.first}
-                        last={this.state.last}
-                        email={this.state.email}
-                        url={this.state.url}
-                        toggleUploader={() => this.toggleUploader()}
-                    />
+                    <div id="header-profile-pic">
+                        <Profilepic
+                            first={this.state.first}
+                            last={this.state.last}
+                            email={this.state.email}
+                            url={this.state.url}
+                            toggleUploader={() => this.toggleUploader()}
+                        />
+                    </div>
                 </header>
                 <Profile
-                    url={this.state.url}
-                    toggleUploader={() => this.toggleUploader()}
                     first={this.state.first}
                     last={this.state.last}
                     email={this.state.email}
+                    url={this.state.url}
+                    toggleUploader={() => this.toggleUploader()}
                 />
                 <BioEditor />
                 {this.state.uploaderIsVisible && (

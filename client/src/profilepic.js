@@ -10,12 +10,8 @@ export default function ProfilePic({
     }
 
     return (
-        <div className ="profile-pic">
-            <img className ="profile-pic"
-                onClick={toggleUploader}
-                src={url}
-                alt={first}
-            ></img>
+        <div className="profile-pic-container">
+            <img onClick={toggleUploader} src={url} alt={first}></img>
             <p className="a">
                 {first} {last}{" "}
             </p>
