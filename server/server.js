@@ -84,7 +84,7 @@ app.post("/registration", function (req, res) {
 
 app.post("/login", (req, res) => {
     const { email, password } = req.body;
-    console.log("post/ login", email, password);
+    //console.log("post/ login", email, password);
     db.getHashAndIdByEmail(email)
         .then((hash) => {
             //console.log("hash", hash.rows[0].password);
@@ -119,11 +119,11 @@ app.post("/reset/password", (req, res) => {
         .then(({ rows }) => {
             // console.log(rows);
             if (rows[0].email === email) {
-                console.log("email exists");
+                //console.log("email exists");
                 const secretCode = cryptoRandomString({
                     length: 6,
                 });
-                console.log("secretCode", secretCode);
+                // console.log("secretCode", secretCode);
                 db.insertResetCode(email, secretCode)
                     .then(() => {
                         //console.log("insertResetCode", res);
@@ -150,18 +150,18 @@ app.post("/reset/password", (req, res) => {
 
 app.post("/reset/password/verify", (req, res) => {
     const { code, password } = req.body;
-    console.log("post/ reset/password/verify", code, password);
+    // console.log("post/ reset/password/verify", code, password);
     db.verifyCode(code)
         .then(({ rows }) => {
-            console.log("res verifyCode", rows, rows[0].code);
+            //console.log("res verifyCode", rows, rows[0].code);
             if (rows[0].code === code) {
-                console.log("code matched");
-                console.log("email + pw", rows[0].email, password);
+                // console.log("code matched");
+                // console.log("email + pw", rows[0].email, password);
                 hash(password)
                     .then((hash) => {
                         db.updatePassword(hash, rows[0].email)
                             .then(({ rows }) => {
-                                console.log("pw updated", rows);
+                                //console.log("pw updated", rows);
                                 res.json(rows);
                             })
                             .catch((err) => {
@@ -202,8 +202,24 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     //console.log(url);
     db.updateProfilPicture(url, req.session.userId)
         .then(() => {
-            console.log("updateProfilPicture is done");
+            //console.log("updateProfilPicture is done");
             res.json({ sucess: true, url: url });
+        })
+        .catch((err) => {
+            console.log("error in updateProfilPicture", err);
+            res.json({ sucess: false });
+        });
+});
+
+app.post("/update/bio", (res, req) => {
+    console.log("update/bio");
+    const { bio } = req.body;
+    console.log("bio", bio);
+
+    db.updateBio(bio)
+        .then(({ rows }) => {
+            console.log(rows);
+            res.json(rows);
         })
         .catch((err) => {
             console.log("error in updateProfilPicture", err);

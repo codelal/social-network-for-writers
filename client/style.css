@@ -1,5 +1,6 @@
 body {
     background-color: ghostwhite;
+    margin:0;
 }
 
 .uploader{
@@ -8,3 +9,37 @@ body {
     border: 0.1rem solid black;
 }
 
+header{
+    border: 0.1rem solid black;
+    height: 7rem;
+}
+
+header div{
+    margin-top:0;
+    height:5rem;
+    width: 5rem;
+    margin-left: 80%;
+    margin-bottom: 0;
+}
+
+header img{
+   height:5rem;
+   margin-top:0;
+   z-index:  2;
+}
+
+
+header p {
+    height:5rem;
+    width: 10rem;
+    border: 0.1rem solid black;
+}
+
+div img{
+    height: 15rem;
+    width: 15rem;
+}
+
+.profile-pic{
+    border: 1rem solid blue;
+}

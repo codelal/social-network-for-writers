@@ -50,14 +50,15 @@ WHERE email = ($2)
 
 module.exports.getProfileData = (id) => {
     return db.query(
-        `SELECT id, first, last, email, url FROM users WHERE id=($1)`,
+        `SELECT id, first, last, email, url, bio FROM users WHERE id=($1)`,
         [id]
     );
 };
 
 module.exports.updateProfilPicture = (url, id) => {
-    return db.query(`UPDATE users SET url=($1) WHERE id =($2)`, [
-        url,
-        id,
-    ]);
+    return db.query(`UPDATE users SET url=($1) WHERE id =($2)`, [url, id]);
+};
+
+module.exports.updateBio = (bio, id) => {
+    return db.query(`UPDATE users SET bio=($1) WHERE id =($2)`, [bio, id]);
 };

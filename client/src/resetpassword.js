@@ -76,10 +76,12 @@ export default class ResetPassword extends Component {
         return (
             <>
                 <h1>Reset Password</h1>
-                {this.state.error && <p>Something went wrong, try again!</p>}
 
                 {this.state.view === 1 && (
                     <>
+                        {this.state.error && (
+                            <p>Something went wrong, try again!</p>
+                        )}
                         <p>
                             Please enter the email adress with which you
                             registered
@@ -99,6 +101,9 @@ export default class ResetPassword extends Component {
 
                 {this.state.view === 2 && (
                     <>
+                        {this.state.error && (
+                            <p>Something went wrong, try again!</p>
+                        )}
                         <p>Please enter the code you received via Email</p>
                         <input
                             onChange={(e) => this.handleChange(e)}
