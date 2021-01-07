@@ -5,9 +5,12 @@ body {
 }
 
 .uploader {
+    position: absolute;
+    margin-top: 1rem;
     height: 10rem;
     width: 30rem;
     border: 0.1rem solid black;
+    background-color:palevioletred;
 }
 
 .app-container{
@@ -15,7 +18,7 @@ body {
     grid-template-areas: "head head"
                           "main main"
                           "footer footer";
-    grid-template-rows: 15rem 1fr 5rem;
+    grid-template-rows: 20% 77% 8%;
     
 }
 
@@ -51,6 +54,7 @@ header {
     grid-area: main;
     display: grid;
     grid-template-columns: 50% 50%;
+   
 }
 
 
@@ -65,6 +69,11 @@ header {
 .profile-pic-container img{
     height: 15rem;
     width: 15rem;
+}
+
+.profile-pic-container p{
+    margin: 1rem;
+    border: 0.1rem solid blue;
 }
 
 .bio-editor-container{

@@ -211,15 +211,14 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
         });
 });
 
-app.post("/update/bio", (res, req) => {
-    console.log("update/bio");
+app.post("/update/bio", (req, res) => {
     const { bio } = req.body;
-    console.log("bio", bio);
+    console.log("update/bio, bio", req.body, bio);
 
-    db.updateBio(bio)
+    db.updateBio(bio, req.session.userId)
         .then(({ rows }) => {
-            console.log(rows);
-            res.json(rows);
+            console.log("updateBio worked", rows);
+            res.json({sucess: true});
         })
         .catch((err) => {
             console.log("error in updateProfilPicture", err);
@@ -230,9 +229,7 @@ app.post("/update/bio", (res, req) => {
 //redirecting
 
 app.get("/welcome", (req, res) => {
-    // if the user IS logged in
     if (req.session.userId) {
-        // they shouldn't be allowed to see /welcome!!!!
         res.redirect("/");
     } else {
         res.sendFile(path.join(__dirname, "..", "client", "index.html"));

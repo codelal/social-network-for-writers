@@ -18,6 +18,7 @@ export default class App extends Component {
         };
     }
     componentDidMount() {
+        
         // console.log("componentDidMount runs");
         axios.get("/profile").then(({ data }) => {
             console.log("res from get /profile", data);
@@ -29,6 +30,8 @@ export default class App extends Component {
                 bio: data[0].bio,
             });
         });
+
+       
     }
     toggleUploader() {
         console.log("toggleUploader runs");
@@ -44,9 +47,16 @@ export default class App extends Component {
         });
     }
 
+    setBio(bio){
+        console.log("bio in App", bio);
+        this.setState({
+            bio: bio
+        });
+    }
+
     render() {
         return (
-            <div className ="app-container">
+            <div className="app-container">
                 <header>
                     <p className="logo">Logo</p>
                     <div id="header-profile-pic">
@@ -59,6 +69,7 @@ export default class App extends Component {
                         />
                     </div>
                 </header>
+
                 <Profile
                     first={this.state.first}
                     last={this.state.last}
@@ -66,7 +77,8 @@ export default class App extends Component {
                     url={this.state.url}
                     toggleUploader={() => this.toggleUploader()}
                 />
-                <BioEditor />
+
+                <BioEditor setBio ={(bio) => this.setBio(bio)} />
                 {this.state.uploaderIsVisible && (
                     <Uploader
                         setImage={(url) => this.setImage(url)}

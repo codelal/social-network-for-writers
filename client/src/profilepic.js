@@ -12,10 +12,8 @@ export default function ProfilePic({
     return (
         <div className="profile-pic-container">
             <img onClick={toggleUploader} src={url} alt={first}></img>
-            <p className="a">
-                {first} {last}{" "}
-            </p>
-            <p>Contact: {email}</p>
+            <p>{first}{last}</p>
+            <p>Contact:{email}</p>
         </div>
     );
 }
