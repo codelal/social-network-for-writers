@@ -6,38 +6,44 @@ export default class BioEditor extends Component {
         super(props);
         this.state = {
             textareaIsVisible: false,
-            bio: "", // onChange eventHandler
+            
         };
     }
 
     toggleTextarea() {
         this.setState({
             textareaIsVisible: !this.state.textareaIsVisible,
+            bio: this.props.bio  
         });
     }
 
     handleChange(e) {
         this.setState({
-            bio: e.target.value,
+            bio: e.target.value
         });
     }
 
     submitBio() {
         var data = { bio: this.state.bio };
-        console.log("upload bio runs", data.bio);
+        // console.log("upload bio runs", data.bio);
 
         axios
             .post("/update/bio", data)
             .then((res) => {
-                console.log(res);
                 if (res.data.sucess) {
-                    this.props.setBio(this.state.bio);
-
-                    //toggle textarea dissapear
+                    this.props.setBio(data.bio);
+                    this.setState({
+                        textareaIsVisible: !this.state.textareaIsVisible,
+                       
+                    });
+                } else {
+                    this.setState({
+                        error: true,
+                    });
                 }
             })
             .catch((err) => {
-                console.log("error catch of post/registration", err);
+                console.log("error catch of /update/bio", err);
                 this.setState({
                     error: true,
                 });
@@ -45,19 +51,42 @@ export default class BioEditor extends Component {
     }
 
     render() {
+        let showBio = this.props.bio;
+        let noBio = !this.props.bio;
+
+        if (this.state.textareaIsVisible) {
+            showBio = null;
+            noBio = null;
+        }
+
         return (
             <div className="bio-editor-container">
                 <h1>BioEditor</h1>
+                {this.state.error && <p>Something went wrong, try again!</p>}
+
+                {noBio && (
+                    <button onClick={() => this.toggleTextarea()}>
+                        Add Bio
+                    </button>
+                )}
+
+                {showBio && (
+                    <div>
+                        Bio:{this.props.bio}
+                        <button onClick={() => this.toggleTextarea()}>
+                            Edit Bio
+                        </button>
+                    </div>
+                )}
+
                 {this.state.textareaIsVisible && (
                     <div>
-                        <textarea onChange={(e) => this.handleChange(e)} />
+                        <textarea value = {this.state.bio} onChange={(e) => this.handleChange(e)} />
                         <button onClick={() => this.submitBio()}>
                             send Bio
                         </button>
                     </div>
                 )}
-                <button onClick={() => this.toggleTextarea()}>Edit Bio</button>
-                <button onClick={() => this.toggleTextarea()}>Add Bio</button>
             </div>
         );
     }

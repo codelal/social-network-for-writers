@@ -52,7 +52,6 @@ export default class ResetPassword extends Component {
             code: this.state.code,
             password: this.state.password,
         };
-        console.log("formdata", formData);
 
         axios
             .post("/reset/password/verify", formData)

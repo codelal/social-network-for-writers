@@ -187,7 +187,7 @@ app.post("/reset/password/verify", (req, res) => {
 app.get("/profile", (req, res) => {
     db.getProfileData(req.session.userId)
         .then(({ rows }) => {
-            // console.log("rows in getProfileData", rows);
+            //console.log("rows in getProfileData", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -218,7 +218,7 @@ app.post("/update/bio", (req, res) => {
     db.updateBio(bio, req.session.userId)
         .then(({ rows }) => {
             console.log("updateBio worked", rows);
-            res.json({sucess: true});
+            res.json({ sucess: true, bio: bio });
         })
         .catch((err) => {
             console.log("error in updateProfilPicture", err);

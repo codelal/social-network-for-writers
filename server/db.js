@@ -7,7 +7,7 @@ const db = spicedPg(
 module.exports.insertDetails = (firstName, lastName, emailadress, hashedPW) => {
     return db.query(
         `INSERT INTO users (first, last, email, password)
-        VALUES($1, $2, $3, $4, $5)
+        VALUES($1, $2, $3, $4)
         RETURNING id`,
         [firstName, lastName, emailadress, hashedPW]
     );

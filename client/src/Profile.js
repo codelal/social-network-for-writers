@@ -1,8 +1,16 @@
-import ProfilePic from "./profilepic";
+import ProfilePic from "./ProfilePic";
 import BioEditor from "./BioEditor";
 
-export default function Profile({ first, last, email, url, toggleUploader }) {
-    console.log(first, last, toggleUploader);
+export default function Profile({
+    first,
+    last,
+    email,
+    url,
+    bio,
+    setBio,
+    toggleUploader,
+}) {
+
     return (
         <div className="profile-container">
             <h2>User Profile Component</h2>
@@ -14,7 +22,7 @@ export default function Profile({ first, last, email, url, toggleUploader }) {
                 email={email}
                 toggleUploader={toggleUploader}
             />
-            <BioEditor />
+            <BioEditor bio={bio} setBio={setBio} />
         </div>
     );
 }
