@@ -11,7 +11,7 @@ export default function ProfilePic({
 
     return (
         <div className="profile-pic-container">
-            <img onClick={toggleUploader} src={url} alt= {`{first} {last}`} ></img>
+            <img onClick={toggleUploader} src={url} alt= {first} ></img>
             <p>Name: {first} {last} </p>
             <p>Contact: {email}</p>
         </div>

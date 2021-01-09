@@ -10,35 +10,26 @@ body {
     height: 10rem;
     width: 30rem;
     border: 0.1rem solid black;
-    background-color:palevioletred;
+    background-color: palevioletred;
 }
 
-.app-container{
+.app-container {
+    height: 100vh;
     display: grid;
-    grid-template-areas: "head head"
-                          "main main"
-                          "footer footer";
-    grid-template-rows: 20% 77% 8%;
-    
+    grid-template-areas:
+        "head head"
+        "main main"
+        "footer footer";
+    grid-template-rows: 15% 80% 5%;
 }
 
 header {
     border: 0.1rem solid black;
     grid-area: head;
+    height: 7rem;
     display: grid;
     grid-template-columns: 20% 60% 20%;
     grid-template-rows: 1;
-    
-}
- #header-profile-pic{
-    width: 10rem;
-    grid-column: 3 / span 4;
-}
-
- #header-profile-pic img {
-    border: 0.2rem solid red;
-    height:10rem;
-    width: 10rem;
 }
 
 .logo {
@@ -46,17 +37,37 @@ header {
     background-color: lightseagreen;
     width: 10rem;
     height: 5rem;
-    margin-left: 2rem;
+    margin-left: 1rem;
+    grid-column: 1 / span 2;
 }
 
-.profile-container{
+header .profile-pic-container {
+    height: 5rem;
+    width: 6rem;
+    grid-column: 3 / span 4;
+}
+
+header .profile-pic-container img {
+    border: 0.2rem solid rgb(15, 14, 14);
+    height: 5rem;
+    width: 5rem;
+    margin-left: 100%;
+    margin-top: 1rem;
+    border-radius: 40px;
+    object-fit: cover;
+}
+
+header .profile-pic-container p {
+    height: 0.1;
+    visibility: hidden;
+}
+
+.profile-container {
     border: 0.2rem solid seagreen;
     grid-area: main;
     display: grid;
     grid-template-columns: 50% 50%;
-   
 }
-
 
 .profile-container .profile-pic-container {
     border: 0.2rem solid blue;
@@ -66,17 +77,66 @@ header {
     grid-column-end: 2;
 }
 
-.profile-pic-container img{
-    height: 15rem;
-    width: 15rem;
+.profile-pic-container img {
+    height: 20rem;
+    width: 20rem;
+    object-fit: contain;
+    margin-top: 1rem;
 }
 
-.profile-pic-container p{
+.profile-pic-container p {
     margin: 1rem;
     border: 0.1rem solid blue;
 }
 
-.bio-editor-container{
-      border: 0.2rem solid blue;
-         grid-column-start: 2;
+.bio-editor-container {
+    border: 0.2rem solid blue;
+    grid-column-start: 2;
+}
+
+.other-profile-container {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 1;
+    margin-left: 1rem;
+    border: 0.2rem solid blue;
+}
+.other-profile-container h2 {
+    height: 5rem;
+    margin-left: 3rem;
+}
+
+.other-profile-container img {
+    grid-column-start: 1;
+    margin-left: 3rem;
+    height: 20rem;
+    width: 20rem;
+    object-fit: contain;
+    margin-top: 1rem;
+}
+
+.other-profile-container h3 {
+    grid-area: 2 / 2;
+    border: 0.2rem solid blue;
+    height: 3rem;
+    margin-right: 3rem;
+   
+}
+
+.other-profile-container p {
+    grid-area: 2 / 2;
+    border: 0.2rem solid blue;
+    height: 15rem;
+    margin-top: 5rem;
+    margin-right: 3rem;
+}
+
+.other-profile-container .error-other-profile {
+    position: fixed;
+    height:100vh;
+    width: 100vw;
+    background-color: blue;
+    grid-row-start:1;
+    margin-top:0;
 }

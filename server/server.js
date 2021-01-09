@@ -184,7 +184,9 @@ app.post("/reset/password/verify", (req, res) => {
         });
 });
 
-app.get("/profile", (req, res) => {
+app.get("/api/profile/", (req, res) => {
+    console.log("get profile");
+
     db.getProfileData(req.session.userId)
         .then(({ rows }) => {
             //console.log("rows in getProfileData", rows);
@@ -223,6 +225,35 @@ app.post("/update/bio", (req, res) => {
         .catch((err) => {
             console.log("error in updateProfilPicture", err);
             res.json({ sucess: false });
+        });
+});
+
+app.get("/api/profile/:id", (req, res) => {
+    const { id } = req.params;
+    console.log(id);
+    console.log("get request api profile id");
+    db.getProfileData(id)
+        .then(({ rows }) => {
+           // console.log("rows in getProfileData", rows);
+            res.json({
+                success:true,
+                first: rows[0].first,
+                last: rows[0].last,
+                email: rows[0].email,
+                url: rows[0].url,
+                bio: rows[0].bio,
+                loggedInId: req.session.userId,
+            });
+        })
+        .catch((err) => {
+            console.log("error in getProfileData", err);
+            if (err == "Cannot read property 'first' of undefined") {
+                res.json({ success: false, error: "this user doesn't existes" });
+            } else {
+                res.json({
+                    success: false,
+                });
+            }
         });
 });
 

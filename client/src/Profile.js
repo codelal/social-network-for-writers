@@ -16,7 +16,6 @@ export default function Profile({
             <h2>User Profile Component</h2>
             <ProfilePic
                 url={url}
-                alt={first}
                 first={first}
                 last={last}
                 email={email}

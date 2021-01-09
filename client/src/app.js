@@ -16,30 +16,33 @@ export default class App extends Component {
             url: "",
             bio: "",
             uploaderIsVisible: false,
+            error: false,
         };
     }
 
     componentDidMount() {
         // console.log("componentDidMount runs");
-        axios.get("/profile").then(({ data }) => {
-            console.log(
-                "res from get /profile",
-                data,
-                data[0].first,
-                data[0].bio
-            );
-            this.setState({
-                first: data[0].first,
-                last: data[0].last,
-                email: data[0].email,
-                url: data[0].url,
-                bio: data[0].bio,
+        axios
+            .get("/api/profile")
+            .then(({ data }) => {
+                this.setState({
+                    first: data[0].first,
+                    last: data[0].last,
+                    email: data[0].email,
+                    url: data[0].url,
+                    bio: data[0].bio,
+                });
+            })
+            .catch((err) => {
+                console.log("error in post/login", err);
+                this.setState({
+                    error: true,
+                });
             });
-        });
     }
+
     toggleUploader() {
-        console.log(
-            "toggleUploader runs");
+        console.log("toggleUploader runs");
         this.setState({
             uploaderIsVisible: !this.state.uploaderIsVisible,
         });
@@ -66,16 +69,18 @@ export default class App extends Component {
                 <div className="app-container">
                     <header>
                         <p className="logo">Logo</p>
-                        <div id="header-profile-pic">
-                            <ProfilePic
-                                first={this.state.first}
-                                last={this.state.last}
-                                email={this.state.email}
-                                url={this.state.url}
-                                toggleUploader={() => this.toggleUploader()}
-                            />
-                        </div>
+                        <ProfilePic
+                            first={this.state.first}
+                            last={this.state.last}
+                            email={this.state.email}
+                            url={this.state.url}
+                            toggleUploader={() => this.toggleUploader()}
+                        />
                     </header>
+
+                    {this.state.error && (
+                        <p>Something went wrong, try again!</p>
+                    )}
 
                     <Route
                         exact

@@ -55,8 +55,8 @@ export default class BioEditor extends Component {
         let noBio = !this.props.bio;
 
         if (this.state.textareaIsVisible) {
-            showBio = null;
-            noBio = null;
+            showBio = "";
+            noBio = "";
         }
 
         return (

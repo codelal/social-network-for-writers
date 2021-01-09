@@ -11,4 +11,4 @@
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   );
 
-INSERT INTO users(first, last, email, password, url) VALUES ('Anna', 'Schmidt', 'anna@web.de', 'anna', 'https://femmessavantes2.pressbooks.com/app/uploads/sites/36475/2015/09/Hannah-Arendt-460x583.jpg');
+INSERT INTO users(first, last, email, password, url) VALUES ('Hannah', 'Arendt', 'ha@web.de', '1', 'https://femmessavantes2.pressbooks.com/app/uploads/sites/36475/2015/09/Hannah-Arendt-460x583.jpg');
