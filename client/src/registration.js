@@ -15,11 +15,9 @@ export default class Registration extends Component {
     }
 
     handleChange(e) {
-        this.setState(
-            {
-                [e.target.name]: e.target.value,
-            }
-        );
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
     }
 
     handleSubmit() {
@@ -29,7 +27,6 @@ export default class Registration extends Component {
             email: this.state.email,
             password: this.state.password,
         };
-  
 
         axios
             .post("/registration", formData)
@@ -57,8 +54,7 @@ export default class Registration extends Component {
                     }
                 } else {
                     this.setState({
-                        error:
-                            "Something went wrong, try again",
+                        error: "Something went wrong, try again",
                     });
                 }
             })
@@ -71,45 +67,51 @@ export default class Registration extends Component {
     }
 
     render() {
-        console.log("this.state.errorType", this.state.errorType);
+        //console.log("this.state.errorType", this.state.errorType);
         return (
-            <>
-                <h1 className = "registration">Registration</h1>
-                {this.state.error && <p className = "registration-error">{this.state.error}</p>}
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="first"
-                    placeholder="first name"
-                    type="text"
-                    required=""
-                />
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="last"
-                    placeholder="last name"
-                    type="text"
-                    required=""
-                />
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="email"
-                    placeholder="email"
-                    type="text"
-                    required=""
-                />
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="password"
-                    placeholder="password"
-                    type="password"
-                    required=""
-                />
-                <button onClick={() => this.handleSubmit()}>Submit</button>
+            <div className="childs-welcome-container">
+                <h2>Registration</h2>
                 <Link to="/login">
                     {" "}
-                    Already a member? Click here to Log in!
+                    Already a member? <br />
+                    Click here to Log in!
                 </Link>
-            </>
+
+                {this.state.error && (
+                    <p className="error">{this.state.error}</p>
+                )}
+                <div className="input-container">
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="first"
+                        placeholder="first name"
+                        type="text"
+                        required=""
+                    />
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="last"
+                        placeholder="last name"
+                        type="text"
+                        required=""
+                    />
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="email"
+                        placeholder="email"
+                        type="text"
+                        required=""
+                    />
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="password"
+                        placeholder="password"
+                        type="password"
+                        required=""
+                    />
+                    <button onClick={() => this.handleSubmit()}>Submit</button>
+                </div>
+            </div>
         );
     }
 }

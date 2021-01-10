@@ -73,68 +73,81 @@ export default class ResetPassword extends Component {
 
     render() {
         return (
-            <>
+            <div className="childs-welcome-container">
                 <h1>Reset Password</h1>
 
                 {this.state.view === 1 && (
                     <>
                         {this.state.error && (
-                            <p>Something went wrong, try again!</p>
+                            <p className="error">
+                                Something went wrong, try again!
+                            </p>
                         )}
-                        <p>
+                        <h3>
                             Please enter the email adress with which you
                             registered
-                        </p>
-                        <input
-                            onChange={(e) => this.handleChange(e)}
-                            name="email"
-                            placeholder="email"
-                            type="text"
-                            required=""
-                        />
-                        <button onClick={() => this.handleSubmitEmail()}>
-                            Submit
-                        </button>
+                        </h3>
+                        <div className="input-container">
+                            <input
+                                onChange={(e) => this.handleChange(e)}
+                                name="email"
+                                placeholder="email"
+                                type="text"
+                                required=""
+                            />
+
+                            <button onClick={() => this.handleSubmitEmail()}>
+                                Submit
+                            </button>
+                        </div>
                     </>
                 )}
 
                 {this.state.view === 2 && (
                     <>
                         {this.state.error && (
-                            <p>Something went wrong, try again!</p>
+                            <p className="error">
+                                Something went wrong, try again!
+                            </p>
                         )}
-                        <p>Please enter the code you received via Email</p>
-                        <input
-                            onChange={(e) => this.handleChange(e)}
-                            name="code"
-                            placeholder="code"
-                            type="text"
-                            required=""
-                        />
-                        <p>Please enter a new password</p>
-                        <input
-                            onChange={(e) => this.handleChange(e)}
-                            name="password"
-                            placeholder="password"
-                            type="password"
-                            required=""
-                        />
-                        <button onClick={() => this.handleSubmitCodeAndNewPW()}>
-                            Submit
-                        </button>
+
+                        <h3>Please enter the code you received via Email</h3>
+                        <div className="input-container">
+                            <input
+                                onChange={(e) => this.handleChange(e)}
+                                name="code"
+                                placeholder="code"
+                                type="text"
+                                required=""
+                            />
+
+                            <h3>Please enter a new password</h3>
+                            <input
+                                onChange={(e) => this.handleChange(e)}
+                                name="password"
+                                placeholder="password"
+                                type="password"
+                                required=""
+                            />
+                            <button
+                                onClick={() => this.handleSubmitCodeAndNewPW()}
+                            >
+                                Submit
+                            </button>
+                        </div>
                     </>
                 )}
 
                 {this.state.view === 3 && (
                     <>
-                        <p>Success!</p>
-                        <p>
+                        <h2>Success!</h2>
+                        <p id ="link-success-pw">
                             You can now <Link to="/login">login </Link>with you
                             new password
                         </p>
                     </>
                 )}
-            </>
+            </div>
         );
     }
 }

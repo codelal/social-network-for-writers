@@ -46,26 +46,34 @@ export default class Login extends Component {
 
     render() {
         return (
-            <>
-                <h1>login</h1>
-                {this.state.error && <p>Something went wrong, try again!</p>}
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="email"
-                    placeholder="email"
-                    type="text"
-                    required=""
-                />
-                <input
-                    onChange={(e) => this.handleChange(e)}
-                    name="password"
-                    placeholder="password"
-                    type="password"
-                    required=""
-                />
-                <button onClick={() => this.handleSubmit()}>Submit</button>
-                <Link to="/reset-password">click here if you forgot your password!</Link>
-            </>
+            <div className="childs-welcome-container">
+                <h2>login</h2>
+                {this.state.error && (
+                    <p className="error">
+                        Something went wrong, try again!
+                    </p>
+                )}
+                <Link to="/reset-password">
+                    click here, when you forgot your password!
+                </Link>
+                <div className="input-container">
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="email"
+                        placeholder="email"
+                        type="text"
+                        required=""
+                    />
+                    <input
+                        onChange={(e) => this.handleChange(e)}
+                        name="password"
+                        placeholder="password"
+                        type="password"
+                        required=""
+                    />
+                    <button onClick={() => this.handleSubmit()}>Submit</button>
+                </div>
+            </div>
         );
     }
 }
