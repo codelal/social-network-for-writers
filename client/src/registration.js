@@ -10,19 +10,15 @@ export default class Registration extends Component {
             last: "",
             email: "",
             password: "",
-            error: false,
+            error: "",
         };
     }
 
     handleChange(e) {
-        if (e.target.email == "") {
-            this.setState({ error: true });
-        }
         this.setState(
             {
                 [e.target.name]: e.target.value,
             }
-            // () => console.log("this.state in handleChange", this.state.first)
         );
     }
 
@@ -33,38 +29,53 @@ export default class Registration extends Component {
             email: this.state.email,
             password: this.state.password,
         };
-        //console.log("formdata", formdata);
+  
 
         axios
             .post("/registration", formData)
-            .then((res) => {
-                //console.log(res.data.sucess);
-                console.log(res);
-
-                if (res.data.sucess) {
-                    //console.log(res.data.sucess);
+            .then(({ data }) => {
+                if (data.success) {
                     location.replace("/");
+                }
+                if (!data.success) {
+                    if (data.error == "empty input") {
+                        this.setState({
+                            error: "Please fill in all fields",
+                        });
+                    }
+                    if (data.error == "email already exists") {
+                        this.setState({
+                            error:
+                                "This Email already exsits, please enter a valid Email",
+                        });
+                    }
+                    if (data.error == "no valid emailformat") {
+                        this.setState({
+                            error:
+                                "This is not a valid Emailformat, please enter a valid email",
+                        });
+                    }
                 } else {
-                    console.log("error in then() of post/registration");
                     this.setState({
-                        error: true,
+                        error:
+                            "Something went wrong, try again",
                     });
                 }
             })
             .catch((err) => {
                 console.log("error catch of post/registration", err);
                 this.setState({
-                    error: true,
+                    error: "Something went wrong, try again",
                 });
             });
     }
 
     render() {
+        console.log("this.state.errorType", this.state.errorType);
         return (
             <>
-                <h1>Registration</h1>
-
-                {this.state.error && <p>Something went wrong, try again!</p>}
+                <h1 className = "registration">Registration</h1>
+                {this.state.error && <p className = "registration-error">{this.state.error}</p>}
                 <input
                     onChange={(e) => this.handleChange(e)}
                     name="first"

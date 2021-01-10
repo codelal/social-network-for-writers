@@ -4,8 +4,8 @@
       id SERIAL PRIMARY KEY,
       first VARCHAR(255) NOT NULL CHECK (first != ''),
       last VARCHAR(255) NOT NULL CHECK (last != ''),
-      email VARCHAR(255) NOT NULL UNIQUE CHECK (email != ''),
-      password VARCHAR(255) NOT NULL,
+      password VARCHAR(255) NOT NULL CHECK (password != ''),
+      email VARCHAR(255) NOT NULL UNIQUE CHECK (email ~* '^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'),
       url VARCHAR(255),
       bio VARCHAR(255),
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

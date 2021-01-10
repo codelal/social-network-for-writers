@@ -61,25 +61,40 @@ app.post("/registration", function (req, res) {
     const { first, last, email, password } = req.body;
     //console.log(first, last, email, password);
 
-    //console.log("ja");
-    hash(password)
-        .then((hash) => {
-            db.insertDetails(first, last, email, hash)
-                .then(({ rows }) => {
-                    // console.log("rows[0].id", rows, rows[0].id, rows);
-                    req.session.userId = rows[0].id;
-                    res.json({ sucess: true });
-                })
-                .catch(function (err) {
-                    res.json({ sucess: false });
-                    console.log("error in db.insertDetails", err);
-                    console.log("no insert");
-                });
-        })
-        .catch((err) => {
-            console.log("error in hash", err);
-            res.json({ sucess: false });
-        });
+    if (first, last, email, password) {
+        hash(password)
+            .then((hash) => {
+                db.insertDetails(first, last, email, hash)
+                    .then(({ rows }) => {
+                        req.session.userId = rows[0].id;
+                        res.json({ success: true });
+                    })
+                    .catch(function (err) {
+                        if (err.constraint == "users_email_key") {
+                            //console.log("this email already exists");
+                            res.json({
+                                success: false,
+                                error: "email already exists",
+                            });
+                        } else if (err.constraint == "users_email_check") {
+                            console.log("this is not a valid email");
+                            res.json({
+                                success: false,
+                                error: "no valid emailformat",
+                            });
+                        } else {
+                            res.json({ success: false });
+                            console.log("error in db.insertDetails", err);
+                        }
+                    });
+            }).catch((err) => {
+                console.log("error in hash", err);
+                res.json({ success: false });
+            });
+    } else {
+        console.log("empty input");
+        res.json({ success: false, error: "empty input" });
+    }
 });
 
 app.post("/login", (req, res) => {
@@ -234,9 +249,9 @@ app.get("/api/profile/:id", (req, res) => {
     console.log("get request api profile id");
     db.getProfileData(id)
         .then(({ rows }) => {
-           // console.log("rows in getProfileData", rows);
+            // console.log("rows in getProfileData", rows);
             res.json({
-                success:true,
+                success: true,
                 first: rows[0].first,
                 last: rows[0].last,
                 email: rows[0].email,
@@ -248,7 +263,10 @@ app.get("/api/profile/:id", (req, res) => {
         .catch((err) => {
             console.log("error in getProfileData", err);
             if (err == "Cannot read property 'first' of undefined") {
-                res.json({ success: false, error: "this user doesn't existes" });
+                res.json({
+                    success: false,
+                    error: "this user doesn't existes",
+                });
             } else {
                 res.json({
                     success: false,
