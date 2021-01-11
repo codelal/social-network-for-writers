@@ -61,7 +61,7 @@ app.post("/registration", function (req, res) {
     const { first, last, email, password } = req.body;
     //console.log(first, last, email, password);
 
-    if (first, last, email, password) {
+    if ((first && last && password && email)) {
         hash(password)
             .then((hash) => {
                 db.insertDetails(first, last, email, hash)
@@ -87,7 +87,8 @@ app.post("/registration", function (req, res) {
                             console.log("error in db.insertDetails", err);
                         }
                     });
-            }).catch((err) => {
+            })
+            .catch((err) => {
                 console.log("error in hash", err);
                 res.json({ success: false });
             });
@@ -97,34 +98,38 @@ app.post("/registration", function (req, res) {
     }
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/login", (req, res) => {
     const { email, password } = req.body;
-    //console.log("post/ login", email, password);
-    db.getHashAndIdByEmail(email)
-        .then((hash) => {
-            //console.log("hash", hash.rows[0].password);
-
-            compare(password, hash.rows[0].password)
-                .then((response) => {
-                    if (response) {
-                        //console.log("success");
-                        req.session.userId = hash.rows[0].id;
-                        //console.log("req.session.userId", req.session.userId);
-                        res.json(hash.rows[0]);
-                    } else {
-                        console.log("no success");
-                        res.json({ sucess: false });
-                    }
-                })
-                .catch((err) => {
-                    console.log("error in compare", err);
-                    res.json({ sucess: false });
-                });
-        })
-        .catch((err) => {
-            console.log("error in getHashAndIdByEmail", err);
-            res.json({ sucess: false });
-        });
+    console.log("post/ login", email, password);
+    if(email && password) {
+        db.getHashAndIdByEmail(email)
+            .then((hash) => {
+                console.log("hash", hash.rows[0].password);
+                compare(password, hash.rows[0].password)
+                    .then((response) => {
+                        if (response) {
+                            //console.log("success");
+                            req.session.userId = hash.rows[0].id;
+                            //console.log("req.session.userId", req.session.userId);
+                            res.json({ success: true });
+                        } else {
+                            console.log("no success");
+                            res.json({ success: false });
+                        }
+                    })
+                    .catch((err) => {
+                        console.log("error in compare", err);
+                        res.json({ success: false });
+                    });
+            })
+            .catch((err) => {
+                console.log("error in getHashAndIdByEmail", err);
+                res.json({ success: false });
+            });
+    } else {
+        console.log("empty input");
+        res.json({ success: false, error: "empty input" });
+    }
 });
 
 app.post("/reset/password", (req, res) => {

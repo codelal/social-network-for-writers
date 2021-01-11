@@ -49,7 +49,7 @@ export default class Registration extends Component {
                     if (data.error == "no valid emailformat") {
                         this.setState({
                             error:
-                                "This is not a valid Emailformat, please enter a valid email",
+                                "Please enter a valid email",
                         });
                     }
                 } else {

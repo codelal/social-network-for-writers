@@ -13,33 +13,40 @@ export default class Login extends Component {
     }
 
     handleChange(e) {
-        this.setState(
-            {
-                [e.target.name]: e.target.value,
-            }
-            // () => console.log("this.state in handleChange", this.state.first)
-        );
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
     }
 
     handleSubmit() {
-        var formData = {
+        var data = {
             email: this.state.email,
             password: this.state.password,
         };
-        //console.log("formdata", formdata);
+        console.log("formdata", data);
 
         axios
-            .post("/login", formData)
-            .then((res) => {
-                console.log("res.data.sucess", res, res.data, res.data.sucess);
-                if (res.data.id) {
+            .post("/api/login", data)
+            .then(({ data }) => {
+                if (data.success) {
                     location.replace("/");
+                } 
+                if (!data.success) {
+                    if (data.error == "empty input") {
+                        this.setState({
+                            error: "Please fill in all fields",
+                        });
+                    } else {
+                        this.setState({
+                            error: "Something went wrong, make sure you enter you data correctly!",
+                        });
+                    }
                 }
             })
             .catch((err) => {
                 console.log("error in post/login", err);
                 this.setState({
-                    error: true,
+                    error: "Something went wrong, try again!",
                 });
             });
     }
@@ -49,9 +56,7 @@ export default class Login extends Component {
             <div className="childs-welcome-container">
                 <h2>login</h2>
                 {this.state.error && (
-                    <p className="error">
-                        Something went wrong, try again!
-                    </p>
+                    <p className="error">{this.state.error}</p>
                 )}
                 <Link to="/reset-password">
                     click here, when you forgot your password!
