@@ -276,10 +276,11 @@ app.get("/api/users/:id", (req, res) => {
         });
 });
 
-app.get("/users", (req, res) => {
+app.get("/api/latest-users", (req, res) => {
+    // console.log("api/latest-users request");
     db.getRecentlyRegisteredUsers()
         .then(({ rows }) => {
-            console.log("rows from getRecentlyRegisteredUsers", rows);
+            //  console.log("rows from getRecentlyRegisteredUsers", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -289,6 +290,24 @@ app.get("/users", (req, res) => {
             });
         });
 });
+
+app.get("/api/find-users/:input", (req, res) => {
+    const { input } = req.params;
+    console.log("/api/find-users works", input);
+
+    db.findUsers(input)
+        .then(({ rows }) => {
+            console.log("rows von findUsers", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in findUsers", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
 //redirecting
 
 app.get("/welcome", (req, res) => {

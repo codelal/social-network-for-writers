@@ -1,10 +1,11 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import axios from "./axios";
 import ProfilePic from "./ProfilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./OtherProfile";
-import { BrowserRouter, Route } from "react-router-dom";
 import FindPeople from "./FindPeople";
 
 export default class App extends Component {
@@ -69,9 +70,9 @@ export default class App extends Component {
                 <div className="app-container">
                     <header>
                         <p className="logo">Logo</p>
-                        <p className="find-people">Find other people</p>
-                        <Route path="/users" component={FindPeople} />
-
+                        <Link to="/users" className="find-people">
+                            Click to find people
+                        </Link>
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}
@@ -80,7 +81,7 @@ export default class App extends Component {
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
-
+                    <Route path="/users" component={FindPeople} />
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
                     )}

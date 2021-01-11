@@ -1,5 +1,6 @@
 import { Component } from "react";
 import axios from "./axios";
+import { Link } from "react-router-dom";
 
 export default class OtherProfile extends Component {
     constructor(props) {
@@ -45,7 +46,7 @@ export default class OtherProfile extends Component {
     }
 
     render() {
-        return (
+        return ( 
             <div className="other-profile-container">
                 {this.state.error && (
                     <p className="error-other-profile">

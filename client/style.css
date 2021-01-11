@@ -240,3 +240,37 @@ header .profile-pic-container p {
     grid-row-start: 1;
     margin-top: 0;
 }
+
+.find-people-container{
+    border: 0.3rem solid black;
+    grid-area: 2/1/3/3;
+    display:grid;
+    grid-template-columns: repeat(6, 20%);
+    grid-template-rows: repeat(5, 25%);
+}
+
+
+.find-people-container h2{
+ grid-area: 1/3/1/5;
+}
+
+.find-people-container input {
+    justify-self: center;
+    grid-area: 1/1/1/2;
+    height: 2rem;
+}
+
+.find-people-container ul div {
+    margin-top:0.5rem;
+   justify-self:start;
+    grid-area: 1/2/1/4;
+    width: 10rem;
+    height:10rem;
+    
+}
+.find-people-container img{
+   object-fit: contain; 
+    width: 10rem;
+    height:10rem;
+     
+}

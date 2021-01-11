@@ -66,3 +66,10 @@ module.exports.updateBio = (bio, id) => {
 module.exports.getRecentlyRegisteredUsers = () => {
     return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 3`);
 };
+
+module.exports.findUsers = (val) => {
+    return db.query(
+        `SELECT id, first, last, url FROM users WHERE first ILIKE $1 LIMIT 8`,
+        [val + "%"]
+    );
+};
