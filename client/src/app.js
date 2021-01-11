@@ -5,7 +5,7 @@ import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./OtherProfile";
 import { BrowserRouter, Route } from "react-router-dom";
-import Hello from "./hooks";
+import FindPeople from "./FindPeople";
 
 export default class App extends Component {
     constructor() {
@@ -64,12 +64,14 @@ export default class App extends Component {
     }
 
     render() {
-        //console.log("test bio", this.state.bio);
         return (
             <BrowserRouter>
                 <div className="app-container">
                     <header>
                         <p className="logo">Logo</p>
+                        <p className="find-people">Find other people</p>
+                        <Route path="/users" component={FindPeople} />
+
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}
@@ -78,7 +80,6 @@ export default class App extends Component {
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
-                    <Hello />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
@@ -101,7 +102,7 @@ export default class App extends Component {
                     />
 
                     <Route
-                        path="/profile/:id"
+                        path="/users/:id"
                         render={(props) => (
                             <OtherProfile
                                 key={props.match.url}

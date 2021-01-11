@@ -118,8 +118,9 @@ height: 2rem;
     grid-area: head;
     height: 7rem;
     display: grid;
-    grid-template-columns: 20% 60% 20%;
+    grid-template-columns: 30% 50% 30%;
     grid-template-rows: 1;
+
 }
 
 .logo {
@@ -128,13 +129,23 @@ height: 2rem;
     width: 10rem;
     height: 5rem;
     margin-left: 1rem;
-    grid-column: 1 / span 2;
+    grid-area: 1/1;
+}
+
+header .find-people {
+    border: 0.2rem solid rgb(15, 14, 14);
+    grid-area: 1/2;
+    width: 8rem;
+    height: 2rem;
+    justify-self: end;
+    align-self:center;
+    
 }
 
 header .profile-pic-container {
     height: 5rem;
     width: 6rem;
-    grid-column: 3 / span 4;
+    grid-area: 1/3;
 }
 
 header .profile-pic-container img {

@@ -10,19 +10,11 @@ export default class OtherProfile extends Component {
     }
 
     componentDidMount() {
-        // console.log("this.props.match: ", this.props.match);
-        // console.log("id: ", this.props.match.params.id);
-        // console.log("path:", `api/profile/${this.props.match.params.id}`);
-
+      
         axios
-            .get(`/api/profile/${this.props.match.params.id}`)
+            .get(`/api/users/${this.props.match.params.id}`)
             .then(({ data }) => {
-                console.log(
-                    "res from get/api/id",
-                    "this.props.history",
-                    this.props.history
-                );
-
+            
                 if (data.success) {
                     if (data.loggedInId == this.props.match.params.id) {
                         this.props.history.push("/");

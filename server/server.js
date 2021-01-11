@@ -244,13 +244,13 @@ app.post("/api/update/bio", (req, res) => {
         });
 });
 
-app.get("/api/profile/:id", (req, res) => {
+app.get("/api/users/:id", (req, res) => {
     const { id } = req.params;
-    console.log(id);
-    console.log("get request api profile id");
+    // console.log(id);
+    console.log("get request api user id");
     db.getProfileData(id)
         .then(({ rows }) => {
-            // console.log("rows in getProfileData", rows);
+            console.log("rows in getProfileData", rows, rows[0].first);
             res.json({
                 success: true,
                 first: rows[0].first,
@@ -276,6 +276,19 @@ app.get("/api/profile/:id", (req, res) => {
         });
 });
 
+app.get("/users", (req, res) => {
+    db.getRecentlyRegisteredUsers()
+        .then(({ rows }) => {
+            console.log("rows from getRecentlyRegisteredUsers", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in getRecentlyRegisteredUsers", err);
+            res.json({
+                success: false,
+            });
+        });
+});
 //redirecting
 
 app.get("/welcome", (req, res) => {

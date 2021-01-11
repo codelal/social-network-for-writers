@@ -62,3 +62,7 @@ module.exports.updateProfilPicture = (url, id) => {
 module.exports.updateBio = (bio, id) => {
     return db.query(`UPDATE users SET bio=($1) WHERE id =($2)`, [bio, id]);
 };
+
+module.exports.getRecentlyRegisteredUsers = () => {
+    return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 3`);
+};
