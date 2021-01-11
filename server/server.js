@@ -61,7 +61,7 @@ app.post("/registration", function (req, res) {
     const { first, last, email, password } = req.body;
     //console.log(first, last, email, password);
 
-    if ((first && last && password && email)) {
+    if (first && last && password && email) {
         hash(password)
             .then((hash) => {
                 db.insertDetails(first, last, email, hash)
@@ -93,27 +93,25 @@ app.post("/registration", function (req, res) {
                 res.json({ success: false });
             });
     } else {
-        console.log("empty input");
+        // console.log("empty input");
         res.json({ success: false, error: "empty input" });
     }
 });
 
 app.post("/api/login", (req, res) => {
     const { email, password } = req.body;
-    console.log("post/ login", email, password);
-    if(email && password) {
+    //console.log("post/ login", email, password);
+    if (email && password) {
         db.getHashAndIdByEmail(email)
             .then((hash) => {
-                console.log("hash", hash.rows[0].password);
+                //console.log("hash", hash.rows[0].password);
                 compare(password, hash.rows[0].password)
                     .then((response) => {
                         if (response) {
-                            //console.log("success");
                             req.session.userId = hash.rows[0].id;
                             //console.log("req.session.userId", req.session.userId);
                             res.json({ success: true });
                         } else {
-                            console.log("no success");
                             res.json({ success: false });
                         }
                     })
@@ -132,7 +130,7 @@ app.post("/api/login", (req, res) => {
     }
 });
 
-app.post("/reset/password", (req, res) => {
+app.post("/api/reset/password", (req, res) => {
     const { email } = req.body;
     console.log("post/ reset-password", email);
     db.verifyEmail(email)
@@ -152,23 +150,23 @@ app.post("/reset/password", (req, res) => {
                             `Please enter the following Code: ${secretCode}`,
                             "here is the code to reset your password"
                         );
-                        res.json(rows);
+                        res.json({ success: true });
                     })
                     .catch((err) => {
                         console.log("error in insertResetCode", err);
-                        res.json({ sucess: false });
+                        res.json({ success: false });
                     });
             } else {
-                res.json({ sucess: false });
+                res.json({ success: false });
             }
         })
         .catch((err) => {
             console.log("error in verifyEmail", err);
-            res.json({ sucess: false });
+            res.json({ success: false });
         });
 });
 
-app.post("/reset/password/verify", (req, res) => {
+app.post("/api/reset/password/verify", (req, res) => {
     const { code, password } = req.body;
     // console.log("post/ reset/password/verify", code, password);
     db.verifyCode(code)
@@ -182,31 +180,29 @@ app.post("/reset/password/verify", (req, res) => {
                         db.updatePassword(hash, rows[0].email)
                             .then(({ rows }) => {
                                 //console.log("pw updated", rows);
-                                res.json(rows);
+                                res.json({ success: true });
                             })
                             .catch((err) => {
                                 console.log("error in updatePassword", err);
-                                res.json({ sucess: false });
+                                res.json({ success: false });
                             });
                     })
                     .catch((err) => {
                         console.log("error in hash PW", err);
-                        res.json({ sucess: false });
+                        res.json({ success: false });
                     });
             } else {
                 console.group("no code matched");
-                res.json({ sucess: false });
+                res.json({ success: false });
             }
         })
         .catch((err) => {
             console.log("error in verifyEmail", err);
-            res.json({ sucess: false });
+            res.json({ success: false });
         });
 });
 
 app.get("/api/profile/", (req, res) => {
-    console.log("get profile");
-
     db.getProfileData(req.session.userId)
         .then(({ rows }) => {
             //console.log("rows in getProfileData", rows);
@@ -214,37 +210,37 @@ app.get("/api/profile/", (req, res) => {
         })
         .catch((err) => {
             console.log("error in getProfileData", err);
-            res.json({ sucess: false });
+            res.json({ success: false });
         });
 });
 
-app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+app.post("/api/upload", uploader.single("file"), s3.upload, (req, res) => {
     //console.log("post upload");
     const url = `${config.s3Url}${req.file.filename}`;
     //console.log(url);
     db.updateProfilPicture(url, req.session.userId)
         .then(() => {
             //console.log("updateProfilPicture is done");
-            res.json({ sucess: true, url: url });
+            res.json({ success: true, url: url });
         })
         .catch((err) => {
             console.log("error in updateProfilPicture", err);
-            res.json({ sucess: false });
+            res.json({ success: false });
         });
 });
 
-app.post("/update/bio", (req, res) => {
+app.post("/api/update/bio", (req, res) => {
     const { bio } = req.body;
-    console.log("update/bio, bio", req.body, bio);
+    //console.log("update/bio, bio", req.body, bio);
 
     db.updateBio(bio, req.session.userId)
         .then(({ rows }) => {
-            console.log("updateBio worked", rows);
-            res.json({ sucess: true, bio: bio });
+            //console.log("updateBio worked", rows);
+            res.json({ success: true, bio: bio });
         })
         .catch((err) => {
             console.log("error in updateProfilPicture", err);
-            res.json({ sucess: false });
+            res.json({ success: false });
         });
 });
 

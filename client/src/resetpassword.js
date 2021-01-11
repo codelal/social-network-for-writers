@@ -15,24 +15,20 @@ export default class ResetPassword extends Component {
     }
 
     handleChange(e) {
-        this.setState(
-            {
-                [e.target.name]: e.target.value,
-            }
-            // () => console.log("this.state in handleChange", this.state.first)
-        );
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
     }
 
     handleSubmitEmail() {
-        var formData = {
+        let data = {
             email: this.state.email,
         };
-      
+
         axios
-            .post("/reset/password", formData)
-            .then((res) => {
-                console.log("res post/reset/password", res);
-                if (res.data[0].id) {
+            .post("/api/reset/password", data)
+            .then(({ data }) => {
+                if (data.success) {
                     this.setState({
                         view: 2,
                     });
@@ -47,16 +43,15 @@ export default class ResetPassword extends Component {
     }
 
     handleSubmitCodeAndNewPW() {
-        var formData = {
+        var data = {
             code: this.state.code,
             password: this.state.password,
         };
 
         axios
-            .post("/reset/password/verify", formData)
-            .then((res) => {
-                console.log("res post/reset-password", res);
-                if (res.data[0].id) {
+            .post("/api/reset/password/verify", data)
+            .then(({ data }) => {
+                if (data.success) {
                     this.setState({
                         view: 3,
                     });
@@ -140,7 +135,7 @@ export default class ResetPassword extends Component {
                 {this.state.view === 3 && (
                     <>
                         <h2>Success!</h2>
-                        <p id ="link-success-pw">
+                        <p id="link-success-pw">
                             You can now <Link to="/login">login </Link>with you
                             new password
                         </p>

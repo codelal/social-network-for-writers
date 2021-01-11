@@ -21,10 +21,10 @@ export default class Uploader extends Component {
         formData.append("file", this.state.file);
 
         axios
-            .post("/upload", formData)
-            .then((res) => {
-                if (res.data.sucess) {
-                    this.props.setImage(res.data.url);
+            .post("/api/upload", formData)
+            .then(({ data }) => {
+                if (data.success) {
+                    this.props.setImage(data.url);
                 } else {
                     console.log("error in then() of post/upload");
                     this.setState({
@@ -52,7 +52,7 @@ export default class Uploader extends Component {
                     accept="image/*"
                 />
                 <button onClick={(e) => this.handleUpload(e)}>Upload</button>
-                <div onClick ={this.props.toggleUploader}>Close</div>
+                <div onClick={this.props.toggleUploader}>Close</div>
             </div>
         );
     }

@@ -28,9 +28,9 @@ export default class BioEditor extends Component {
         // console.log("upload bio runs", data.bio);
 
         axios
-            .post("/update/bio", data)
-            .then((res) => {
-                if (res.data.sucess) {
+            .post("/api/update/bio", data)
+            .then(({ data}) => {
+                if (data.success) {
                     this.props.setBio(data.bio);
                     this.setState({
                         textareaIsVisible: !this.state.textareaIsVisible,

@@ -5,6 +5,7 @@ import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./OtherProfile";
 import { BrowserRouter, Route } from "react-router-dom";
+import Hello from "./hooks";
 
 export default class App extends Component {
     constructor() {
@@ -77,6 +78,7 @@ export default class App extends Component {
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
+                    <Hello />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
