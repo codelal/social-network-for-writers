@@ -35,7 +35,7 @@ grid-template-rows: 15% 10% 70% 15%;
     border: 0.2rem solid black;
     grid-area: main;
     display: grid;
-    grid-template-columns:40% 30% 40%;
+    grid-template-columns:40% 20% 40%;
     grid-template-rows: 5rem 3rem 3rem 20rem;
    
 }
@@ -168,6 +168,7 @@ header .profile-pic-container p {
     grid-area: main;
     display: grid;
     grid-template-columns: 50% 50%;
+  
 }
 
 .profile-container .profile-pic-container {
@@ -202,6 +203,7 @@ header .profile-pic-container p {
     grid-template-rows: 1;
     margin-left: 1rem;
     border: 0.2rem solid blue;
+   background-color: grey;
 }
 .other-profile-container h2 {
     height: 5rem;

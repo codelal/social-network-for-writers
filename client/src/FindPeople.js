@@ -54,8 +54,8 @@ export default function FindPeople() {
                 <ul>
                     {latestUsers.map((user) => (
                         <div key={user.id}>
-                            <Link to="/users/:6">
-                                <img src={user.url} />{" "}
+                            <Link to={`/users/${user.id}`}>
+                                <img src={user.url} />
                             </Link>
                             {user.first}
                             {user.last}

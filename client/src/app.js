@@ -82,6 +82,7 @@ export default class App extends Component {
                         />
                     </header>
                     <Route path="/users" component={FindPeople} />
+                    
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
                     )}
