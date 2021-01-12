@@ -7,7 +7,7 @@ export default function FindPeople() {
     const [input, setInput] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [error, setError] = useState(false);
-    console.log("input", input, "input.length", input.length, "selectedUsers", selectedUsers);
+  //  console.log("input", input, "input.length", input.length, "selectedUsers", selectedUsers);
 
     useEffect(() => {
         let abort;
@@ -55,7 +55,7 @@ export default function FindPeople() {
                 <ul>
                     {latestUsers.map((user) => (
                         <div key={user.id}>
-                            <Link to={`/users/${user.id}`}>
+                            <Link to={`/find-people/${user.id}`}>
                                 <img src={user.url} />
                             </Link>
                             {user.first} {user.last}
@@ -67,7 +67,7 @@ export default function FindPeople() {
                 <ul>
                     {selectedUsers.map((selectedUser) => (
                         <div key={selectedUser.id}>
-                            <Link to={`/users/${selectedUser.id}`}>
+                            <Link to={`/find-people/${selectedUser.id}`}>
                                 <img src={selectedUser.url} />
                             </Link>
                             {selectedUser.first} {selectedUser.last}

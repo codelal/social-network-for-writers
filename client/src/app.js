@@ -70,8 +70,8 @@ export default class App extends Component {
                 <div className="app-container">
                     <header>
                         <p className="logo">Logo</p>
-                        <Link to="/users" className="find-people">
-                            Click to find people
+                        <Link to="/find-people" className="find-people">
+                            Find people
                         </Link>
                         <ProfilePic
                             first={this.state.first}
@@ -81,8 +81,8 @@ export default class App extends Component {
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
-                    <Route path="/users" component={FindPeople} />
-                    
+                    <Route path="/find-people" component={FindPeople} />
+
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
                     )}
@@ -105,6 +105,16 @@ export default class App extends Component {
 
                     <Route
                         path="/users/:id"
+                        render={(props) => (
+                            <OtherProfile
+                                key={props.match.url}
+                                match={props.match}
+                                history={props.history}
+                            />
+                        )}
+                    />
+                    <Route
+                        path="/find-people/:id"
                         render={(props) => (
                             <OtherProfile
                                 key={props.match.url}

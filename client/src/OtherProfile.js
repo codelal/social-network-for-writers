@@ -1,6 +1,6 @@
 import { Component } from "react";
 import axios from "./axios";
-import { Link } from "react-router-dom";
+import FriendButton from "./FriendButton";
 
 export default class OtherProfile extends Component {
     constructor(props) {
@@ -11,11 +11,9 @@ export default class OtherProfile extends Component {
     }
 
     componentDidMount() {
-      
         axios
             .get(`/api/users/${this.props.match.params.id}`)
             .then(({ data }) => {
-            
                 if (data.success) {
                     if (data.loggedInId == this.props.match.params.id) {
                         this.props.history.push("/");
@@ -46,7 +44,7 @@ export default class OtherProfile extends Component {
     }
 
     render() {
-        return ( 
+        return (
             <div className="other-profile-container">
                 {this.state.error && (
                     <p className="error-other-profile">
@@ -65,6 +63,7 @@ export default class OtherProfile extends Component {
                     {this.state.first} {this.state.last}
                 </h3>
                 <p>Bio: {this.state.bio}</p>
+                <FriendButton/>
             </div>
         );
     }

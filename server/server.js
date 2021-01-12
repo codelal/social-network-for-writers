@@ -6,6 +6,7 @@ const path = require("path");
 const { hash, compare } = require("./bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
+const dbfriends = require("./dbfriends");
 const ses = require("./ses");
 const s3 = require("./s3");
 const multer = require("multer");

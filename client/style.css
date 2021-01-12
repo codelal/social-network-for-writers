@@ -168,7 +168,16 @@ header .profile-pic-container p {
     grid-area: main;
     display: grid;
     grid-template-columns: 50% 50%;
+    grid-auto-rows: 10% 90%;
+    margin-top: 0;
+    
   
+}
+.profile-container h2{
+    height: 3rem;
+    border: 0.2rem solid blue;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .profile-container .profile-pic-container {
@@ -179,11 +188,13 @@ header .profile-pic-container p {
     grid-column-end: 2;
 }
 
+
 .profile-pic-container img {
     height: 20rem;
     width: 20rem;
     object-fit: contain;
     margin-top: 1rem;
+  
 }
 
 .profile-pic-container p {
@@ -200,21 +211,22 @@ header .profile-pic-container p {
     grid-area: main;
     display: grid;
     grid-template-columns: 40% 60%;
-    grid-template-rows: 1;
+    grid-template-rows: 10% 40% 50%;
     margin-left: 1rem;
-    border: 0.2rem solid blue;
-   background-color: grey;
+    border: 0.2rem solid rgb(255, 0, 179);
+    background-color: rgb(207, 204, 204);
 }
 .other-profile-container h2 {
-    height: 5rem;
+    height: 3rem;
     margin-left: 3rem;
+    grid-column: 1 /span 2;
 }
 
 .other-profile-container img {
     grid-column-start: 1;
     margin-left: 3rem;
-    height: 20rem;
-    width: 20rem;
+    height: 12rem;
+    width: 12rem;
     object-fit: contain;
     margin-top: 1rem;
 }
@@ -241,6 +253,15 @@ header .profile-pic-container p {
     background-color: blue;
     grid-row-start: 1;
     margin-top: 0;
+}
+
+.other-profile-container .friend-button {
+ border: 0.3rem solid black;
+ height: 3rem;
+ width: 10rem;
+ grid-row-start: 3;
+ grid-column-start:1;
+ justify-self: center;
 }
 
 .find-people-container{
@@ -276,3 +297,4 @@ header .profile-pic-container p {
     height:10rem;
      
 }
+
