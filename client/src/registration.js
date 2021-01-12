@@ -29,7 +29,7 @@ export default class Registration extends Component {
         };
 
         axios
-            .post("/registration", formData)
+            .post("/api/registration", formData)
             .then(({ data }) => {
                 if (data.success) {
                     location.replace("/");
@@ -48,8 +48,7 @@ export default class Registration extends Component {
                     }
                     if (data.error == "no valid emailformat") {
                         this.setState({
-                            error:
-                                "Please enter a valid email",
+                            error: "Please enter a valid email",
                         });
                     }
                 } else {

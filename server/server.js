@@ -14,6 +14,13 @@ const config = require("./config.json");
 const uidSafe = require("uid-safe");
 const cryptoRandomString = require("crypto-random-string");
 
+const BUTTON_TEXT = {
+    MAKE_REQUEST: "Make Friend Request",
+    CANCEL_REQUEST: "Cancel Request",
+    ACCEPT_REQUEST: "Accept Request",
+    UNFRIEND: "Unfriend",
+};
+
 app.use(compression());
 
 app.use(
@@ -58,7 +65,9 @@ const uploader = multer({
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.post("/registration", function (req, res) {
+
+
+app.post("/api/registration", function (req, res) {
     const { first, last, email, password } = req.body;
     //console.log(first, last, email, password);
 
@@ -248,10 +257,10 @@ app.post("/api/update/bio", (req, res) => {
 app.get("/api/users/:id", (req, res) => {
     const { id } = req.params;
     // console.log(id);
-    console.log("get request api user id");
+    //console.log("get request api user id");
     db.getProfileData(id)
         .then(({ rows }) => {
-            console.log("rows in getProfileData", rows, rows[0].first);
+            //   console.log("rows in getProfileData", rows, rows[0].first);
             res.json({
                 success: true,
                 first: rows[0].first,
@@ -294,11 +303,11 @@ app.get("/api/latest-users", (req, res) => {
 
 app.get("/api/find-users/:input", (req, res) => {
     const { input } = req.params;
-    console.log("/api/find-users works", input);
+    //console.log("/api/find-users works", input);
 
     db.findUsers(input)
         .then(({ rows }) => {
-            console.log("rows von findUsers", rows);
+            //console.log("rows von findUsers", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -308,6 +317,32 @@ app.get("/api/find-users/:input", (req, res) => {
             });
         });
 });
+
+app.get("/api/friendship-status/:otherUserId", (req, res) => {
+    const { otherUserId } = req.params;
+
+    dbfriends
+        .getFriendshipStatus(otherUserId, req.session.userId)
+        .then(({ rows }) => {
+            if (rows.length) {
+                res.json(rows);
+            } else {
+                res.json(BUTTON_TEXT.MAKE_REQUEST);
+            }
+        })
+        .catch((err) => {
+            console.log("error in findUsers", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+app.post("/api/friendship-action", (req, res) => {
+    console.log("/api/friendship-action runs");
+});
+
+
 
 //redirecting
 

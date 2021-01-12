@@ -43,7 +43,7 @@ export default class OtherProfile extends Component {
         this.props.history.push("/");
     }
 
-    render() {
+    render() {console.log(this.props.match.params.id);
         return (
             <div className="other-profile-container">
                 {this.state.error && (
@@ -63,7 +63,7 @@ export default class OtherProfile extends Component {
                     {this.state.first} {this.state.last}
                 </h3>
                 <p>Bio: {this.state.bio}</p>
-                <FriendButton/>
+                <FriendButton otherUserId={this.props.match.params.id} />
             </div>
         );
     }

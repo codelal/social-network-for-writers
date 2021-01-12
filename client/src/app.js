@@ -81,7 +81,7 @@ export default class App extends Component {
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
-                    <Route path="/find-people" component={FindPeople} />
+                    <Route exactpath="/find-people" component={FindPeople} />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

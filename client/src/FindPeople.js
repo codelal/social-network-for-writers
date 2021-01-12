@@ -7,7 +7,7 @@ export default function FindPeople() {
     const [input, setInput] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [error, setError] = useState(false);
-  //  console.log("input", input, "input.length", input.length, "selectedUsers", selectedUsers);
+    //  console.log("input", input, "input.length", input.length, "selectedUsers", selectedUsers);
 
     useEffect(() => {
         let abort;
@@ -38,7 +38,7 @@ export default function FindPeople() {
         }
 
         return () => {
-            console.log("clean up running");
+            //  console.log("clean up running");
             abort = true;
         };
     }, [input]);
@@ -63,7 +63,7 @@ export default function FindPeople() {
                     ))}
                 </ul>
             )}
-            {input.length && (
+            {input.length > 0 && (
                 <ul>
                     {selectedUsers.map((selectedUser) => (
                         <div key={selectedUser.id}>
@@ -76,7 +76,7 @@ export default function FindPeople() {
                 </ul>
             )}
 
-            {input.length && !selectedUsers.length && <p>No results</p>}
+            {input.length > 0 && !selectedUsers.length && <p>No results</p>}
         </div>
     );
 }
