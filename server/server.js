@@ -65,8 +65,6 @@ const uploader = multer({
 
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-
-
 app.post("/api/registration", function (req, res) {
     const { first, last, email, password } = req.body;
     //console.log(first, last, email, password);
@@ -338,11 +336,27 @@ app.get("/api/friendship-status/:otherUserId", (req, res) => {
         });
 });
 
-app.post("/api/friendship-action", (req, res) => {
+app.post("/api/friendship-action/", (req, res) => {
     console.log("/api/friendship-action runs");
+    const { button, otherUserId } = req.body;
+    //console.log(button, otherUserId);
+
+    if (button == BUTTON_TEXT.MAKE_REQUEST) {
+        console.log("button text is make request");
+
+        dbfriends
+            .insertForFriendRequest(req.session.userId, otherUserId)
+            .then(({ rows }) => {
+                console.log("rows in insertForFriendRequest", rows);
+            })
+            .catch((err) => {
+                console.log("insertForFriendRequest", err);
+                res.json({
+                    success: false,
+                });
+            });
+    }
 });
-
-
 
 //redirecting
 

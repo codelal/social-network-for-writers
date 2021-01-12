@@ -43,7 +43,7 @@ export default class OtherProfile extends Component {
         this.props.history.push("/");
     }
 
-    render() {console.log(this.props.match.params.id);
+    render() {
         return (
             <div className="other-profile-container">
                 {this.state.error && (

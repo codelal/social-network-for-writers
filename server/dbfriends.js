@@ -10,3 +10,15 @@ module.exports.getFriendshipStatus = (otherUserId, userId) => {
         [otherUserId, userId]
     );
 };
+
+module.exports.insertForFriendRequest = (userId, otherUserId) => {
+    return db.query(
+        `INSERT INTO friendships (sender_id, recipient_id, accepted) VALUES($1, $2, TRUE)`[
+            (userId, otherUserId)
+        ]
+    );
+};
+
+
+
+

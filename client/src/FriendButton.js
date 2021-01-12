@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "./axios";
 
 const BUTTON_TEXT = {
     MAKE_REQUEST: "Make Friend Request",
@@ -36,10 +36,14 @@ export default function FriendButton({ otherUserId }) {
     }, [otherUserId]);
 
     function handleRequests() {
-        console.log("button clicked");
-        let data = "hallo";
+        console.log("button clicked", button);
+        let data = {
+            button: button,
+            otherUserId: otherUserId
+        };
+
         axios
-            .post("/api/friendship-action")
+            .post("/api/friendship-action", data)
             .then(({ data }) => {
                 console.log("/api/friendship-action", data);
             })
