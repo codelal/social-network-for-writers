@@ -7,6 +7,7 @@ const { hash, compare } = require("./bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const dbfriends = require("./dbfriends");
+const btn = require("./getButtonText");
 const ses = require("./ses");
 const s3 = require("./s3");
 const multer = require("multer");
@@ -320,31 +321,15 @@ app.get("/api/friendship-status/:otherUserId", (req, res) => {
     const { otherUserId } = req.params;
 
     dbfriends
-        .getFriendshipStatus(otherUserId, req.session.userId)
+        .getFriendshipStatus(req.session.userId, otherUserId)
         .then(({ rows }) => {
-            console.log("rows ingetFriendshipStatus", rows);
-            if (rows.length) {
-                if (rows[0].accepted && rows[1].accepted) {
-                    console.log("both accepted");
-                    res.json(BUTTON_TEXT.UNFRIEND);
-                }
-                if (
-                    rows[0].sender_id == req.session.userId &&
-                    rows[0].accepted &&
-                    !rows[1].accepted
-                ) {
-                    console.log("user is sender");
-                    res.json(BUTTON_TEXT.CANCEL_REQUEST);
-                }else if (
-                    rows[0].recipient_id == req.session.userId && !rows[0].accepted
-                    
-                ) {
-                    console.log("user is recipient");
-                    //res.json(BUTTON_TEXT.ACCEPT_REQUEST);
-                }
-            } else {
-                res.json(BUTTON_TEXT.MAKE_REQUEST);
-            }
+            console.log("getFriendshipStatus", rows);
+            const selectedButtontext = btn.friendshipStatusToButtonText(
+                rows,
+                req.session.userId,
+                BUTTON_TEXT
+            );
+            res.json({ success: true, text: selectedButtontext });
         })
         .catch((err) => {
             console.log("error getFriendshipStatus", err);
@@ -357,25 +342,44 @@ app.get("/api/friendship-status/:otherUserId", (req, res) => {
 app.post("/api/friendship-action/", (req, res) => {
     console.log("/api/friendship-action runs");
     const { button, otherUserId } = req.body;
-    let otherUser = parseInt(otherUserId);
-    console.log(
-        typeof req.session.userId,
-        typeof otherUser,
-        "otherUserId",
-        otherUser
-    );
-    //  console.log("button", button, "otherUserId", otherUserId+1);
+    parseInt(otherUserId);
+    console.log(otherUserId);
 
     if (button == BUTTON_TEXT.MAKE_REQUEST) {
-        console.log("button text is make request");
-
         dbfriends
-            .insertForFriendRequest(req.session.userId, otherUser)
-            .then(({ rows }) => {
-                console.log("rows from insertForFriendRequest", rows);
+            .insertForFriendRequest(req.session.userId, otherUserId)
+            .then(() => {
+                res.json({ success: true, text: BUTTON_TEXT.CANCEL_REQUEST });
             })
             .catch((err) => {
                 console.log("insertForFriendRequest", err);
+                res.json({
+                    success: false,
+                });
+            });
+    } else if (button == BUTTON_TEXT.ACCEPT_REQUEST) {
+        dbfriends
+            .acceptFriendRequest(req.session.userId, otherUserId)
+            .then(() => {
+                res.json({
+                    success: true,
+                    text: BUTTON_TEXT.UNFRIEND,
+                });
+            })
+            .catch((err) => {
+                console.log("acceptFriendRequest", err);
+                res.json({
+                    success: false,
+                });
+            });
+    } else if (button == BUTTON_TEXT.CANCEL_REQUEST || BUTTON_TEXT.UNFRIEND) {
+        dbfriends
+            .cancelRequestOrUnfriend(req.session.userId, otherUserId)
+            .then(() => {
+                res.json({ success: true, text: BUTTON_TEXT.MAKE_REQUEST });
+            })
+            .catch((err) => {
+                console.log("cancelRequestOrUnfriend", err);
                 res.json({
                     success: false,
                 });
