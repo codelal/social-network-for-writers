@@ -15,23 +15,23 @@ export default function FriendButton({ otherUserId }) {
 
     useEffect(() => {
         axios.get(`/api/friendship-status/${otherUserId}`).then(({ data }) => {
-            console
-                .log
-                // " data from /friendship-status/${otherUserId}",data,
-                // data.MAKE_REQUEST
-                ();
-            if (data.MAKE_REQUEST) {
-                setButton(data.MAKE_REQUEST);
-            } else {
-                const userStatus = data[0].accepted;
-                const otherUserStatus = data[1].accepted;
-                const buttontext = friendshipStatusToButtonText(
-                    userStatus,
-                    otherUserStatus
-                );
-
-                setButton(buttontext);
-            }
+            console.log(
+                " data from /friendship-status/${otherUserId} json",
+                data,
+            );
+            setButton(data);
+            // if (data.MAKE_REQUEST) {
+            //     setButton(data.MAKE_REQUEST);
+            // }
+            // if (data.CANCEL_REQUEST) {
+            //     setButton(data.CANCEL_REQUEST);
+            // }
+            // if (data.ACCEPT_REQUEST) {
+            //     setButton(data.ACCEPT_REQUEST);
+            // }
+            // if (data.UNFRIEND) {
+            //     setButton(data.UNFRIEND);
+            // }
         });
     }, [otherUserId]);
 
@@ -39,7 +39,7 @@ export default function FriendButton({ otherUserId }) {
         console.log("button clicked", button);
         let data = {
             button: button,
-            otherUserId: otherUserId
+            otherUserId: otherUserId,
         };
 
         axios

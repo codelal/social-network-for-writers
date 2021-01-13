@@ -17,5 +17,3 @@ INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (11, 1, true)
 INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 12, true);
 INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (12, 1, true);
 
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 13, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (13, 1, false);

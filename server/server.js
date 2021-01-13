@@ -322,14 +322,32 @@ app.get("/api/friendship-status/:otherUserId", (req, res) => {
     dbfriends
         .getFriendshipStatus(otherUserId, req.session.userId)
         .then(({ rows }) => {
+            console.log("rows ingetFriendshipStatus", rows);
             if (rows.length) {
-                res.json(rows);
+                if (rows[0].accepted && rows[1].accepted) {
+                    console.log("both accepted");
+                    res.json(BUTTON_TEXT.UNFRIEND);
+                }
+                if (
+                    rows[0].sender_id == req.session.userId &&
+                    rows[0].accepted &&
+                    !rows[1].accepted
+                ) {
+                    console.log("user is sender");
+                    res.json(BUTTON_TEXT.CANCEL_REQUEST);
+                }else if (
+                    rows[0].recipient_id == req.session.userId && !rows[0].accepted
+                    
+                ) {
+                    console.log("user is recipient");
+                    //res.json(BUTTON_TEXT.ACCEPT_REQUEST);
+                }
             } else {
                 res.json(BUTTON_TEXT.MAKE_REQUEST);
             }
         })
         .catch((err) => {
-            console.log("error in findUsers", err);
+            console.log("error getFriendshipStatus", err);
             res.json({
                 success: false,
             });
@@ -339,15 +357,22 @@ app.get("/api/friendship-status/:otherUserId", (req, res) => {
 app.post("/api/friendship-action/", (req, res) => {
     console.log("/api/friendship-action runs");
     const { button, otherUserId } = req.body;
-    //console.log(button, otherUserId);
+    let otherUser = parseInt(otherUserId);
+    console.log(
+        typeof req.session.userId,
+        typeof otherUser,
+        "otherUserId",
+        otherUser
+    );
+    //  console.log("button", button, "otherUserId", otherUserId+1);
 
     if (button == BUTTON_TEXT.MAKE_REQUEST) {
         console.log("button text is make request");
 
         dbfriends
-            .insertForFriendRequest(req.session.userId, otherUserId)
+            .insertForFriendRequest(req.session.userId, otherUser)
             .then(({ rows }) => {
-                console.log("rows in insertForFriendRequest", rows);
+                console.log("rows from insertForFriendRequest", rows);
             })
             .catch((err) => {
                 console.log("insertForFriendRequest", err);
