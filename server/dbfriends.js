@@ -13,14 +13,14 @@ module.exports.getFriendshipStatus = (userId, otherUserId) => {
 
 module.exports.insertForFriendRequest = (userId, otherUserId) => {
     return db.query(
-        `INSERT INTO friendships (sender_id, recipient_id, accepted) VALUES($1, $2, true), ($2, $1, false)`,
+        `INSERT INTO friendships (sender_id, recipient_id) VALUES($1, $2)`,
         [userId, otherUserId]
     );
 };
 
 module.exports.acceptFriendRequest = (userId, otherUserId) => {
     return db.query(
-        `UPDATE friendships SET accepted=true WHERE sender_id = $1 AND recipient_id = $2 RETURNING accepted`,
+        `UPDATE friendships SET accepted=true WHERE recipient_id = $1 AND sender_id = $2 RETURNING accepted`,
         [userId, otherUserId]
     );
 };
