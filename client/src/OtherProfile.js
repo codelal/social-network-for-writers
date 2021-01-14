@@ -1,6 +1,6 @@
 import { Component } from "react";
 import axios from "./axios";
-import FriendButton from "./FriendButton";
+import FriendButton from "./friendButton";
 
 export default class OtherProfile extends Component {
     constructor(props) {

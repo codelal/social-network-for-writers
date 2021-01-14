@@ -142,6 +142,15 @@ header .find-people {
     
 }
 
+header .friends{
+    border: 0.2rem solid rgb(15, 14, 14);
+    grid-area: 1/2;
+    width: 8rem;
+    height: 2rem;
+    justify-self: center;
+    align-self:center;
+}
+
 header .profile-pic-container {
     height: 5rem;
     width: 6rem;

@@ -1,5 +1,5 @@
-import ProfilePic from "./ProfilePic";
-import BioEditor from "./BioEditor";
+import ProfilePic from "./profilePic";
+import BioEditor from "./bioEditor";
 
 export default function Profile({
     first,

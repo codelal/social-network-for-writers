@@ -2,11 +2,14 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 import axios from "./axios";
-import ProfilePic from "./ProfilePic";
+
+import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
-import OtherProfile from "./OtherProfile";
-import FindPeople from "./FindPeople";
+import OtherProfile from "./otherProfile";
+import FindPeople from "./findPeople";
+import Friends from "./friends";
+
 
 export default class App extends Component {
     constructor() {
@@ -73,6 +76,9 @@ export default class App extends Component {
                         <Link to="/find-people" className="find-people">
                             Find people
                         </Link>
+                        <Link to="/friends" className="friends">
+                            Friends
+                        </Link>
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}
@@ -82,6 +88,7 @@ export default class App extends Component {
                         />
                     </header>
                     <Route exact path="/find-people" component={FindPeople} />
+                    <Route exact path="/friends" component={Friends} />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

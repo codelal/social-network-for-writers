@@ -5,7 +5,7 @@ export default function ProfilePic({
     url,
     toggleUploader,
 }) {
-    console.log("no url", url);
+  
     if (!url) {
         url = "../defaultpic.png";
     }

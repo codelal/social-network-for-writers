@@ -1,7 +1,18 @@
-//Classnotes
-// export function reducer(state = {}, action) {
-//     return state;
-// }
+export function reducer(state = {}, action) {
+
+    if (action.type == "RECEIVE_FRIENDS") {
+        state = {
+            ...state,
+            friendsList: action.friendsList,
+        };
+    }
+       
+        return state;
+}
+
+
+
+
 
 // const obj = {
 //     first: "anna",

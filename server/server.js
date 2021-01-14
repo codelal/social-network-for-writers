@@ -387,6 +387,21 @@ app.post("/api/friendship-action/", (req, res) => {
     }
 });
 
+app.get("/api/friends", (req, res) => {
+    console.log("api/friends request works");
+    dbfriends
+        .getFriends(req.session.userId)
+        .then(({ rows }) => {
+           //console.log("rows from getFriendsAndWannabes", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("getFriendsAndWannabes", err);
+            res.json({
+                success: false,
+            });
+        });
+});
 //redirecting
 
 app.get("/welcome", (req, res) => {

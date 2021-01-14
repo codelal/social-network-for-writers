@@ -8,10 +8,11 @@ CREATE TABLE friendships(
 );
 
 
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 10, false);
-
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (11, 1, false);
-
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 12, true);
-
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (13, 1, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 2, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 1, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 4, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (5, 1, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 6, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (7, 1, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 8, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (9, 1, false);
