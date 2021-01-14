@@ -58,7 +58,7 @@ export default class OtherProfile extends Component {
                 )}
 
                 <h2>Other - Profile - Component</h2>
-                <img src={this.state.url} />
+                <img src={this.state.url} alt="profile-picture"/>
                 <h3>
                     {this.state.first} {this.state.last}
                 </h3>

@@ -5,16 +5,18 @@ export default function ProfilePic({
     url,
     toggleUploader,
 }) {
-    if (url === null) {
+    console.log("no url", url);
+    if (!url) {
         url = "../defaultpic.png";
     }
 
     return (
         <div className="profile-pic-container">
-            <img onClick={toggleUploader} src={url} alt= {first} ></img>
-            <p>Name: {first} {last} </p>
+            <img onClick={toggleUploader} src={url} alt="profile-picture"></img>
+            <p>
+                Name: {first} {last}{" "}
+            </p>
             <p>Contact: {email}</p>
         </div>
     );
 }
- 
