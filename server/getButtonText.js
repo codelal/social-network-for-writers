@@ -1,4 +1,11 @@
 
+module.exports.BUTTON_TEXT = {
+    MAKE_REQUEST: "Make Friend Request",
+    CANCEL_REQUEST: "Cancel Request",
+    ACCEPT_REQUEST: "Accept Request",
+    UNFRIEND: "Unfriend",
+};
+
 module.exports.friendshipStatusToButtonText = (rows, userId, BUTTON_TEXT) => {
     if (rows.length) {
         if (rows[0].accepted) {

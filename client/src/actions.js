@@ -1,19 +1,32 @@
 import axios from "./axios";
 
-
-export async function receiveFriends(){
+export async function receiveFriendsList() {
     const { data } = await axios.get("/api/friends");
-    console.log("data /api/friends from ", data)
+    console.log(
+        "data from  /api/friends, data.userId, data.rows",
+        data.userId,
+        data.rows
+    );
     return {
         type: "RECEIVE_FRIENDS",
-        friendsList: data.friendsList,
+        friendsList: data.rows,
+        userId: data.userId,
     };
 }
 
-// export function fn() {
-//     //we could talk to the server here
-//     return {
-//         type: "UPDATEE_STATE_SOMEHOW",
-//         data: 12,
-//     };
-// }
+export async function handleRequest(otherUserId, button) {
+    console.log("wannabeid", otherUserId, button);
+
+    let btnData = {
+        button: button,
+        otherUserId: otherUserId,
+    };
+
+    const { data } = await axios.post("/api/friendship-action/", btnData);
+    console.log("data post(/api/friendship-action/", data);
+    return {
+        type: "ACCEPT_FRIEND",
+        btnText: data,
+    };
+}
+

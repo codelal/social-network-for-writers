@@ -1,5 +1,12 @@
 const express = require("express");
 const app = express();
+//cange
+// const server = require("http").Server(app);
+// const io = require("socket.io")(server, {
+//     allowRequest: (req, callback) =>
+//         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+// }); //here include url, if I deploy to f.e. heroku
+// //cange
 const compression = require("compression");
 const csurf = require("csurf");
 const path = require("path");
@@ -14,13 +21,6 @@ const multer = require("multer");
 const config = require("./config.json");
 const uidSafe = require("uid-safe");
 const cryptoRandomString = require("crypto-random-string");
-
-const BUTTON_TEXT = {
-    MAKE_REQUEST: "Make Friend Request",
-    CANCEL_REQUEST: "Cancel Request",
-    ACCEPT_REQUEST: "Accept Request",
-    UNFRIEND: "Unfriend",
-};
 
 app.use(compression());
 
@@ -327,7 +327,7 @@ app.get("/api/friendship-status/:otherUserId", (req, res) => {
             const selectedButtontext = btn.friendshipStatusToButtonText(
                 rows,
                 req.session.userId,
-                BUTTON_TEXT
+                btn.BUTTON_TEXT
             );
             res.json({ success: true, text: selectedButtontext });
         })
@@ -342,14 +342,18 @@ app.get("/api/friendship-status/:otherUserId", (req, res) => {
 app.post("/api/friendship-action/", (req, res) => {
     console.log("/api/friendship-action runs");
     const { button, otherUserId } = req.body;
+    console.log(button, otherUserId);
     parseInt(otherUserId);
     console.log(otherUserId);
 
-    if (button == BUTTON_TEXT.MAKE_REQUEST) {
+    if (button == btn.BUTTON_TEXT.MAKE_REQUEST) {
         dbfriends
             .insertForFriendRequest(req.session.userId, otherUserId)
             .then(() => {
-                res.json({ success: true, text: BUTTON_TEXT.CANCEL_REQUEST });
+                res.json({
+                    success: true,
+                    text: btn.BUTTON_TEXT.CANCEL_REQUEST,
+                });
             })
             .catch((err) => {
                 console.log("insertForFriendRequest", err);
@@ -357,13 +361,13 @@ app.post("/api/friendship-action/", (req, res) => {
                     success: false,
                 });
             });
-    } else if (button == BUTTON_TEXT.ACCEPT_REQUEST) {
+    } else if (button == btn.BUTTON_TEXT.ACCEPT_REQUEST) {
         dbfriends
             .acceptFriendRequest(req.session.userId, otherUserId)
             .then(() => {
                 res.json({
                     success: true,
-                    text: BUTTON_TEXT.UNFRIEND,
+                    text: btn.BUTTON_TEXT.UNFRIEND,
                 });
             })
             .catch((err) => {
@@ -372,11 +376,14 @@ app.post("/api/friendship-action/", (req, res) => {
                     success: false,
                 });
             });
-    } else if (button == BUTTON_TEXT.CANCEL_REQUEST || BUTTON_TEXT.UNFRIEND) {
+    } else if (
+        button == btn.BUTTON_TEXT.CANCEL_REQUEST ||
+        btn.BUTTON_TEXT.UNFRIEND
+    ) {
         dbfriends
             .cancelRequestOrUnfriend(req.session.userId, otherUserId)
             .then(() => {
-                res.json({ success: true, text: BUTTON_TEXT.MAKE_REQUEST });
+                res.json({ success: true, text: btn.BUTTON_TEXT.MAKE_REQUEST });
             })
             .catch((err) => {
                 console.log("cancelRequestOrUnfriend", err);
@@ -392,8 +399,9 @@ app.get("/api/friends", (req, res) => {
     dbfriends
         .getFriends(req.session.userId)
         .then(({ rows }) => {
-           //console.log("rows from getFriendsAndWannabes", rows);
-            res.json(rows);
+            //   console.log("rows from getFriendsAndWannabes", rows);
+            res.json({ userId: req.session.userId, rows });
+            //res.json(rows);
         })
         .catch((err) => {
             console.log("getFriendsAndWannabes", err);
@@ -402,6 +410,7 @@ app.get("/api/friends", (req, res) => {
             });
         });
 });
+
 //redirecting
 
 app.get("/welcome", (req, res) => {
@@ -422,6 +431,23 @@ app.get("*", function (req, res) {
     }
 });
 
+//for socket change app to server
 app.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
+
+// io.on("connection", (socket) => {
+//     console.log(`Socker with id ${socket.id} has connected`);
+
+//     socket.emit("hello", {
+//         cohort: "jasmine",
+//     });
+
+//     socket.on("another event", (data) => {
+//         console.log("data from another event", data);
+//     });
+
+//     socket.on("Disconnect", () => {
+//         console.log(`Socker with id ${socket.id} has disconnected`);
+//     });
+// });
