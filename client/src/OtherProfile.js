@@ -18,6 +18,9 @@ export default class OtherProfile extends Component {
                     if (data.loggedInId == this.props.match.params.id) {
                         this.props.history.push("/");
                     } else {
+                        if (!data.url) {
+                            data.url = "../defaultpic.png";
+                        }
                         this.setState({
                             first: data.first,
                             last: data.last,
@@ -58,7 +61,10 @@ export default class OtherProfile extends Component {
                 )}
 
                 <h2>Other - Profile - Component</h2>
-                <img src={this.state.url} alt="profile-picture"/>
+                <img
+                    src={this.state.url}
+                    alt="PROFILE - PIC"
+                />
                 <h3>
                     {this.state.first} {this.state.last}
                 </h3>

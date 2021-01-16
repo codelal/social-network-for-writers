@@ -302,11 +302,9 @@ app.get("/api/latest-users", (req, res) => {
 
 app.get("/api/find-users/:input", (req, res) => {
     const { input } = req.params;
-    //console.log("/api/find-users works", input);
-
+   
     db.findUsers(input)
         .then(({ rows }) => {
-            //console.log("rows von findUsers", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -413,6 +411,7 @@ app.get("/api/friends", (req, res) => {
 
 //redirecting
 
+
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
         res.redirect("/");
@@ -421,8 +420,16 @@ app.get("/welcome", (req, res) => {
     }
 });
 
+app.get("/login", (req, res) => {
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(path.join(__dirname, "..", "client", "index.html"));
+    }
+});
+
+
 app.get("*", function (req, res) {
-    // if the user is NOT logged in
     if (!req.session.userId) {
         res.redirect("/welcome");
     } else {

@@ -33,8 +33,7 @@ export default class Registration extends Component {
             .then(({ data }) => {
                 if (data.success) {
                     location.replace("/");
-                }
-                if (!data.success) {
+                } else if (!data.success) {
                     if (data.error == "empty input") {
                         this.setState({
                             error: "Please fill in all fields",

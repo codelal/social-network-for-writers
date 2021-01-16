@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveFriendsList, handleRequest } from "./actions";
+import { Link } from "react-router-dom";
 
 export const BUTTON_TEXT = {
     MAKE_REQUEST: "Make Friend Request",
@@ -13,7 +14,7 @@ export default function Friends() {
     //const [error, setError] = useState(false);
 
     const dispatch = useDispatch();
-    const wannabeAcceptList = useSelector(
+    const wannabesAcceptList = useSelector(
         (state) =>
             state.friendsList &&
             state.friendsList.filter(
@@ -44,12 +45,13 @@ export default function Friends() {
 
     const wannabesAccept = (
         <div className="wannabes">
-            {wannabeAcceptList &&
-                wannabeAcceptList.map((wannabe) => (
+            {wannabesAcceptList &&
+                wannabesAcceptList.map((wannabe) => (
                     <div className="wannabe" key={wannabe.id}>
                         <p>
                             {wannabe.first} {wannabe.last}
                         </p>
+                        {!wannabe.url && <img src="../defaultpic.png" />}
                         <img src={wannabe.url} />
                         <button
                             onClick={() =>
@@ -76,6 +78,7 @@ export default function Friends() {
                         <p>
                             {wannabe.first} {wannabe.last}
                         </p>
+                        {!wannabe.url && <img src="../defaultpic.png" />}
                         <img src={wannabe.url} />
                         <button
                             onClick={() =>
@@ -102,6 +105,7 @@ export default function Friends() {
                         <p>
                             {friend.first} {friend.last}
                         </p>
+                        {!friend.url && <img src="../defaultpic.png" />}
                         <img src={friend.url} />
                         <button
                             onClick={() =>
@@ -123,6 +127,15 @@ export default function Friends() {
     return (
         <div>
             <h2>Friend Component</h2>
+            {!wannabesAccept.length &&
+                !wannabesRequest.length &&
+                !friends.length && (
+                    <p>
+                        No friends yet{" "}
+                        <Link to="/find-people">click here </Link>
+                        to find people.
+                    </p>
+                )}
             <div>{wannabesAccept}</div>
             <div>{wannabesRequest}</div>
             <div>{friends}</div>

@@ -7,7 +7,6 @@ export default function FindPeople() {
     const [input, setInput] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [error, setError] = useState(false);
-    //  console.log("input", input, "input.length", input.length, "selectedUsers", selectedUsers);
 
     useEffect(() => {
         let abort;
@@ -22,11 +21,9 @@ export default function FindPeople() {
             });
 
         if (input.length) {
-            console.log("input active");
             axios
                 .get(`/api/find-users/${input}`)
                 .then(({ data }) => {
-                    console.log("data in /api/find-users", data);
                     if (!abort) {
                         setSelectedUsers(data);
                     }
@@ -38,7 +35,6 @@ export default function FindPeople() {
         }
 
         return () => {
-            //  console.log("clean up running");
             abort = true;
         };
     }, [input]);
@@ -56,6 +52,7 @@ export default function FindPeople() {
                     {latestUsers.map((user) => (
                         <div key={user.id}>
                             <Link to={`/find-people/${user.id}`}>
+                                {!user.url && <img src="../defaultpic.png" />}
                                 <img src={user.url} />
                             </Link>
                             {user.first} {user.last}
