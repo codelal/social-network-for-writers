@@ -1,4 +1,3 @@
-import { BUTTON_TEXT } from "./friends";
 
 export function reducer(state = {}, action) {
     if (action.type == "RECEIVE_FRIENDS") {

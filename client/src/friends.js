@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveFriendsList, handleRequest } from "./actions";
-
 
 export const BUTTON_TEXT = {
     MAKE_REQUEST: "Make Friend Request",
@@ -11,33 +10,42 @@ export const BUTTON_TEXT = {
 };
 
 export default function Friends() {
-    const [btnAccept, setbtnAccept] = useState(BUTTON_TEXT.ACCEPT_REQUEST);
-    const [btnUnfriend, setbtnUnfriend] = useState(BUTTON_TEXT.UNFRIEND);
-    const [error, setError] = useState(false);
+    //const [error, setError] = useState(false);
 
     const dispatch = useDispatch();
-    const wannabeList = useSelector(
+    const wannabeAcceptList = useSelector(
         (state) =>
             state.friendsList &&
-            state.friendsList.filter((friend) => friend.accepted == false)
+            state.friendsList.filter(
+                (friend) =>
+                    friend.accepted == false &&
+                    friend.recipient_id == state.userId
+            )
     );
+
+    const wannabesRequestList = useSelector(
+        (state) =>
+            state.friendsList &&
+            state.friendsList.filter(
+                (friend) =>
+                    friend.accepted == false && friend.sender_id == state.userId
+            )
+    );
+
     const friendsList = useSelector(
         (state) =>
             state.friendsList &&
             state.friendsList.filter((friend) => friend.accepted)
     );
 
-    const userId = useSelector((state) => state.userId);
-    
     useEffect(() => {
         dispatch(receiveFriendsList());
-        console.log("useEffect runs");
     }, []);
 
-    const wannabes = (
+    const wannabesAccept = (
         <div className="wannabes">
-            {wannabeList &&
-                wannabeList.map((wannabe) => (
+            {wannabeAcceptList &&
+                wannabeAcceptList.map((wannabe) => (
                     <div className="wannabe" key={wannabe.id}>
                         <p>
                             {wannabe.first} {wannabe.last}
@@ -45,15 +53,47 @@ export default function Friends() {
                         <img src={wannabe.url} />
                         <button
                             onClick={() =>
-                                dispatch(handleRequest(wannabe.id, btnAccept))
+                                dispatch(
+                                    handleRequest(
+                                        wannabe.id,
+                                        BUTTON_TEXT.ACCEPT_REQUEST
+                                    )
+                                )
                             }
                         >
-                            {btnAccept}
+                            {BUTTON_TEXT.ACCEPT_REQUEST}
                         </button>
                     </div>
                 ))}
         </div>
     );
+
+    const wannabesRequest = (
+        <div className="wannabes">
+            {wannabesRequestList &&
+                wannabesRequestList.map((wannabe) => (
+                    <div className="wannabe" key={wannabe.id}>
+                        <p>
+                            {wannabe.first} {wannabe.last}
+                        </p>
+                        <img src={wannabe.url} />
+                        <button
+                            onClick={() =>
+                                dispatch(
+                                    handleRequest(
+                                        wannabe.id,
+                                        BUTTON_TEXT.CANCEL_REQUEST
+                                    )
+                                )
+                            }
+                        >
+                            {BUTTON_TEXT.CANCEL_REQUEST}
+                        </button>
+                    </div>
+                ))}
+        </div>
+    );
+
     const friends = (
         <div className="friends">
             {friendsList &&
@@ -65,10 +105,15 @@ export default function Friends() {
                         <img src={friend.url} />
                         <button
                             onClick={() =>
-                                dispatch(handleRequest(friend.id, btnUnfriend))
+                                dispatch(
+                                    handleRequest(
+                                        friend.id,
+                                        BUTTON_TEXT.UNFRIEND
+                                    )
+                                )
                             }
                         >
-                            {btnUnfriend}
+                            {BUTTON_TEXT.UNFRIEND}
                         </button>
                     </div>
                 ))}
@@ -78,7 +123,8 @@ export default function Friends() {
     return (
         <div>
             <h2>Friend Component</h2>
-            <div>{wannabes}</div>
+            <div>{wannabesAccept}</div>
+            <div>{wannabesRequest}</div>
             <div>{friends}</div>
         </div>
     );
