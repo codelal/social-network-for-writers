@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveFriendsList, handleRequest } from "./actions";
-// import { BUTTON_TEXT } from "./src/client/server/getButtonText.js";
 
-const BUTTON_TEXT = {
+
+export const BUTTON_TEXT = {
     MAKE_REQUEST: "Make Friend Request",
     CANCEL_REQUEST: "Cancel Request",
     ACCEPT_REQUEST: "Accept Request",
@@ -28,9 +28,7 @@ export default function Friends() {
     );
 
     const userId = useSelector((state) => state.userId);
-
-    // console.log("userId", userId);
-
+    
     useEffect(() => {
         dispatch(receiveFriendsList());
         console.log("useEffect runs");
@@ -67,7 +65,7 @@ export default function Friends() {
                         <img src={friend.url} />
                         <button
                             onClick={() =>
-                                dispatch(handleRequest(wannabe.id, btnUnfriend))
+                                dispatch(handleRequest(friend.id, btnUnfriend))
                             }
                         >
                             {btnUnfriend}
