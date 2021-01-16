@@ -9,7 +9,6 @@ export function reducer(state = {}, action) {
         };
     }
 
-
     if (action.type == "ACCEPT_REQUEST") {
         state = {
             ...state,
@@ -23,6 +22,15 @@ export function reducer(state = {}, action) {
                     return friend;
                 }
             }),
+        };
+    }
+
+    if (action.type == "UNFRIEND") {
+        state = {
+            ...state,
+            friendsList: state.friendsList.filter(
+                (friend) => friend.id !== action.otherUserId
+            ),
         };
     }
 

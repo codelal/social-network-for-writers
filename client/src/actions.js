@@ -33,11 +33,11 @@ export async function handleRequest(otherUserId, button) {
         };
     }
 
-    // if ((data.text == BUTTON_TEXT.MAKE_REQUEST)) {
-    //     console.log("delete friends data /api/friendship-action/", data.text);
-    //     return {
-    //         type: "DELETE_FRIEND",
-    //         otherUserId: otherUserId,
-    //     };
-    // }
+    if ((data.text == BUTTON_TEXT.MAKE_REQUEST)) {
+        console.log("delete friends data /api/friendship-action/", data.text);
+        return {
+            type: "UNFRIEND",
+            otherUserId: otherUserId,
+        };
+    }
 }
