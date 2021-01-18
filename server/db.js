@@ -73,3 +73,20 @@ module.exports.findUsers = (val) => {
         [val + "%"]
     );
 };
+
+module.exports.insertChatMessages = (userId, message) => {
+    return db.query(
+        `INSERT into chat_messages (user_id, message) VALUES ($1,$2) RETURNING timestamp`,
+        [userId, message]
+    );
+};
+
+module.exports.getRecentMessages = (userId) => {
+    return db.query(
+        `SELECT users.first, users.last, users.url, chat_messages.id, chat_messages.user_id, chat_messages.message, chat_messages.timestamp FROM chat_messages
+        JOIN users
+        ON chat_messages.user_id = users.id 
+        WHERE chat_messages.user_id=$1 LIMIT 10`,
+        [userId]
+    );
+};

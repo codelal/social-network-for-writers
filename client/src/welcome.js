@@ -1,4 +1,4 @@
-//client/src/welcome.js
+
 import { HashRouter, Route } from "react-router-dom";
 import Registration from "./registration";
 import Login from "./login";
@@ -8,7 +8,7 @@ export default function Welcome() {
     return (
         <div className="parent-welcome-container">
             <header>
-                <p className="logo">Logo</p>
+                <img src="../logo1.png" className="logo" />
             </header>
 
             <h1>Welcome to the Socialnetwork</h1>

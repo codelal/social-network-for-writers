@@ -1,96 +1,108 @@
 body {
-    background-color: ghostwhite;
     margin: 0;
     box-sizing: border-box;
 }
 
 /*//////Welcome-Component//////*/
 .parent-welcome-container {
-border: 0.3rem solid rgb(233, 38, 38);
-height: 100vh;
-display: grid;
-grid-template-areas:
+    /* border: 0.3rem solid rgb(233, 38, 38); */
+    height: 100vh;
+    display: grid;
+    grid-template-areas:
         "head"
         "title"
         "main"
         "footer";
-grid-template-rows: 15% 10% 70% 15%;
-
+    grid-template-rows: 13% 10% 70% 15%;
+    font-family: "Open Sans Condensed";
+    letter-spacing: 0.25rem;
+    /* color:rgb(246, 230, 230); */
+    color: rgb(36, 38, 44);
 }
 
-.parent-welcome-container header{
- border: 0.2rem solid black;
- grid-area: head;
+.parent-welcome-container header {
+    border-bottom: 0.3rem solid rgb(154, 211, 230);
+    grid-area: head;
+    background-color: white;
 }
 
-.parent-welcome-container h1{
-    border: 0.2rem solid black;
+.parent-welcome-container {
+    grid-area: title;
+}
+.parent-welcome-container h1 {
+    border-top: 0.3rem solid rgb(246, 208, 20);
     grid-row-start: 2;
     grid-area: title;
     justify-self: center;
-    height: 3rem;
+    height: 4rem;
+    width: 100%;
+    font-size: 3rem;
+    text-align: center;
+    margin: 0;
 }
 
-.childs-welcome-container{
-    border: 0.2rem solid black;
+.childs-welcome-container {
+    /* border: 0.2rem solid black; */
     grid-area: main;
     display: grid;
-    grid-template-columns:40% 20% 40%;
+    grid-template-columns: 40% 20% 40%;
     grid-template-rows: 5rem 3rem 3rem 20rem;
-   
 }
 
 .childs-welcome-container h2 {
- grid-area: 1/2/2/2;
- justify-self: center;
+    grid-area: 1/2/2/2;
+    justify-self: center;
 }
 .childs-welcome-container h3 {
- grid-area: 1/1/1/4;
- justify-self: center;
+    grid-area: 1/1/1/4;
+    justify-self: center;
 }
 
 .childs-welcome-container a {
     grid-area: 2/2;
     justify-self: center;
-    border: 0.1rem solid lightseagreen;
+    letter-spacing: 0.1rem;
     text-align: center;
-}
-
- #link-success-pw {
-    grid-area: 2/1/3/4;
-    justify-self: center;
-    border: 0.1rem solid lightseagreen;
-    text-align: center;
-    font-size: 1.3rem;
-    height: 3rem;
+    color: rgb(13, 26, 149);
+    font-weight: bold;
 }
 
 .childs-welcome-container .error {
-    color:red;
+    color: red;
     grid-area: 3/1/3/4;
     justify-self: center;
     border: 0.1rem solid lightseagreen;
 }
 
 .childs-welcome-container input {
-height: 2rem;
+    height: 2.5rem;
+    width: 10rem;
+    border: 0.1rem solid black;
 }
 
 .input-container {
+    border-style: double;
+    border: 0.2rem solid rgb(164, 26, 155);
+
     grid-area: 4/2 /10 /2;
-    height: 2rem;
+
     justify-self: center;
-    border: 1rem solid lightseagreen;
-    height: 12rem;
+    height: 15rem;
+    width: 12rem;
+}
+
+.childs-welcome-container button {
+    height: 3rem;
     width: 10rem;
 }
 
-.childs-welcome-container button{
-    height: 2rem;
-    width: 10rem
+#link-success-pw {
+    grid-area: 2/1/3/4;
+    justify-self: center;
+    text-align: center;
+    font-size: 1.3rem;
+    height: 3rem;
 }
-
-
 
 /*/ ///// App-Component//////*/
 
@@ -120,16 +132,24 @@ height: 2rem;
     display: grid;
     grid-template-columns: 30% 50% 30%;
     grid-template-rows: 1;
-
 }
 
 .logo {
-    border: 0.2rem solid black;
+    /* border: 0.1rem solid black; */
     background-color: lightseagreen;
-    width: 10rem;
+    width: 6rem;
     height: 5rem;
     margin-left: 1rem;
     grid-area: 1/1;
+    margin-top: 0.2rem;
+}
+
+header .chat {
+    grid-area: 1/2;
+    align-self: center;
+    border: 0.2rem solid rgb(15, 14, 14);
+    width: 8rem;
+    height: 2rem;
 }
 
 header .find-people {
@@ -138,17 +158,16 @@ header .find-people {
     width: 8rem;
     height: 2rem;
     justify-self: end;
-    align-self:center;
-    
+    align-self: center;
 }
 
-header .friends{
+header .friends {
     border: 0.2rem solid rgb(15, 14, 14);
     grid-area: 1/2;
     width: 8rem;
     height: 2rem;
     justify-self: center;
-    align-self:center;
+    align-self: center;
 }
 
 header .profile-pic-container {
@@ -179,10 +198,8 @@ header .profile-pic-container p {
     grid-template-columns: 50% 50%;
     grid-auto-rows: 10% 90%;
     margin-top: 0;
-    
-  
 }
-.profile-container h2{
+.profile-container h2 {
     height: 3rem;
     border: 0.2rem solid blue;
     margin-top: 0;
@@ -197,13 +214,11 @@ header .profile-pic-container p {
     grid-column-end: 2;
 }
 
-
 .profile-pic-container img {
     height: 20rem;
     width: 20rem;
     object-fit: contain;
     margin-top: 1rem;
-  
 }
 
 .profile-pic-container p {
@@ -228,7 +243,7 @@ header .profile-pic-container p {
 .other-profile-container h2 {
     height: 3rem;
     margin-left: 3rem;
-    grid-column: 1 /span 2;
+    grid-column: 1 / span 2;
 }
 
 .other-profile-container img {
@@ -265,25 +280,24 @@ header .profile-pic-container p {
 }
 
 .other-profile-container .friend-button {
- border: 0.3rem solid black;
- height: 3rem;
- width: 10rem;
- grid-row-start: 3;
- grid-column-start:1;
- justify-self: center;
+    border: 0.3rem solid black;
+    height: 3rem;
+    width: 10rem;
+    grid-row-start: 3;
+    grid-column-start: 1;
+    justify-self: center;
 }
 
-.find-people-container{
+.find-people-container {
     border: 0.3rem solid black;
     grid-area: 2/1/3/3;
-    display:grid;
+    display: grid;
     grid-template-columns: repeat(6, 20%);
     grid-template-rows: repeat(5, 25%);
 }
 
-
-.find-people-container h2{
- grid-area: 1/3/1/5;
+.find-people-container h2 {
+    grid-area: 1/3/1/5;
 }
 
 .find-people-container input {
@@ -293,17 +307,61 @@ header .profile-pic-container p {
 }
 
 .find-people-container ul div {
-    margin-top:0.5rem;
-   justify-self:start;
+    margin-top: 0.5rem;
+    justify-self: start;
     grid-area: 1/2/1/4;
     width: 10rem;
-    height:10rem;
-    
+    height: 10rem;
 }
-.find-people-container img{
-   object-fit: contain; 
+.find-people-container img {
+    object-fit: contain;
     width: 10rem;
-    height:10rem;
-     
+    height: 10rem;
 }
 
+.chat-container {
+    border: 0.1rem solid rgb(7, 7, 7);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container h1 {
+    text-align: center;
+}
+
+.chat-messages {
+    border: 0.1rem solid black;
+    width: 70%;
+    height: 20rem;
+    align-self: center;
+    flex-basis: fit-content;
+}
+
+.messages {
+    border: 0.1rem solid black;
+}
+
+.chat-container textarea {
+    margin-top: 1rem;
+    border: 0.1rem solid black;
+    width: 70%;
+    height: 6rem;
+    justify-content: center;
+    align-self: center;
+}
+
+.chat-container img {
+    border: 0.2rem solid rgb(15, 14, 14);
+    height: 3rem;
+    width: 3rem;
+    margin-top: 1rem;
+    border-radius: 40px;
+    object-fit: cover;
+}
+
+.chat-container button {
+    height: 2rem;
+    width: 5rem;
+    align-self: center;
+}

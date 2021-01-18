@@ -1,12 +1,12 @@
 const express = require("express");
 const app = express();
-//cange
-// const server = require("http").Server(app);
-// const io = require("socket.io")(server, {
-//     allowRequest: (req, callback) =>
-//         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
-// }); //here include url, if I deploy to f.e. heroku
-// //cange
+
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    allowRequest: (req, callback) =>
+        callback(null, req.headers.referer.startsWith("http://localhost:3000")),
+}); //here include url, if I deploy to f.e. heroku
+
 const compression = require("compression");
 const csurf = require("csurf");
 const path = require("path");
@@ -21,6 +21,7 @@ const multer = require("multer");
 const config = require("./config.json");
 const uidSafe = require("uid-safe");
 const cryptoRandomString = require("crypto-random-string");
+const date = require("./formateDate");
 
 app.use(compression());
 
@@ -32,12 +33,14 @@ app.use(
 
 app.use(express.json());
 
-app.use(
-    cookieSession({
-        secret: `pure being and pure nothing are the same.`,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: `pure being and pure nothing are the same.`,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+});
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 
@@ -302,7 +305,7 @@ app.get("/api/latest-users", (req, res) => {
 
 app.get("/api/find-users/:input", (req, res) => {
     const { input } = req.params;
-   
+
     db.findUsers(input)
         .then(({ rows }) => {
             res.json(rows);
@@ -411,7 +414,6 @@ app.get("/api/friends", (req, res) => {
 
 //redirecting
 
-
 app.get("/welcome", (req, res) => {
     if (req.session.userId) {
         res.redirect("/");
@@ -428,7 +430,6 @@ app.get("/login", (req, res) => {
     }
 });
 
-
 app.get("*", function (req, res) {
     if (!req.session.userId) {
         res.redirect("/welcome");
@@ -438,23 +439,45 @@ app.get("*", function (req, res) {
     }
 });
 
-//for socket change app to server
-app.listen(process.env.PORT || 3001, function () {
+server.listen(process.env.PORT || 3001, function () {
     console.log("I'm listening.");
 });
 
-// io.on("connection", (socket) => {
-//     console.log(`Socker with id ${socket.id} has connected`);
+io.on("connection", (socket) => {
+    console.log(`Socker with id ${socket.id} has connected`);
+    const userId = socket.request.session.userId;
 
-//     socket.emit("hello", {
-//         cohort: "jasmine",
-//     });
+    socket.on("chat message", (message) => {
+        console.log("chat message", message);
+        db.insertChatMessages(userId, message)
+            .then(({ rows }) => {
+                const formatedDate = date.formateDateTime(rows[0].timestamp);
+                db.getProfileData(userId)
+                    .then(({ rows }) => {
+                        io.sockets.emit("message and user data", {
+                            message: message,
+                            userId: userId,
+                            first: rows[0].first,
+                            last: rows[0].last,
+                            url: rows[0].url,
+                            timeStamp: formatedDate,
+                        });
+                    })
+                    .catch((err) =>
+                        console.log("error in socket getProfileData", err)
+                    );
+            })
+            .catch((err) => console.log("error in insertChatMessages", err));
+    });
 
-//     socket.on("another event", (data) => {
-//         console.log("data from another event", data);
-//     });
+    db.getRecentMessages(userId)
+        .then(({ rows }) => {
+            //  console.log("rows", rows);
+            socket.emit("ten most recent messages", rows);
+        })
+        .catch((err) => console.log("error in getRecentMessages", err));
 
-//     socket.on("Disconnect", () => {
-//         console.log(`Socker with id ${socket.id} has disconnected`);
-//     });
-// });
+    socket.on("Disconnect", () => {
+        console.log(`Socker with id ${socket.id} has disconnected`);
+    });
+});

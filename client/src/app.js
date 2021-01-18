@@ -9,6 +9,7 @@ import Profile from "./profile";
 import OtherProfile from "./otherProfile";
 import FindPeople from "./findPeople";
 import Friends from "./friends";
+import Chat from "./chat";
 
 
 export default class App extends Component {
@@ -26,7 +27,7 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        // console.log("componentDidMount runs");
+       
         axios
             .get("/api/profile")
             .then(({ data }) => {
@@ -72,9 +73,12 @@ export default class App extends Component {
             <BrowserRouter>
                 <div className="app-container">
                     <header>
-                        <p className="logo">Logo</p>
+                        <img src="../logo1.png" className="logo" />
                         <Link to="/find-people" className="find-people">
                             Find people
+                        </Link>
+                        <Link to="/chat" className="chat">
+                            Chat
                         </Link>
                         <Link to="/friends" className="friends">
                             Friends
@@ -89,6 +93,7 @@ export default class App extends Component {
                     </header>
                     <Route exact path="/find-people" component={FindPeople} />
                     <Route exact path="/friends" component={Friends} />
+                    <Route exact path="/chat" component={Chat} />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

@@ -1,4 +1,3 @@
-
 export function reducer(state = {}, action) {
     if (action.type == "RECEIVE_FRIENDS") {
         state = {
@@ -30,6 +29,20 @@ export function reducer(state = {}, action) {
             friendsList: state.friendsList.filter(
                 (friend) => friend.id !== action.otherUserId
             ),
+        };
+    }
+
+    if (action.type == "POST MESSAGE") {
+        state = {
+            ...state,
+            messageAndUserData: action.messageAndUserData,
+        };
+    }
+
+    if (action.type == "RECEIVE_MOST_RECENT_MESSAGES") {
+        state = {
+            ...state,
+            mostRecentMessages: action.mostRecentMessages,
         };
     }
 
