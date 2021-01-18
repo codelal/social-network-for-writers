@@ -32,7 +32,7 @@ export default function Chat() {
                         <img src={message.url} />
                         <p>{message.message}</p>
                         <p>
-                            {message.first} {message.last} {message.timeStamp}
+                            {message.first} {message.last} {message.timestamp}
                         </p>
                     </div>
                 ))}
