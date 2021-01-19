@@ -44,7 +44,10 @@ export default class Uploader extends Component {
         return (
             <div className="uploader">
                 {this.state.error && <p>Something went wrong, try again!</p>}
-                <h3>upload a profile picture</h3>
+                <div id="close" onClick={this.props.toggleUploader}>
+                    X
+                </div>
+                <h3>Upload a profile picture</h3>
                 <input
                     onChange={(e) => this.handleChange(e)}
                     name="file"
@@ -52,7 +55,6 @@ export default class Uploader extends Component {
                     accept="image/*"
                 />
                 <button onClick={(e) => this.handleUpload(e)}>Upload</button>
-                <div onClick={this.props.toggleUploader}>Close</div>
             </div>
         );
     }

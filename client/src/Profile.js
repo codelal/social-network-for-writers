@@ -13,7 +13,7 @@ export default function Profile({
 
     return (
         <div className="profile-container">
-            <h2>User Profile Component</h2>
+            <h2>My Profile</h2>
             <ProfilePic
                 url={url}
                 first={first}

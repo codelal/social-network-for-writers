@@ -77,11 +77,11 @@ export default class ResetPassword extends Component {
                                 Something went wrong, try again!
                             </p>
                         )}
-                        <h3>
+                        <h3 id="h3-reset-password">
                             Please enter the email adress with which you
                             registered
                         </h3>
-                        <div className="input-container">
+                        <div className="input-container" id="reset-password">
                             <input
                                 onChange={(e) => this.handleChange(e)}
                                 name="email"
@@ -105,8 +105,11 @@ export default class ResetPassword extends Component {
                             </p>
                         )}
 
-                        <h3>Please enter the code you received via Email</h3>
-                        <div className="input-container">
+                        <h3 id="h3-reset-password">
+                            Please enter the code you received via Email and
+                            enter a new Password
+                        </h3>
+                        <div className="input-container" id="reset-password">
                             <input
                                 onChange={(e) => this.handleChange(e)}
                                 name="code"
@@ -114,8 +117,6 @@ export default class ResetPassword extends Component {
                                 type="text"
                                 required=""
                             />
-
-                            <h3>Please enter a new password</h3>
                             <input
                                 onChange={(e) => this.handleChange(e)}
                                 name="password"
@@ -134,7 +135,7 @@ export default class ResetPassword extends Component {
 
                 {this.state.view === 3 && (
                     <>
-                        <h2>Success!</h2>
+                        <h2 id="h2-success">Success!</h2>
                         <p id="link-success-pw">
                             You can now <Link to="/login">login </Link>with you
                             new password

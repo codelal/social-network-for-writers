@@ -11,7 +11,6 @@ import FindPeople from "./findPeople";
 import Friends from "./friends";
 import Chat from "./chat";
 
-
 export default class App extends Component {
     constructor() {
         super();
@@ -27,7 +26,6 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-       
         axios
             .get("/api/profile")
             .then(({ data }) => {
@@ -74,15 +72,27 @@ export default class App extends Component {
                 <div className="app-container">
                     <header>
                         <img src="../logo1.png" className="logo" />
-                        <Link to="/find-people" className="find-people">
-                            Find people
-                        </Link>
-                        <Link to="/chat" className="chat">
-                            Chat
-                        </Link>
-                        <Link to="/friends" className="friends">
-                            Friends
-                        </Link>
+                        <ul className="navbar">
+                            <li>
+                                <Link to="/find-people" className="find-people">
+                                    Find people
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/friends" className="friends">
+                                    Friends
+                                </Link>
+                            </li>
+                            <li>
+                                {" "}
+                                <Link to="/chat" className="chat">
+                                    Chat
+                                </Link>
+                            </li>
+
+                            <li>Logout</li>
+                        </ul>
+
                         <ProfilePic
                             first={this.state.first}
                             last={this.state.last}

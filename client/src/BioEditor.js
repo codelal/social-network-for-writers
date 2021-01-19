@@ -6,20 +6,19 @@ export default class BioEditor extends Component {
         super(props);
         this.state = {
             textareaIsVisible: false,
-            
         };
     }
 
     toggleTextarea() {
         this.setState({
             textareaIsVisible: !this.state.textareaIsVisible,
-            bio: this.props.bio  
+            bio: this.props.bio,
         });
     }
 
     handleChange(e) {
         this.setState({
-            bio: e.target.value
+            bio: e.target.value,
         });
     }
 
@@ -29,12 +28,11 @@ export default class BioEditor extends Component {
 
         axios
             .post("/api/update/bio", data)
-            .then(({ data}) => {
+            .then(({ data }) => {
                 if (data.success) {
                     this.props.setBio(data.bio);
                     this.setState({
                         textareaIsVisible: !this.state.textareaIsVisible,
-                       
                     });
                 } else {
                     this.setState({
@@ -61,8 +59,10 @@ export default class BioEditor extends Component {
 
         return (
             <div className="bio-editor-container">
-                <h1>BioEditor</h1>
-                {this.state.error && <p>Something went wrong, try again!</p>}
+                <h1>Bio</h1>
+                {this.state.error && (
+                    <p className="error">Something went wrong, try again!</p>
+                )}
 
                 {noBio && (
                     <button onClick={() => this.toggleTextarea()}>
@@ -72,7 +72,7 @@ export default class BioEditor extends Component {
 
                 {showBio && (
                     <div>
-                        Bio:{this.props.bio}
+                        <p>{this.props.bio}</p>
                         <button onClick={() => this.toggleTextarea()}>
                             Edit Bio
                         </button>
@@ -81,7 +81,10 @@ export default class BioEditor extends Component {
 
                 {this.state.textareaIsVisible && (
                     <div>
-                        <textarea value = {this.state.bio} onChange={(e) => this.handleChange(e)} />
+                        <textarea
+                            value={this.state.bio}
+                            onChange={(e) => this.handleChange(e)}
+                        />
                         <button onClick={() => this.submitBio()}>
                             send Bio
                         </button>
