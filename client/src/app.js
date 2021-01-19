@@ -74,8 +74,13 @@ export default class App extends Component {
                         <img src="../logo1.png" className="logo" />
                         <ul className="navbar">
                             <li>
+                                <Link to="/" className="find-people">
+                                    My Profile
+                                </Link>
+                            </li>
+                            <li>
                                 <Link to="/find-people" className="find-people">
-                                    Find people
+                                    Find People
                                 </Link>
                             </li>
                             <li>

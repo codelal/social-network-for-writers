@@ -157,15 +157,17 @@ body {
         "head head"
         "main main"
         "footer footer";
-    grid-template-rows: 11% 80% 5%;
+    grid-template-rows: 6rem 80% 5%;
 }
 
 .app-container header {
     grid-area: head;
     display: grid;
-    grid-template-columns: 25% 50% 25%;
+    grid-template-columns: 10% 80% 10%;
     grid-template-rows: 1;
     border-bottom: 0.2rem solid rgb(46, 102, 110);
+    /* border-bottom: 0.2rem solid rgb(26, 65, 181); */
+    /* border-bottom: 0.3rem solid rgb(18, 150, 171); */
 }
 
 .navbar {
@@ -180,15 +182,16 @@ body {
 .navbar li {
     /* border: 0.1rem solid rgb(46, 102, 110); */
     height: 1.5rem;
-    width: 8rem;
+    
     text-align: center;
-    margin-right: 0.3rem;
+    margin-right: 0.5rem;
     margin-bottom: 0;
     display: inline-block;
     color: rgb(4, 67, 77);
     border-radius: 6px;
-    box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
-    letter-spacing: 1;
+    font-size: 1.2rem;
+    letter-spacing: 0.5;
+    font-weight: bold;
 }
 
 .navbar li a {
@@ -198,12 +201,11 @@ body {
 .logo {
     /* border: 0.1rem solid black; */
     width: 5rem;
-    height: 5rem;
+    height: 5.2rem;
     margin-left: 1rem;
     margin-top: 0.5rem;
     grid-area: 1/1;
     border-radius: 9px;
-    box-shadow: 0 10px 10px rgba(86, 90, 81, 0.3);
 }
 
 header .profile-pic-container {
@@ -218,7 +220,7 @@ header .profile-pic-container {
 }
 
 header .profile-pic-container img {
-    border: 0.2rem solid rgb(15, 14, 14);
+    border: 0.13rem solid rgb(3, 18, 94);
     height: 4.7rem;
     width: 4.7rem;
     border-radius: 40px;
@@ -259,12 +261,13 @@ header .profile-pic-container p {
 }
 
 .profile-container {
-    border: 0.2rem solid seagreen;
+    border-bottom: 0.2rem solid rgb(46, 102, 110);
     grid-area: main;
     display: grid;
     grid-template-columns: 50% 50%;
     grid-auto-rows: 10% 90%;
     margin-top: 0;
+    background-color: rgb(229, 232, 229);
 }
 .profile-container h2 {
     margin-top: 2rem;
@@ -290,30 +293,34 @@ header .profile-pic-container p {
     border: 0.2rem solid rgb(46, 102, 110);
     box-shadow: 0 10px 10px rgba(86, 90, 81, 0.3);
     margin-bottom: 2rem;
+    background-color: #fff;
 }
 
 .profile-pic-container p {
     margin: 1rem;
     border: 0.1rem solid rgb(46, 102, 110);
     text-align: center;
+    background-color: white;
 }
 
 .bio-editor-container {
-    border: 0.2rem solid rgb(165, 6, 85);
+    border: 0.2rem solid rgb(46, 102, 110);
+    /* border: 0.2rem solid rgb(195, 9, 6); */
     grid-column-start: 2;
-    background-color: rgb(209, 185, 193);
+
     margin: 3rem;
     width: 30rem;
-    height: 30rem;
+    height: 20rem;
     box-shadow: 0 10px 10px rgba(86, 90, 81, 0.3);
+    background-color: #fff;
 }
 
 .bio-editor-container .error {
     color: rgb(165, 6, 85);
-    letter-spacing:1;
+    letter-spacing: 1;
     font-weight: bold;
-    margin-left:2rem;
-    font-size:1.2rem
+    font-size: 1.2rem;
+    margin-left: 2rem;
 }
 .bio-editor-container h1 {
     margin-left: 2rem;
@@ -322,110 +329,226 @@ header .profile-pic-container p {
     height: 5rem;
     width: 25rem;
     margin: 1rem;
-    border: 0.1rem solid rgb(165, 6, 85);
+    border: 0.1rem solid rgb(46, 102, 110);
 }
-.bio-editor-container p{
+.bio-editor-container p {
     margin-left: 2rem;
     width: 24rem;
-    border: 0.11rem solid rgb(165, 6, 85);
     text-align: center;
+    font-weight: bold;
+    letter-spacing: 1;
     line-break: anywhere;
+    border: 0.1rem solid rgb(46, 102, 110);
 }
 
 .bio-editor-container button {
     margin-left: 2rem;
-    border: 0.11rem solid rgb(165, 6, 85);
-     background-color: rgb(209, 185, 193);
-    border-radius: 3px;
-    
+    border: 0.1rem solid rgb(46, 102, 110);
+    background-color: #fff;
+    border-radius: 2px;
 }
 
 .other-profile-container {
     grid-area: main;
     display: grid;
     grid-template-columns: 40% 60%;
-    grid-template-rows: 10% 40% 50%;
+    grid-template-rows: 10% 55% 35%;
     margin-left: 1rem;
-    border: 0.2rem solid rgb(255, 0, 179);
-    background-color: rgb(207, 204, 204);
-}
-.other-profile-container h2 {
-    height: 3rem;
-    margin-left: 3rem;
-    grid-column: 1 / span 2;
+    border-bottom: 0.2rem solid rgb(46, 102, 110);
 }
 
 .other-profile-container img {
-    grid-column-start: 1;
-    margin-left: 3rem;
-    height: 12rem;
-    width: 12rem;
+    grid-area: 2/1;
+    margin-top: 3rem;
+    height: 15rem;
+    width: 15rem;
     object-fit: contain;
     margin-top: 1rem;
+    align-self: center;
+    justify-self: center;
+    border: 0.2rem solid rgb(46, 102, 110);
 }
 
 .other-profile-container h3 {
     grid-area: 2 / 2;
-    border: 0.2rem solid blue;
+    font-weight: bold;
+    font-size: 1.4rem;
     height: 3rem;
-    margin-right: 3rem;
+    margin-left: 1rem;
 }
 
 .other-profile-container p {
     grid-area: 2 / 2;
-    border: 0.2rem solid blue;
+    border: 0.2rem solid rgb(46, 102, 110);
     height: 15rem;
     margin-top: 5rem;
     margin-right: 3rem;
+    padding: 1rem;
 }
 
 .other-profile-container .error-other-profile {
     position: fixed;
     height: 100vh;
     width: 100vw;
-    background-color: blue;
+    color: rgb(165, 6, 85);
+    letter-spacing: 1;
+    font-weight: bold;
+    font-size: 1.5rem;
     grid-row-start: 1;
     margin-top: 0;
+    background-color: white;
+}
+.error-other-profile a {
+    color: rgb(165, 6, 85);
 }
 
-.other-profile-container .friend-button {
-    border: 0.3rem solid black;
+#friend-button {
+    border: 0.2rem solid rgb(46, 102, 110);
     height: 3rem;
     width: 10rem;
     grid-row-start: 3;
     grid-column-start: 1;
     justify-self: center;
+    background-color: white;
+    color: rgb(46, 102, 110);
 }
 
 .find-people-container {
-    border: 0.3rem solid black;
     grid-area: 2/1/3/3;
     display: grid;
-    grid-template-columns: repeat(6, 20%);
-    grid-template-rows: repeat(5, 25%);
+    grid-template-columns: repeat(3, 33%);
+    grid-template-rows: repeat(3, 33%);
 }
 
 .find-people-container h2 {
-    grid-area: 1/3/1/5;
+    grid-area: 1/1/1/2;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 0;
+    height: 4rem;
+    justify-self: center;
+    align-self: center;
 }
 
 .find-people-container input {
-    justify-self: center;
-    grid-area: 1/1/1/2;
-    height: 2rem;
+    margin-left: 1rem;
+    grid-area: 1/2/1/2;
+    height: 1.5rem;
+    width: 10rem;
+    justify-self: start;
+    align-self: center;
+    border: 0.12rem solid rgb(15, 103, 117);
 }
 
-.find-people-container ul div {
-    margin-top: 0.5rem;
+.find-people-container div {
+    border: 0.13rem solid rgb(5, 91, 104);
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    width: 8rem;
+    padding-left: 0.2rem;
+    padding-top: 0.2rem;
+}
+
+.find-people-container ul {
+    align-self: center;
     justify-self: start;
-    grid-area: 1/2/1/4;
     width: 10rem;
     height: 10rem;
+    grid-area: 1/3/1/4;
+    padding: 0;
 }
+
 .find-people-container img {
     object-fit: contain;
-    width: 10rem;
-    height: 10rem;
+    width: 6rem;
+    height: 6rem;
+    justify-self: center;
+    align-self: center;
+    border: 0.1rem solid rgb(5, 91, 104);
+    background-color: rgb(15, 103, 117);
+}
+
+.find-people-container .error {
+    grid-area: 1/2;
+    justify-self: start;
+    align-self: end;
+    height: 3rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: rgb(165, 6, 85);
+}
+
+.no-results {
+    letter-spacing: 1;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: rgb(10, 70, 79);
+    grid-area: 1/2;
+    justify-self: start;
+    align-self: end;
+    height: 3rem;
+    margin-left: 2.5rem;
+}
+
+.friends-container {
+    display: grid;
+    grid-template-rows: 5rem 15rem 15rem 15rem;
+    padding-left: 2rem;
+    margin-top: 0;
+}
+
+.friends-container h1 {
+    grid-area: 1/1;
+    font-weight: bold;
+    /* border: 0.1rem solid rgb(5, 91, 104); */
+}
+
+.friends-container img {
+    object-fit: cover;
+    width: 6rem;
+    height: 6rem;
+    border: 0.2rem solid rgb(7, 1, 60);
+    background-color: black;
+    margin: 1rem;
+}
+.friends-container p {
+    letter-spacing: 0.1rem;
+    text-align: center;
+}
+
+.friends-container button {
+    color: rgb(4, 67, 77);
+    background-color: rgb(245, 247, 243);
+    border-radius: 2px;
+    border: 0.1rem solid rgb(7, 1, 60);
+   
+}
+
+#wannabes-accept {
+    grid-area: 2/1/2/3;
+    display: flex;
+}
+
+#wannabes-cancel {
+    grid-area: 3/1/3/3;
+    display: flex;
+}
+
+#friends {
+    grid-area: 4/1/4/3;
+    display: flex;
+   
+}
+
+.friend {
+    border: 0.12rem solid rgb(4, 47, 14);
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
+      border-radius: 4px;
 }
 
 .chat-container {

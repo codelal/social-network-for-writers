@@ -1,6 +1,7 @@
 import { Component } from "react";
 import axios from "./axios";
 import FriendButton from "./friendButton";
+import { Link } from "react-router-dom";
 
 export default class OtherProfile extends Component {
     constructor(props) {
@@ -53,22 +54,15 @@ export default class OtherProfile extends Component {
                     <p className="error-other-profile">
                         Something went wrong, probably this user doenst exists!
                         Try it again or{" "}
-                        <button onClick={() => this.redirect()}>
-                            click here
-                        </button>
-                        for you profile
+                        <Link to="/"> here </Link> or you profile
                     </p>
                 )}
 
-                <h2>Other - Profile - Component</h2>
-                <img
-                    src={this.state.url}
-                    alt="PROFILE - PIC"
-                />
+                <img src={this.state.url} alt="PROFILE - PIC" />
                 <h3>
                     {this.state.first} {this.state.last}
                 </h3>
-                <p>Bio: {this.state.bio}</p>
+                <p>My Bio: {this.state.bio}</p>
                 <FriendButton otherUserId={this.props.match.params.id} />
             </div>
         );

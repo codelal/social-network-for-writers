@@ -42,18 +42,18 @@ export default function FindPeople() {
     return (
         <div className="find-people-container">
             <h2>Find other people</h2>
-            {error && <p>Something went wrong,try again</p>}
+            {error && <p className ="error">Something went wrong,try again!</p>}
             <input
                 placeholder="Type a name here..."
                 onChange={(e) => setInput(e.target.value)}
             />
             {!input.length && (
-                <ul>
+                <ul className="users">
                     {latestUsers.map((user) => (
                         <div key={user.id}>
                             <Link to={`/find-people/${user.id}`}>
                                 {!user.url && <img src="../defaultpic.png" />}
-                                <img src={user.url} />
+                                {user.url && <img src={user.url} />}
                             </Link>
                             {user.first} {user.last}
                         </div>
@@ -61,11 +61,14 @@ export default function FindPeople() {
                 </ul>
             )}
             {input.length > 0 && (
-                <ul>
+                <ul className="users">
                     {selectedUsers.map((selectedUser) => (
                         <div key={selectedUser.id}>
                             <Link to={`/find-people/${selectedUser.id}`}>
-                                <img src={selectedUser.url} />
+                                {!selectedUser.url && (
+                                    <img src="../defaultpic.png" />
+                                )}
+                                {selectedUser && <img src={selectedUser.url} />}
                             </Link>
                             {selectedUser.first} {selectedUser.last}
                         </div>
@@ -73,7 +76,7 @@ export default function FindPeople() {
                 </ul>
             )}
 
-            {input.length > 0 && !selectedUsers.length && <p>No results</p>}
+            {input.length > 0 && !selectedUsers.length && <p className ="no-results">No results</p>}
         </div>
     );
 }

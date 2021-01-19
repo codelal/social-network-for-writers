@@ -44,15 +44,17 @@ export default function Friends() {
     }, []);
 
     const wannabesAccept = (
-        <div className="wannabes">
+        <div id="wannabes-accept">
             {wannabesAcceptList &&
                 wannabesAcceptList.map((wannabe) => (
-                    <div className="wannabe" key={wannabe.id}>
+                    <div className="friend" key={wannabe.id}>
+                        <Link to={`/find-people/${wannabe.id}`}>
+                            {!wannabe.url && <img src="../defaultpic.png" />}{" "}
+                            {wannabe.url && <img src={wannabe.url} />}
+                        </Link>
                         <p>
                             {wannabe.first} {wannabe.last}
                         </p>
-                        {!wannabe.url && <img src="../defaultpic.png" />}
-                        <img src={wannabe.url} />
                         <button
                             onClick={() =>
                                 dispatch(
@@ -71,15 +73,17 @@ export default function Friends() {
     );
 
     const wannabesRequest = (
-        <div className="wannabes">
+        <div id="wannabes-cancel">
             {wannabesRequestList &&
                 wannabesRequestList.map((wannabe) => (
-                    <div className="wannabe" key={wannabe.id}>
+                    <div className="friend" key={wannabe.id}>
+                        <Link to={`/find-people/${wannabe.id}`}>
+                            {!wannabe.url && <img src="../defaultpic.png" />}{" "}
+                            {wannabe.url && <img src={wannabe.url} />}
+                        </Link>
                         <p>
                             {wannabe.first} {wannabe.last}
                         </p>
-                        {!wannabe.url && <img src="../defaultpic.png" />}
-                        <img src={wannabe.url} />
                         <button
                             onClick={() =>
                                 dispatch(
@@ -98,15 +102,17 @@ export default function Friends() {
     );
 
     const friends = (
-        <div className="friends">
+        <div id="friends">
             {friendsList &&
                 friendsList.map((friend) => (
                     <div className="friend" key={friend.id}>
+                        <Link to={`/find-people/${friend.id}`}>
+                            {!friend.url && <img src="../defaultpic.png" />}
+                            {friend.url && <img src={friend.url} />}
+                        </Link>
                         <p>
                             {friend.first} {friend.last}
                         </p>
-                        {!friend.url && <img src="../defaultpic.png" />}
-                        <img src={friend.url} />
                         <button
                             onClick={() =>
                                 dispatch(
@@ -125,20 +131,11 @@ export default function Friends() {
     );
 
     return (
-        <div>
-            <h2>Friend Component</h2>
-            {!wannabesAccept.length &&
-                !wannabesRequest.length &&
-                !friends.length && (
-                    <p>
-                        No friends yet{" "}
-                        <Link to="/find-people">click here </Link>
-                        to find people.
-                    </p>
-                )}
-            <div>{wannabesAccept}</div>
-            <div>{wannabesRequest}</div>
-            <div>{friends}</div>
+        <div className="friends-container">
+            <h1>Friends</h1>
+            <div id="wannabes-accept">{wannabesAccept}</div>
+            <div id="friends">{friends}</div>
+            <div id="wannabes-cancel">{wannabesRequest}</div>
         </div>
     );
 }

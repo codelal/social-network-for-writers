@@ -40,9 +40,9 @@ export default function FriendButton({ otherUserId }) {
     }
 
     return (
-        <div className="friend-button">
+        <>
             {error && <p>Something went wrong, try again!</p>}
-            <button onClick={handleRequests}>{button}</button>
-        </div>
+            <button id = "friend-button" onClick={handleRequests}>{button}</button>
+        </>
     );
 }
