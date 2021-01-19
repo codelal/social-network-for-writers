@@ -460,7 +460,7 @@ header .profile-pic-container p {
 }
 
 .find-people-container img {
-    object-fit: contain;
+    object-fit: cover;
     width: 6rem;
     height: 6rem;
     justify-self: center;
@@ -501,6 +501,7 @@ header .profile-pic-container p {
 .friends-container h1 {
     grid-area: 1/1;
     font-weight: bold;
+    margin-left: 2rem;
     /* border: 0.1rem solid rgb(5, 91, 104); */
 }
 
@@ -509,7 +510,7 @@ header .profile-pic-container p {
     width: 6rem;
     height: 6rem;
     border: 0.2rem solid rgb(7, 1, 60);
-    background-color: black;
+    background-color: rgb(7, 42, 50);
     margin: 1rem;
 }
 .friends-container p {
@@ -518,11 +519,10 @@ header .profile-pic-container p {
 }
 
 .friends-container button {
-    color: rgb(4, 67, 77);
+    color: rgb(1, 46, 53);
     background-color: rgb(245, 247, 243);
     border-radius: 2px;
     border: 0.1rem solid rgb(7, 1, 60);
-   
 }
 
 #wannabes-accept {
@@ -565,13 +565,33 @@ header .profile-pic-container p {
 .chat-messages {
     border: 0.1rem solid black;
     width: 70%;
-    height: 20rem;
-    align-self: center;
-    flex-basis: fit-content;
+    align-self: center;  
 }
 
-.messages {
+#messages {
     border: 0.1rem solid black;
+    width: auto;
+    display:grid;
+    grid-template-columns: 95% 5%;
+  
+}
+#messages p{
+      border: 0.1rem solid black;
+      margin:0;
+      letter-spacing:0rem;
+      font-size: 1rem;
+}
+
+#date {
+    font-size:0.8rem;
+}
+#messages img {
+    border: 0.2rem solid rgb(15, 14, 14);
+    height: 1.7rem;
+    width: 1.7rem;
+    border-radius: 40px;
+    object-fit: cover;
+    grid-area: 1/2;
 }
 
 .chat-container textarea {
@@ -582,18 +602,10 @@ header .profile-pic-container p {
     justify-content: center;
     align-self: center;
 }
-
-.chat-container img {
-    border: 0.2rem solid rgb(15, 14, 14);
-    height: 3rem;
-    width: 3rem;
-    margin-top: 1rem;
-    border-radius: 40px;
-    object-fit: cover;
-}
-
 .chat-container button {
-    height: 2rem;
-    width: 5rem;
+    color: rgb(1, 46, 53);
+    background-color: rgb(245, 247, 243);
+    border-radius: 2px;
+    border: 0.1rem solid rgb(7, 1, 60);
     align-self: center;
 }
