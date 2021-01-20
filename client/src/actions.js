@@ -37,7 +37,7 @@ export async function handleRequest(otherUserId, button) {
 export function postNewMessage(messageAndUserData) {
     return {
         type: "POST MESSAGE",
-        messageAndUserData: messageAndUserData,
+        newMessage: messageAndUserData,
     };
 }
 

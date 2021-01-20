@@ -76,7 +76,7 @@ module.exports.findUsers = (val) => {
 
 module.exports.insertChatMessages = (userId, message) => {
     return db.query(
-        `INSERT into chat_messages (user_id, message) VALUES ($1,$2) RETURNING timestamp`,
+        `INSERT into chat_messages (user_id, message) VALUES ($1,$2) RETURNING id, timestamp`,
         [userId, message]
     );
 };

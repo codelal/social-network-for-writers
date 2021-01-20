@@ -35,7 +35,9 @@ export function reducer(state = {}, action) {
     if (action.type == "POST MESSAGE") {
         state = {
             ...state,
-            messageAndUserData: action.messageAndUserData,
+            mostRecentMessages: state.mostRecentMessages.concat(
+                action.newMessage
+            ),
         };
     }
 

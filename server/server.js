@@ -452,16 +452,21 @@ io.on("connection", (socket) => {
         db.insertChatMessages(userId, message)
             .then(({ rows }) => {
                 console.log("message again", message, "rows", rows);
-                const formatedDate = date.formateDateTime(rows[0].timestamp);
+                // const formatedDate = date.formateDateTime(rows[0].timestamp);
+                const messagesId = rows[0].id;
+                const timestamp = rows[0].timestamp;
+
                 db.getProfileData(userId)
                     .then(({ rows }) => {
+                        console.log("rows getProfileData", rows);
                         io.sockets.emit("message and user data", {
                             message: message,
                             userId: userId,
+                            id: messagesId,
                             first: rows[0].first,
                             last: rows[0].last,
                             url: rows[0].url,
-                            timeStamp: formatedDate,
+                            timestamp: timestamp,
                         });
                     })
                     .catch((err) =>
@@ -473,8 +478,8 @@ io.on("connection", (socket) => {
 
     db.getRecentMessages(userId)
         .then(({ rows }) => {
-            //  console.log("rows", rows);
-            socket.emit("ten most recent messages", rows);
+            const reversedMessages = rows.reverse();
+            socket.emit("ten most recent messages", reversedMessages);
         })
         .catch((err) => console.log("error in getRecentMessages", err));
 
