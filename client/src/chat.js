@@ -1,6 +1,16 @@
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
 import { useEffect, useRef } from "react";
+const formateDateTime = (date) => {
+    return new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+    }).format(new Date(date));
+};
 
 export default function Chat() {
     const mostRecentMessages = useSelector(
@@ -8,9 +18,18 @@ export default function Chat() {
     );
 
     const elemRef = useRef();
-    
+
     useEffect(() => {
-        elemRef.current.scrollTop();// I am not sure what to write here
+        elemRef.current.scrollTop =
+            elemRef.current.scrollHeight - elemRef.current.clientHeight;
+        console.log(
+            "1",
+            elemRef.current.scrollTop,
+            "2",
+            elemRef.current.scrollHeight,
+            "3",
+            elemRef.current.clientHeight
+        );
     }, [mostRecentMessages]);
 
     console.log("mostRecentMessages in chat", mostRecentMessages);
@@ -47,7 +66,7 @@ export default function Chat() {
     );
 
     return (
-        <div ref = { elemRef } className="chat-container">
+        <div ref={elemRef} className="chat-container">
             <h1>Chat</h1>
             <div className="chat-messages">
                 <>{recentMessages}</>
@@ -57,16 +76,3 @@ export default function Chat() {
         </div>
     );
 }
-
-
-
-const formateDateTime = (date) => {
-    return new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-    }).format(new Date(date));
-};

@@ -564,8 +564,8 @@ header .profile-pic-container p {
     border: 0.1rem solid black;
     width: 70%;
     align-self: center;
-    overflow: scroll;
-    height: 20rem;
+    overflow-y: scroll;
+    height: 15rem;
 }
 
 #messages {
