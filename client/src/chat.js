@@ -22,17 +22,7 @@ export default function Chat() {
     useEffect(() => {
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;
-        console.log(
-            "1",
-            elemRef.current.scrollTop,
-            "2",
-            elemRef.current.scrollHeight,
-            "3",
-            elemRef.current.clientHeight
-        );
     }, [mostRecentMessages]);
-
-    console.log("mostRecentMessages in chat", mostRecentMessages);
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
@@ -40,10 +30,6 @@ export default function Chat() {
             socket.emit("chat message", e.target.value);
             e.target.value = "";
         }
-    };
-
-    const handleSubmit = (e) => {
-        socket.emit("chat message", e.target.value);
     };
 
     const recentMessages = (
@@ -54,7 +40,6 @@ export default function Chat() {
                         {!message.url && <img src="../defaultpic.png" />}
                         {message.url && <img src={message.url} />}
                         <p>{message.message}</p>
-
                         <p id="date">
                             {" "}
                             {message.first} {message.last}{" "}
@@ -72,7 +57,6 @@ export default function Chat() {
                 <>{recentMessages}</>
             </div>
             <textarea onKeyDown={handleKeyDown} />
-            <button onClick={handleSubmit}>Submit</button>
         </div>
     );
 }
