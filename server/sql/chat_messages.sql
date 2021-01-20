@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS chat_messages;
 CREATE TABLE chat_messages(
   id SERIAL PRIMARY KEY,
   user_id INT REFERENCES users(id) NOT NULL,
-  message VARCHAR(1000),
+  message VARCHAR NOT NULL CHECK (message != ''),
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

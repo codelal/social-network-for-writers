@@ -86,9 +86,8 @@ body {
     height: 21rem;
     width: 15rem;
     display: grid;
-    border: 0.13rem solid rgb(46, 102, 110);
-    background-color: rgb(174, 189, 192);
-
+    border: 0.12rem solid rgb(46, 102, 110);
+    /* background-color: rgb(174, 189, 192); */
     align-items: center;
     border-radius: 3px;
     box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
@@ -128,7 +127,7 @@ body {
 #reset-password {
     grid-area: 3/2 /10 /2;
     height: 13rem;
-    border: 0.13rem solid rgb(110, 46, 78);
+    border: 0.12rem solid rgb(46, 102, 110);
 }
 
 #h2-success {
@@ -182,7 +181,7 @@ body {
 .navbar li {
     /* border: 0.1rem solid rgb(46, 102, 110); */
     height: 1.5rem;
-    
+
     text-align: center;
     margin-right: 0.5rem;
     margin-bottom: 0;
@@ -538,7 +537,6 @@ header .profile-pic-container p {
 #friends {
     grid-area: 4/1/4/3;
     display: flex;
-   
 }
 
 .friend {
@@ -548,7 +546,7 @@ header .profile-pic-container p {
     display: flex;
     flex-direction: column;
     box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
-      border-radius: 4px;
+    border-radius: 4px;
 }
 
 .chat-container {
@@ -565,25 +563,26 @@ header .profile-pic-container p {
 .chat-messages {
     border: 0.1rem solid black;
     width: 70%;
-    align-self: center;  
+    align-self: center;
+    overflow: scroll;
+    height: 20rem;
 }
 
 #messages {
     border: 0.1rem solid black;
     width: auto;
-    display:grid;
+    display: grid;
     grid-template-columns: 95% 5%;
-  
 }
-#messages p{
-      border: 0.1rem solid black;
-      margin:0;
-      letter-spacing:0rem;
-      font-size: 1rem;
+#messages p {
+    border: 0.1rem solid black;
+    margin: 0;
+    letter-spacing: 0rem;
+    font-size: 1rem;
 }
 
 #date {
-    font-size:0.8rem;
+    font-size: 0.8rem;
 }
 #messages img {
     border: 0.2rem solid rgb(15, 14, 14);

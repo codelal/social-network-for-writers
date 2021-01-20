@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
+import { useEffect, useRef } from "react";
 
 export default function Chat() {
     const messageAndUserData = useSelector(
@@ -10,12 +11,19 @@ export default function Chat() {
         (state) => state && state.mostRecentMessages
     );
 
-    console.log("mostRecentMessages in chat", mostRecentMessages);
+    const elemRef = useRef();
+
+    // useEffect(() => {
+    //     // elemRef.current.scrollTop
+    // }, [messageAndUserData]);
+
+    //console.log("mostRecentMessages in chat", mostRecentMessages);
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
             console.log("user pressed enter");
             socket.emit("chat message", e.target.value);
+            e.target.value = "";
         }
     };
 
@@ -61,9 +69,9 @@ export default function Chat() {
     return (
         <div className="chat-container">
             <h1>Chat</h1>
-            <div className="chat-messages">
-                <p>{recentMessages}</p>
-                <p>{chatMessage}</p>
+            <div className="chat-messages" ref={elemRef}>
+                <>{recentMessages}</>
+                <>{chatMessage}</>
             </div>
             <textarea onKeyDown={handleKeyDown} />
             <button onClick={handleSubmit}>Submit</button>

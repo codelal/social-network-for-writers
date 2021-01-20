@@ -448,9 +448,10 @@ io.on("connection", (socket) => {
     const userId = socket.request.session.userId;
 
     socket.on("chat message", (message) => {
-        console.log("chat message", message);
+        // console.log("chat message", message);
         db.insertChatMessages(userId, message)
             .then(({ rows }) => {
+                console.log("message again", message, "rows", rows);
                 const formatedDate = date.formateDateTime(rows[0].timestamp);
                 db.getProfileData(userId)
                     .then(({ rows }) => {

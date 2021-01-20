@@ -86,7 +86,7 @@ module.exports.getRecentMessages = (userId) => {
         `SELECT users.first, users.last, users.url, chat_messages.id, chat_messages.user_id, chat_messages.message, chat_messages.timestamp FROM chat_messages
         JOIN users
         ON chat_messages.user_id = users.id 
-        WHERE chat_messages.user_id=$1 LIMIT 10`,
+        WHERE chat_messages.user_id=$1  ORDER BY timestamp DESC LIMIT 5`,
         [userId]
     );
 };
