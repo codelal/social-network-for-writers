@@ -430,6 +430,11 @@ app.get("/login", (req, res) => {
     }
 });
 
+app.get("/logout", (req, res) => {
+    req.session.userId = false;
+    res.redirect("/api/registration");
+});
+
 app.get("*", function (req, res) {
     if (!req.session.userId) {
         res.redirect("/welcome");

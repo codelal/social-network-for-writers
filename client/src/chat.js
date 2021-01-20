@@ -66,9 +66,9 @@ export default function Chat() {
     );
 
     return (
-        <div ref={elemRef} className="chat-container">
+        <div className="chat-component">
             <h1>Chat</h1>
-            <div className="chat-messages">
+            <div ref={elemRef} className="chat-messages">
                 <>{recentMessages}</>
             </div>
             <textarea onKeyDown={handleKeyDown} />

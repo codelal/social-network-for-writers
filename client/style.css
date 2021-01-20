@@ -549,14 +549,15 @@ header .profile-pic-container p {
     border-radius: 4px;
 }
 
-.chat-container {
-    border: 0.1rem solid rgb(7, 7, 7);
+.chat-component {
+    border: 0.1rem solid rgb(10, 0, 0);
     width: 100vw;
     display: flex;
     flex-direction: column;
+   
 }
 
-.chat-container h1 {
+.chat-component h1 {
     text-align: center;
 }
 
@@ -565,7 +566,7 @@ header .profile-pic-container p {
     width: 70%;
     align-self: center;
     overflow-y: scroll;
-    height: 15rem;
+    height: 20rem;
 }
 
 #messages {
@@ -593,7 +594,7 @@ header .profile-pic-container p {
     grid-area: 1/2;
 }
 
-.chat-container textarea {
+.chat-component textarea {
     margin-top: 1rem;
     border: 0.1rem solid black;
     width: 70%;
@@ -601,7 +602,7 @@ header .profile-pic-container p {
     justify-content: center;
     align-self: center;
 }
-.chat-container button {
+.chat-component button {
     color: rgb(1, 46, 53);
     background-color: rgb(245, 247, 243);
     border-radius: 2px;

@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route } from "react-router-dom";
 import axios from "./axios";
-
+import Registration from "./registration";
 import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
@@ -95,7 +95,9 @@ export default class App extends Component {
                                 </Link>
                             </li>
 
-                            <li>Logout</li>
+                            <li>
+                                <Link to="/logout">Logout</Link>
+                            </li>
                         </ul>
 
                         <ProfilePic
@@ -109,6 +111,7 @@ export default class App extends Component {
                     <Route exact path="/find-people" component={FindPeople} />
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
+                    <Route exact path="/logout" component={Registration} />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
