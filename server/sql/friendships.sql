@@ -8,17 +8,33 @@ CREATE TABLE friendships(
 );
 
 
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 2, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 1, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 4, true);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (5, 1, true);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 6, true);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (7, 1, true);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (1, 8, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (9, 1, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (10, 1, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (11, 1, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (12, 1, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (13, 1, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (14, 1, false);
-INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (15, 1, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 2, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 4, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 5, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 6, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 7, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 8, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 9, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 10, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (3, 11, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (11, 3, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (12, 3, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (13, 3, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (14, 3, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (15, 3, false);
+
+
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 2, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 114, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 5, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 6, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 7, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 8, true);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 9, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 10, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (4, 11, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (11, 4, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (12, 4, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (13, 4, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (14, 4, false);
+INSERT INTO friendships(sender_id, recipient_id, accepted ) VALUES (15, 4, false);
