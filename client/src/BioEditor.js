@@ -1,7 +1,7 @@
 import { Component } from "react";
 import axios from "./axios";
 
-export default class BioEditor extends Component {
+export default class bioEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,14 +59,14 @@ export default class BioEditor extends Component {
 
         return (
             <div className="bio-editor-container">
-                <h1>Bio</h1>
+                <h1>My Text</h1>
                 {this.state.error && (
                     <p className="error">Something went wrong, try again!</p>
                 )}
 
                 {noBio && (
                     <button onClick={() => this.toggleTextarea()}>
-                        Add Bio
+                     add text
                     </button>
                 )}
 
@@ -74,7 +74,7 @@ export default class BioEditor extends Component {
                     <div>
                         <p>{this.props.bio}</p>
                         <button onClick={() => this.toggleTextarea()}>
-                            Edit Bio
+                            Edit Text
                         </button>
                     </div>
                 )}
@@ -86,7 +86,7 @@ export default class BioEditor extends Component {
                             onChange={(e) => this.handleChange(e)}
                         />
                         <button onClick={() => this.submitBio()}>
-                            send Bio
+                           save Text
                         </button>
                     </div>
                 )}

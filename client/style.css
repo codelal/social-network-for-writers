@@ -1,13 +1,13 @@
 body {
     margin: 0;
     box-sizing: border-box;
-    font-family: "Open Sans Condensed", sans-serif;
-    letter-spacing: 0.2rem;
+    /* font-family: 'Overlock'; */
+    font-family: "Boogaloo", cursive;
 }
 
 /*//////Welcome-Component//////*/
 .parent-welcome-container {
-    /* border: 0.3rem solid rgb(233, 38, 38); */
+    border: 0.3rem solid black;
     height: 100vh;
     display: grid;
     grid-template-areas:
@@ -16,33 +16,22 @@ body {
         "main"
         "footer";
     grid-template-rows: 14% 10% 75% 10%;
-    font-family: "Open Sans Condensed";
-    /* font-family: "Bad Script", cursive; */
-    /* color:rgb(246, 230, 230); */
-    /* font-family: 'Pompiere', cursive; */
-    /* font-family: 'Farsan', cursive;  */
-    /* font-family: 'Gupter', serif; */
 }
 
 .parent-welcome-container header {
-    border-bottom: 0.2rem solid rgb(46, 102, 110);
+    border-bottom: 0.2rem solid black;
     grid-area: head;
 }
 
 .parent-welcome-container h1 {
-    letter-spacing: 0.3;
-    color: rgb(36, 38, 44);
-    font-family: "Wire One", sans-serif;
-    border-top: 0.3rem solid rgb(240, 182, 23);
+    color: rgb(205, 45, 101);
     grid-row-start: 2;
     grid-area: title;
-    justify-self: center;
-    height: 4rem;
+    height: 2rem;
     width: 100%;
-    font-size: 3rem;
     text-align: center;
-    margin-top: 0.1rem;
-    letter-spacing: 0.3rem;
+    justify-self: start;
+    letter-spacing: 0.2rem;
 }
 
 .childs-welcome-container {
@@ -50,31 +39,27 @@ body {
     display: grid;
     grid-template-columns: 40% 20% 40%;
     grid-template-rows: 5rem 3rem 3rem 20rem 3rem;
-    /* background-color: rgb(229, 232, 229); */
-    border-top: 0.1rem solid rgb(46, 102, 110);
+    /* border-top: 0.1rem solid rgb(46, 102, 110);
     border-bottom: 0.1rem solid rgb(46, 102, 110);
-    background-color: rgb(252, 252, 236);
+    background-color: rgb(252, 252, 236); */
 }
 
 .childs-welcome-container h2 {
     grid-area: 1/2/2/2;
     justify-self: center;
-    color: rgb(2, 55, 12);
 }
 .childs-welcome-container h3 {
     grid-area: 1/1/1/4;
     justify-self: center;
     letter-spacing: 0.1rem;
     font-size: 1.5;
-    font-style: bold;
-    color: rgb(2, 55, 12);
 }
 
 .childs-welcome-container a {
     grid-area: 2/1/2/4;
     justify-self: center;
     text-align: center;
-    color: rgb(2, 55, 12);
+    color: black;
 }
 
 .childs-welcome-container .error {
@@ -92,13 +77,12 @@ body {
     height: 21rem;
     width: 15rem;
     display: grid;
-    background-color: rgb(74, 131, 132);
     align-items: center;
     border-radius: 7px;
     box-shadow: 0 14px 28px rgba(65, 64, 51, 0.3);
-    border: 0.12rem solid rgb(31, 118, 68);
+    border: 0.12rem solid black;
     /* border: 0.12rem solid rgb(240, 182, 23); */
-    background-color: white;
+    /* background-color: white; */
 }
 
 .childs-welcome-container input {
@@ -108,12 +92,10 @@ body {
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
-    border-bottom: 0.12rem solid rgb(240, 182, 23);
+    /* border-bottom: 0.12rem solid rgb(240, 182, 23); */
 
     background-color: white;
-
     color: rgb(2, 55, 12);
-    font-family: "Open Sans Condensed", sans-serif;
     font-size: 1rem;
 }
 
@@ -121,14 +103,11 @@ body {
     height: 2rem;
     width: 6rem;
     justify-self: center;
-    /* background-color: rgb(46, 102, 110); */
-    /* border: 0.13rem solid rgb(46, 102, 110); */
     box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
     border: hidden;
     border-radius: 4px;
-    background-color: rgb(252, 246, 216);
-    color: rgb(2, 55, 12);
-    font-family: "Open Sans Condensed", sans-serif;
+    /* background-color: rgb(252, 246, 216); */
+
     font-size: 1rem;
 }
 
@@ -222,9 +201,9 @@ body {
 header .profile-pic-container {
     height: 5rem;
     width: 5rem;
-    grid-area: 1/3;
+    grid-area: 1/1;
     /* border: 0.1rem solid black; */
-    grid-area: 1/3;
+
     justify-self: end;
     margin-right: 1rem;
     margin-top: 0.7rem;
@@ -324,7 +303,7 @@ header .profile-pic-container p {
 .bio-editor-container {
     border: 0.15rem solid rgb(46, 102, 110);
     /* border: 0.2rem solid rgb(195, 9, 6); */
-    grid-column-start: 2;
+    grid-column-start: 1;
     margin: 3rem;
     width: 30rem;
     height: 20rem;

@@ -6,7 +6,7 @@ import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./otherProfile";
-import FindPeople from "./findPeople";
+import CollaborativeWriting from "./collaborativeWriting";
 import Friends from "./friends";
 import Chat from "./chat";
 
@@ -70,21 +70,10 @@ export default class App extends Component {
             <BrowserRouter>
                 <div className="app-container">
                     <header>
-                        <img src="../logo1.png" className="logo" />
                         <ul className="navbar">
                             <li>
                                 <Link to="/" className="find-people">
-                                    My Profile
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/find-people" className="find-people">
-                                    Find People
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/friends" className="friends">
-                                    Friends
+                                    My Workspace
                                 </Link>
                             </li>
                             <li>
@@ -93,6 +82,9 @@ export default class App extends Component {
                                     Chat
                                 </Link>
                             </li>
+                            <li>
+                                <a href="/collaborative-writing">collaborative Workspace</a>
+                            </li>
 
                             <li>
                                 <a href="/logout">Logout</a>
@@ -100,17 +92,17 @@ export default class App extends Component {
                         </ul>
 
                         <ProfilePic
-                            first={this.state.first}
-                            last={this.state.last}
-                            email={this.state.email}
                             url={this.state.url}
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
-                    <Route exact path="/find-people" component={FindPeople} />
+                    <Route
+                        exact
+                        path="/collaborative-writing"
+                        component={CollaborativeWriting}
+                    />
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
-          
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

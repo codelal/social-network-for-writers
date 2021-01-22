@@ -1,4 +1,3 @@
-
 import { HashRouter, Route } from "react-router-dom";
 import Registration from "./registration";
 import Login from "./login";
@@ -8,10 +7,10 @@ export default function Welcome() {
     return (
         <div className="parent-welcome-container">
             <header>
-                <img src="../logo1.png" className="logo" />
+                <p>Logo</p>
             </header>
 
-            <h1>Welcome to the Socialnetwork</h1>
+            <h1>Exchange Action, Thought and Things</h1>
             <HashRouter>
                 <div>
                     <Route exact path="/" component={Registration} />
