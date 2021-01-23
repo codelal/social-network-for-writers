@@ -1,22 +1,33 @@
 import axios from "./axios";
 import { socket } from "./socket";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 export default function DrawingSurface() {
-    const [canvasInput, setCanvasInput] = useState();
+    const [canvasInput, setCanvasInput] = useState("");
     const [error, setError] = useState(false);
 
+    let dataUrl;
+
     useEffect(() => {
+        console.log("useEffect runs");
         socket.on("canvas drawing", (data) => {
-            setCanvasInput(data);
+            console.log("canvas in useEffect", data);
+            let canvas = document.querySelector("canvas");
+            let ctx = canvas.getContext("2d");
+            let image = new Image();
+            image.onload = () => {
+                ctx.drawImage(image, 0, 0);
+            };
+            image.src = data.dataUrl;
         });
 
-        const canvas = document.querySelector("canvas");
-        //console.log("canvas", canvas);
+        drawOnCanvas();
+
+    }, [canvasInput]);
+
+    function drawOnCanvas() {
+        let canvas = document.querySelector("canvas");
         let ctx = canvas.getContext("2d");
-        //console.log("ctx", ctx);
-        let dataUrl;
         let clickStart;
 
         function draw(e) {
@@ -43,16 +54,15 @@ export default function DrawingSurface() {
         });
 
         canvas.addEventListener("mouseup", function () {
+            console.log("canvas data befor url", canvas);
             clickStart = false;
             ctx.beginPath();
             dataUrl = canvas.toDataURL();
-            // console.log("dataUrl", dataUrl);
+            // console.log("dataUrl3", dataUrl);
             setCanvasInput(dataUrl);
-            socket.emit("canvas drawing", canvas);
+            socket.emit("canvas drawing", dataUrl);
         });
-
-        console.log("canvasInput", canvasInput);
-    }, []);
+    }
 
     function submitDrawing() {
         console.log("submitDrawing works");

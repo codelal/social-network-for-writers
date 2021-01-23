@@ -416,7 +416,7 @@ app.get("/api/friends", (req, res) => {
 app.post("/api/whiteboard", (req, res) => {
     console.log("/api/whiteboard runs");
     const { drawingUrl } = req.body;
-  
+
     dbworkspace
         .insertDrawingUrl(req.session.userId, drawingUrl)
         .then(({ rows }) => {
@@ -502,13 +502,18 @@ io.on("connection", (socket) => {
         })
         .catch((err) => console.log("error in getRecentMessages", err));
 
-    socket.on("canvas drawing", (drawingUrl) => {
+    socket.on("canvas drawing", (dataUrl) => {
+        console.log("canvas data comes in");
         dbworkspace
-            .insertDrawingUrl(userId, drawingUrl)
+            .insertDrawingUrl(userId, dataUrl)
             .then(({ rows }) => {
-                console.log("rows in insertDrawingUrl", rows);
-                io.broadcast.emit("canvas drawing", {
-                     drawingUrl:  drawingUrl
+                // console.log("rows in insertDrawingUrl", rows);
+                socket.broadcast.emit("canvas drawing", {
+                    dataUrl: dataUrl,
+                });
+            })
+            .catch((err) => {
+                console.log("error in insertDrawingUrl", err);
             });
     });
 
