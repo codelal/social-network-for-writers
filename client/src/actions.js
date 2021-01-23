@@ -42,9 +42,9 @@ export function postNewMessage(messageAndUserData) {
 }
 
 export function postRecentMesssages(mostRecentMessages) {
-    console.log("mostRecentMessages in action", mostRecentMessages);
     return {
         type: "RECEIVE_MOST_RECENT_MESSAGES",
         mostRecentMessages: mostRecentMessages,
     };
 }
+

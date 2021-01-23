@@ -14,6 +14,8 @@ const { hash, compare } = require("./bc");
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const dbfriends = require("./dbfriends");
+const dbworkspace = require("./dbworkspace");
+
 const btn = require("./getButtonText");
 const ses = require("./ses");
 const s3 = require("./s3");
@@ -21,7 +23,6 @@ const multer = require("multer");
 const config = require("./config.json");
 const uidSafe = require("uid-safe");
 const cryptoRandomString = require("crypto-random-string");
-
 
 app.use(compression());
 
@@ -412,6 +413,23 @@ app.get("/api/friends", (req, res) => {
         });
 });
 
+app.post("/api/whiteboard", (req, res) => {
+    console.log("/api/whiteboard runs");
+    const { drawingUrl } = req.body;
+  
+    dbworkspace
+        .insertDrawingUrl(req.session.userId, drawingUrl)
+        .then(({ rows }) => {
+            console.log("rows in insertDrawingUrl", rows);
+        })
+        .catch((err) => {
+            console.log("error in insertDrawingUrl", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
 //redirecting
 
 app.get("/welcome", (req, res) => {
@@ -453,14 +471,10 @@ io.on("connection", (socket) => {
     const userId = socket.request.session.userId;
 
     socket.on("chat message", (message) => {
-        // console.log("chat message", message);
         db.insertChatMessages(userId, message)
             .then(({ rows }) => {
-                console.log("message again", message, "rows", rows);
-                // const formatedDate = date.formateDateTime(rows[0].timestamp);
                 const messagesId = rows[0].id;
                 const timestamp = rows[0].timestamp;
-
                 db.getProfileData(userId)
                     .then(({ rows }) => {
                         console.log("rows getProfileData", rows);
@@ -487,6 +501,16 @@ io.on("connection", (socket) => {
             socket.emit("ten most recent messages", reversedMessages);
         })
         .catch((err) => console.log("error in getRecentMessages", err));
+
+    socket.on("canvas drawing", (drawingUrl) => {
+        dbworkspace
+            .insertDrawingUrl(userId, drawingUrl)
+            .then(({ rows }) => {
+                console.log("rows in insertDrawingUrl", rows);
+                io.broadcast.emit("canvas drawing", {
+                     drawingUrl:  drawingUrl
+            });
+    });
 
     socket.on("Disconnect", () => {
         console.log(`Socker with id ${socket.id} has disconnected`);

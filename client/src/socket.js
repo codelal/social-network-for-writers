@@ -1,8 +1,9 @@
 import io from "socket.io-client";
 export let socket;
 import { postNewMessage, postRecentMesssages } from "./actions";
+
 export const init = (store) => {
-    //make sure 1user has one socket independly fron the number f open tabs
+    //make sure 1user has one socket independly from the number f open tabs
     if (!socket) {
         socket = io.connect();
     }
@@ -16,3 +17,4 @@ export const init = (store) => {
         store.dispatch(postRecentMesssages(mostRecentMessages));
     });
 };
+
