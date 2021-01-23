@@ -84,7 +84,7 @@ export default class App extends Component {
                             </li>
                             <li>
                                 <a href="/whiteBoard">
-                                    collaborative Workspace
+                                    WhiteBoard
                                 </a>
                             </li>
 

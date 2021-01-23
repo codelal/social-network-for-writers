@@ -2,67 +2,82 @@ import axios from "./axios";
 import { socket } from "./socket";
 import { useEffect, useState } from "react";
 
-export default function DrawingSurface() {
+export default function DrawingSurface({ color, size }) {
     const [canvasInput, setCanvasInput] = useState("");
     const [error, setError] = useState(false);
 
     let dataUrl;
 
     useEffect(() => {
+        let abort;
         console.log("useEffect runs");
-        socket.on("canvas drawing", (data) => {
-            console.log("canvas in useEffect", data);
-            let canvas = document.querySelector("canvas");
-            let ctx = canvas.getContext("2d");
-            let image = new Image();
-            image.onload = () => {
-                ctx.drawImage(image, 0, 0);
-            };
-            image.src = data.dataUrl;
-        });
 
-        drawOnCanvas();
-
-    }, [canvasInput]);
-
-    function drawOnCanvas() {
+        let clickStart;
         let canvas = document.querySelector("canvas");
         let ctx = canvas.getContext("2d");
-        let clickStart;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = size;
+        ctx.lineCap = "round";
 
-        function draw(e) {
-            ctx.strokeStyle = "black";
-            ctx.lineWidth = 1;
-            ctx.lineCap = "round";
-            ctx.lineTo(e.pageX - canvas.offsetLeft, e.pageY - canvas.offsetTop);
-            ctx.stroke();
+        if (!abort) {
+            socket.on("canvas drawing", (data) => {
+                console.log("canvas in useEffect");
+                let image = new Image();
+                image.onload = () => {
+                    ctx.drawImage(image, 0, 0);
+                };
+                image.src = data.dataUrl;
+            });
+
+            function draw(e) {
+                ctx.lineTo(
+                    e.pageX - canvas.offsetLeft,
+                    e.pageY - canvas.offsetTop
+                );
+                ctx.stroke();
+                console.log(
+                    "ctx.strokeStyle,ctx.lineWidth",
+                    ctx.strokeStyle,
+                    ctx.lineWidth
+                );
+            }
+
+            canvas.addEventListener("mousedown", function (e) {
+                clickStart = true;
+                draw(e);
+            });
+
+            canvas.addEventListener("mousemove", function (e) {
+                if (!clickStart) {
+                    return;
+                } else {
+                    draw(e);
+                    // let timeout;
+                    // if (timeout != undefined) {
+                    //     clearTimeout(timeout);
+                    // }
+                    //     timeout = setTimeout(function () {
+                    //         dataUrl = canvas.toDataURL();
+                    //     }, 100);
+                    //     // console.log("dataUrl3", dataUrl);
+                    //     setCanvasInput(dataUrl);
+                    //     socket.emit("canvas drawing", dataUrl);
+                }
+            });
+
+            canvas.addEventListener("mouseup", function () {
+                clickStart = false;
+                ctx.beginPath();
+                dataUrl = canvas.toDataURL();
+                setCanvasInput(dataUrl);
+                socket.emit("canvas drawing", dataUrl);
+            });
         }
 
-        canvas.addEventListener("mousedown", function (e) {
-            console.log("mousedown works");
-            clickStart = true;
-            draw(e);
-        });
-
-        canvas.addEventListener("mousemove", function (e) {
-            console.log("mousemove works");
-            if (!clickStart) {
-                return;
-            } else {
-                draw(e);
-            }
-        });
-
-        canvas.addEventListener("mouseup", function () {
-            console.log("canvas data befor url", canvas);
-            clickStart = false;
-            ctx.beginPath();
-            dataUrl = canvas.toDataURL();
-            // console.log("dataUrl3", dataUrl);
-            setCanvasInput(dataUrl);
-            socket.emit("canvas drawing", dataUrl);
-        });
-    }
+        return () => {
+            abort = true;
+        };
+    }, [canvasInput]);
 
     function submitDrawing() {
         console.log("submitDrawing works");

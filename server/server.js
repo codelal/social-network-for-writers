@@ -504,17 +504,17 @@ io.on("connection", (socket) => {
 
     socket.on("canvas drawing", (dataUrl) => {
         console.log("canvas data comes in");
-        dbworkspace
-            .insertDrawingUrl(userId, dataUrl)
-            .then(({ rows }) => {
-                // console.log("rows in insertDrawingUrl", rows);
-                socket.broadcast.emit("canvas drawing", {
-                    dataUrl: dataUrl,
-                });
-            })
-            .catch((err) => {
-                console.log("error in insertDrawingUrl", err);
-            });
+        // dbworkspace
+        //     .insertDrawingUrl(userId, dataUrl)
+        //     .then(({ rows }) => {
+        // console.log("rows in insertDrawingUrl", rows);
+        socket.broadcast.emit("canvas drawing", {
+            dataUrl: dataUrl,
+        });
+        // })
+        // .catch((err) => {
+        //     console.log("error in insertDrawingUrl", err);
+        // });
     });
 
     socket.on("Disconnect", () => {
