@@ -655,3 +655,28 @@ header .profile-pic-container p {
     border: 0.1rem solid rgb(7, 1, 60);
     align-self: center;
 }
+
+ .whiteboard-container{
+    height: 100vh;
+    width: 100vw;
+    border: 0.1rem solid black;
+    background-color: lavenderblush;
+}
+
+ .whiteboard-container h1{
+     text-align: center;
+ }
+ .color-picker{
+     margin-left: 2rem;
+ }
+
+ .drawing-surface{
+      border: 0.1rem solid black;
+      margin: 2rem;
+      height: 70%
+ }
+
+ canvas{
+     height: 20rem;
+     background-color: #fff;
+ }

@@ -6,7 +6,7 @@ import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./otherProfile";
-import CollaborativeWriting from "./collaborativeWriting";
+import WhiteBoard from "./whiteBoard";
 import Friends from "./friends";
 import Chat from "./chat";
 
@@ -83,7 +83,9 @@ export default class App extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <a href="/collaborative-writing">collaborative Workspace</a>
+                                <a href="/whiteBoard">
+                                    collaborative Workspace
+                                </a>
                             </li>
 
                             <li>
@@ -96,11 +98,7 @@ export default class App extends Component {
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
-                    <Route
-                        exact
-                        path="/collaborative-writing"
-                        component={CollaborativeWriting}
-                    />
+                    <Route exact path="/whiteBoard" component={WhiteBoard} />
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
 
