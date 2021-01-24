@@ -13,6 +13,19 @@ module.exports.insertDrawingUrl = (userId, drawingUrl) => {
 
 module.exports.getDrawingUrl = () => {
     return db.query(
-        `SELECT drawing_url, id, timestamp FROM workspace_drawings ORDER BY timestamp DESC LIMIT 3`
+        `SELECT drawing_url, id, timestamp FROM workspace_drawings ORDER BY timestamp DESC`
+    );
+};
+
+module.exports.deleteWhiteboard = (whiteboardId) => {
+    return db.query(
+        `DELETE FROM workspace_drawings WHERE id = $1`, [whiteboardId]
+    );
+};
+
+module.exports.updateDrawing = (dataUrl, whiteboardId) => {
+    return db.query(
+        `UPDATE workspace_drawings SET drawing_url = $1 WHERE id = $2`,
+        [dataUrl, whiteboardId]
     );
 };

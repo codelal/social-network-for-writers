@@ -421,6 +421,9 @@ app.post("/api/whiteboard", (req, res) => {
         .insertDrawingUrl(req.session.userId, drawingUrl)
         .then(({ rows }) => {
             console.log("rows in insertDrawingUrl", rows);
+            res.json({
+                success: true,
+            });
         })
         .catch((err) => {
             console.log("error in insertDrawingUrl", err);
@@ -435,11 +438,69 @@ app.get("/api/latest-whiteboards", (req, res) => {
     dbworkspace
         .getDrawingUrl()
         .then(({ rows }) => {
-            // console.log("getDrawingUrl comes");
             res.json({ success: true, latestWhiteboards: rows });
         })
         .catch((err) => {
             console.log("error in getDrawingUrl", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+app.post("/api/update-whiteboard", (req, res) => {
+    console.log("post /api/update-whiteboard runs");
+    const { whiteboardId, drawingUrl } = req.body;
+
+    dbworkspace
+        .updateDrawing(drawingUrl, whiteboardId)
+        .then(() => {
+            dbworkspace
+                .getDrawingUrl()
+                .then(({ rows }) => {
+                    console.log(
+                        "getDrawingUrl comes",
+                        rows[0].timestamp,
+                        rows[1].timestamp
+                    );
+                    res.json({ success: true, latestWhiteboards: rows });
+                })
+                .catch((err) => {
+                    console.log("error in getDrawingUrl", err);
+                    res.json({
+                        success: false,
+                    });
+                });
+        })
+        .catch((err) => {
+            console.log("error updateDrawing", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+app.post("/api/delete-whiteboard", (req, res) => {
+    const { whiteboardId } = req.body;
+    console.log("api/delete-whiteboard runs", whiteboardId);
+    dbworkspace
+        .deleteWhiteboard(whiteboardId)
+        .then(() => {
+            dbworkspace
+                .getDrawingUrl()
+                .then(({ rows }) => {
+                    // console.log("getDrawingUrl comes");
+                    res.json({ success: true, latestWhiteboards: rows });
+                })
+                .catch((err) => {
+                    console.log("error in getDrawingUrl", err);
+                    res.json({
+                        success: false,
+                    });
+                });
+        })
+        .catch((err) => {
+            console.log("error in deleteWhiteboard", err);
             res.json({
                 success: false,
             });
@@ -520,17 +581,17 @@ io.on("connection", (socket) => {
 
     socket.on("canvas drawing", (dataUrl) => {
         console.log("canvas data comes in");
-        // dbworkspace
-        //     .insertDrawingUrl(userId, dataUrl)
-        //     .then(({ rows }) => {
-        // console.log("rows in insertDrawingUrl", rows);
         socket.broadcast.emit("canvas drawing", {
             dataUrl: dataUrl,
         });
-        // })
-        // .catch((err) => {
-        //     console.log("error in insertDrawingUrl", err);
-        // });
+    });
+
+    socket.on("canvas edit", (dataUrl) => {
+        console.log("canvas edit comes in");
+        io.sockets.emit("canvas drawing", {
+            dataUrl: dataUrl,
+            edit: true,
+        });
     });
 
     socket.on("Disconnect", () => {
