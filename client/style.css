@@ -656,27 +656,64 @@ header .profile-pic-container p {
     align-self: center;
 }
 
- .whiteboard-container{
+.whiteboard-container {
     height: 100vh;
     width: 100vw;
     border: 0.1rem solid black;
     background-color: lavenderblush;
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 10% 10% 80%;
+    align-items: start;
 }
 
- .whiteboard-container h1{
-     text-align: center;
- }
- .color-picker{
-     margin-left: 2rem;
- }
+.whiteboard-container h1 {
+    grid-area: 1/2/1/2;
+}
 
- .drawing-surface{
-      border: 0.1rem solid black;
-      margin: 2rem;
-      height: 70%
- }
+.tools-container {
+    border: 0.3rem solid rgb(49, 93, 53);
+    display: flex;
+    grid-area: 2/2/2/2;
+}
 
- canvas{
-     height: 20rem;
-     background-color: #fff;
- }
+.tool {
+    border: 0.1rem solid rgb(0, 0, 0);
+    margin-left: 2rem;
+    width: 8rem;
+}
+
+.drawing-surface {
+    border: 0.3rem solid rgb(15, 47, 232);
+    grid-area: 3/2/3/2;
+    height: 70%;
+    width: 90%;
+    margin-right: 2rem;
+}
+
+canvas {
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+.whiteboard-container button {
+    background-color: white;
+}
+
+.latest-whitebaords {
+    border: 0.3rem solid rgb(15, 47, 232);
+    height: 30rem;
+}
+
+.latest-whitebaords div {
+    border: 0.3rem solid rgb(15, 47, 232);
+    height: 5rem;
+    margin-left: 0rem;
+}
+
+
+.latest-whitebaords img {
+    height:3rem;
+    width: 3rem;
+}

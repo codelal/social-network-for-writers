@@ -430,6 +430,22 @@ app.post("/api/whiteboard", (req, res) => {
         });
 });
 
+app.get("/api/latest-whiteboards", (req, res) => {
+    console.log("get /api/latest-whiteboards runs");
+    dbworkspace
+        .getDrawingUrl()
+        .then(({ rows }) => {
+            // console.log("getDrawingUrl comes");
+            res.json({ success: true, latestWhiteboards: rows });
+        })
+        .catch((err) => {
+            console.log("error in getDrawingUrl", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
 //redirecting
 
 app.get("/welcome", (req, res) => {

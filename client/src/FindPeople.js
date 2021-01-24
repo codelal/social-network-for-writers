@@ -20,6 +20,7 @@ export default function FindPeople() {
                 setError(true);
             });
 
+            
         if (input.length) {
             axios
                 .get(`/api/find-users/${input}`)
