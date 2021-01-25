@@ -712,8 +712,13 @@ canvas {
     margin-left: 0rem;
 }
 
-
 .latest-whitebaords img {
-    height:3rem;
+    height: 3rem;
     width: 3rem;
+}
+
+.texteditor {
+    border: 0.3rem solid rgb(15, 47, 232);
+    width: 100vw;
+    font-family: Cambria serif;
 }
