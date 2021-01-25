@@ -9,6 +9,7 @@ import OtherProfile from "./otherProfile";
 import WhiteBoard from "./whiteBoard";
 import Friends from "./friends";
 import Chat from "./chat";
+import Texteditor from "./texteditor";
 
 export default class App extends Component {
     constructor() {
@@ -83,9 +84,11 @@ export default class App extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <a href="/whiteBoard">
-                                    WhiteBoard
-                                </a>
+                                <a href="/whiteBoard">WhiteBoard</a>
+                            </li>
+
+                            <li>
+                                <a href="/texteditor">Texteditor</a>
                             </li>
 
                             <li>
@@ -101,6 +104,7 @@ export default class App extends Component {
                     <Route exact path="/whiteBoard" component={WhiteBoard} />
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
+                    <Route exact path="/texteditor" component={Texteditor} />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

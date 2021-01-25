@@ -3,6 +3,7 @@ import { socket } from "./socket";
 import axios from "./axios";
 import { useEffect, useState } from "react";
 
+
 const formateDateTime = (date) => {
     return new Intl.DateTimeFormat("en-US", {
         year: "numeric",
@@ -25,6 +26,8 @@ export default function WhiteBoard() {
     const [canvasInput, setCanvasInput] = useState("");
     const [latestWhiteboards, setLatestWhiteboards] = useState([]);
     const [updateList, setUpdateList] = useState(false);
+    const [editModus, setEditModus] = useState(false);
+    const [idForEditing, setIdForEditing] = useState();
 
     useEffect(() => {
         console.log("useEffect runs");
@@ -47,6 +50,9 @@ export default function WhiteBoard() {
 
         socket.on("canvas drawing", (data) => {
             //  console.log("canvas in useEffect");
+            if (data.edit) {
+                setEditModus(true);
+            }
 
             let image = new Image();
             image.onload = () => {
@@ -125,6 +131,32 @@ export default function WhiteBoard() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
+    function editWhiteboard(dataUrl, whiteboardId) {
+        socket.emit("canvas edit", dataUrl);
+        setEditModus(true);
+        setIdForEditing(whiteboardId);
+        setCanvasInput(dataUrl);
+    }
+
+    function saveChanges() {
+        const data = {
+            whiteboardId: idForEditing,
+            drawingUrl: canvasInput,
+        };
+
+        console.log("update date", data);
+        axios.post("/api/update-whiteboard", data).then(({ data }) => {
+            console.log("/api/update-whiteboard", data);
+            if (data.success) {
+                setUpdateList(true);
+                clearWhiteboard();
+                setEditModus(false);
+            } else {
+                setError(true);
+            }
+        });
+    }
+
     function deleteWhiteboard(whiteboardId) {
         console.log("delete runs");
         const id = {
@@ -143,6 +175,12 @@ export default function WhiteBoard() {
         <div className="whiteboard-container">
             <div className="latest-whitebaords">
                 Latest Whiteboards:
+                {editModus && (
+                    <p>
+                        Editmodus: you have to save you Changes befor editing an
+                        other Whiteboard
+                    </p>
+                )}
                 {!latestWhiteboards.length && <p>no whiteboards yet</p>}
                 {latestWhiteboards && (
                     <div className="latest-whiteboards">
@@ -151,13 +189,27 @@ export default function WhiteBoard() {
                                 <img src={whiteboard.drawing_url}></img>
                                 Whiteboard from{" "}
                                 {formateDateTime(whiteboard.timestamp)}
-                                <button
-                                    onClick={() => {
-                                        deleteWhiteboard(whiteboard.id);
-                                    }}
-                                >
-                                    Delete
-                                </button>
+                                {!editModus && (
+                                    <button
+                                        onClick={() => {
+                                            editWhiteboard(
+                                                whiteboard.drawing_url,
+                                                whiteboard.id
+                                            );
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                )}
+                                {!editModus && (
+                                    <button
+                                        onClick={() => {
+                                            deleteWhiteboard(whiteboard.id);
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -203,15 +255,18 @@ export default function WhiteBoard() {
                         name="canvasInput"
                     />
                 </canvas>
-
-                <button
-                    onClick={submitDrawing}
-                    className="button-save"
-                    type="submit"
-                >
-                    Save and Close
-                </button>
-
+                {!editModus && (
+                    <button
+                        onClick={submitDrawing}
+                        className="button-save"
+                        type="submit"
+                    >
+                        Save
+                    </button>
+                )}
+                {editModus && (
+                    <button onClick={saveChanges}>Save Changes</button>
+                )}
                 <button onClick={clearWhiteboard}>Clear Whiteboard</button>
             </div>
         </div>
