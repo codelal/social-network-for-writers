@@ -9,7 +9,7 @@ import OtherProfile from "./otherProfile";
 import WhiteBoard from "./whiteBoard";
 import Friends from "./friends";
 import Chat from "./chat";
-import Texteditor from "./texteditor";
+import Texteditor from "./texteditor/texteditor.js";
 
 export default class App extends Component {
     constructor() {
