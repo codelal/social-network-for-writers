@@ -10,6 +10,7 @@ import WhiteBoard from "./whiteBoard";
 import Friends from "./friends";
 import Chat from "./chat";
 import Texteditor from "./texteditor.js";
+// import OnlineUsers from "./OnlineUsers.js";
 
 export default class App extends Component {
     constructor() {
@@ -84,16 +85,20 @@ export default class App extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <a href="/whiteBoard">WhiteBoard</a>
+                                <Link to="/whiteBoard">WhiteBoard</Link>
                             </li>
 
                             <li>
-                                <a href="/texteditor">Texteditor</a>
+                                {" "}
+                                <Link to="/texteditor">Texteditor</Link>
                             </li>
 
                             <li>
-                                <a href="/logout">Logout</a>
+                                <Link to="/logout">Logout</Link>
                             </li>
+                            {/* <li>
+                                <Link to="/online">Online</Link>
+                            </li> */}
                         </ul>
 
                         <ProfilePic
@@ -105,6 +110,7 @@ export default class App extends Component {
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
                     <Route exact path="/texteditor" component={Texteditor} />
+                    {/* <Route exact path="/online" component={OnlineUsers} /> */}
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

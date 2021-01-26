@@ -19,7 +19,7 @@ export default function WhiteBoard() {
 
     useEffect(() => {
         console.log("useEffect runs");
-        // let abort
+        let abort;
 
         axios
             .get("/api/latest-whiteboards")
@@ -36,60 +36,58 @@ export default function WhiteBoard() {
                 setError(true);
             });
 
-        socket.on("canvas drawing", (data) => {
-            //  console.log("canvas in useEffect");
-
-            let image = new Image();
-            image.onload = () => {
-                ctx.drawImage(image, 0, 0);
-            };
-            image.src = data.dataUrl;
-        });
-
         canvas = document.querySelector("canvas");
         ctx = canvas.getContext("2d");
         ctx.strokeStyle = colorInput;
         ctx.lineWidth = size;
-        ctx.lineCap = "round";
 
-        function draw(e) {
-            ctx.lineTo(
-                e.clientX - canvas.offsetLeft,
-                e.clientY - canvas.offsetTop
-            );
-            ctx.stroke();
-            // console.log(
-            //     "e.clientX - canvas.offsetLeft",
-            //     e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop,
-            //     e.clientX, e.clientY
-            // );
+        if (!abort) {
+            socket.on("canvas drawing", (data) => {
+                //  console.log("canvas in useEffect");
+                let image = new Image();
+                image.onload = () => {
+                    ctx.drawImage(image, 0, 0);
+                };
+                image.src = data.dataUrl;
+            });
+
+            ctx.lineCap = "round";
+
+            function draw(e) {
+                ctx.lineTo(
+                    e.clientX - canvas.offsetLeft,
+                    e.clientY - canvas.offsetTop
+                );
+                ctx.stroke();
+             
+            }
+
+            canvas.addEventListener("mousedown", function (e) {
+                clickStart = true;
+                draw(e);
+            });
+
+            canvas.addEventListener("mousemove", function (e) {
+                if (!clickStart) {
+                    return;
+                } else {
+                    draw(e);
+                }
+            });
+
+            canvas.addEventListener("mouseup", function () {
+                clickStart = false;
+                ctx.beginPath();
+                dataUrl = canvas.toDataURL();
+
+                setCanvasInput(dataUrl);
+                socket.emit("canvas drawing", dataUrl);
+            });
         }
 
-        canvas.addEventListener("mousedown", function (e) {
-            clickStart = true;
-            draw(e);
-        });
-
-        canvas.addEventListener("mousemove", function (e) {
-            if (!clickStart) {
-                return;
-            } else {
-                draw(e);
-            }
-        });
-
-        canvas.addEventListener("mouseup", function () {
-            clickStart = false;
-            ctx.beginPath();
-            dataUrl = canvas.toDataURL();
-
-            setCanvasInput(dataUrl);
-            socket.emit("canvas drawing", dataUrl);
-        });
-
-        // return () => {
-        //     abort = true;
-        // };
+        return () => {
+            abort = true;
+        };
     }, [canvasInput, colorInput, size, updateList]);
 
     function submitDrawing() {
@@ -191,7 +189,6 @@ export default function WhiteBoard() {
                         <option>18</option>
                     </select>
                 </div>
-            
             </div>
 
             <div className="drawing-surface">

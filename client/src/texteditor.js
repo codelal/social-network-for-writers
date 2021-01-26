@@ -18,7 +18,7 @@ export default function Texteditor() {
         // let abort;
 
         socket.on("text writing", ({ text }) => {
-            console.log("text writing", text.text);
+            console.log("text writing");
             setTextareaValue(text.text);
         });
 
@@ -27,7 +27,7 @@ export default function Texteditor() {
             .then(({ data }) => {
                 if (data.success) {
                     setLatestTextes(data.latestTextes);
-                    console.log(data, data.latestTextes);
+
                     setUpdateList(true);
                 } else {
                     setError(true);
@@ -97,6 +97,16 @@ export default function Texteditor() {
             });
     }
 
+    function boldText() {
+        if (document.getSelection) {
+            var text = document.getSelection().toString();
+            // let boldString = (textareaValue, text) =>
+            //     textareaValue.replace(RegExp(text, text), `<b>${text}</b>`);
+            console.log("ja", text);
+
+            //     setTextareaValue(boldString);
+        }
+    }
     return (
         <div className="texteditor-container">
             {error && <p className="error">Something went wrong, try again!</p>}
@@ -120,17 +130,16 @@ export default function Texteditor() {
             )}
 
             <div className="toolbar">
-                <button onMouseDown={() => {}}>Bold</button>
+                <button onMouseDown={boldText}>Bold</button>
                 <button onMouseDown={() => {}}>Code Block</button>
                 <button onMouseDown={() => {}}>Italic</button>
                 <button onClick={submitText}>save Text</button>
                 {textSaved && <p className="text-saved"> You text is saved!</p>}
             </div>
-        
-            <textarea
-                onChange={(e) => handleChange(e)}
-                value={textareaValue}
-            ></textarea>
+
+            <textarea value={textareaValue} onChange={(e) => handleChange(e)}>
+                <b> </b>
+            </textarea>
         </div>
     );
 }

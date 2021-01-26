@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { socket } from "./socket";
 import { useEffect, useRef } from "react";
 import { formateDateTime } from "./formateDate";
+import { OnlineUsers } from "./onlineUsers";
 
 export default function Chat() {
     const mostRecentMessages = useSelector(
@@ -44,6 +45,7 @@ export default function Chat() {
     return (
         <div className="chat-component">
             <h1>Chat</h1>
+            <div>{OnlineUsers}</div>
             <div ref={elemRef} className="chat-messages">
                 <>{recentMessages}</>
             </div>
