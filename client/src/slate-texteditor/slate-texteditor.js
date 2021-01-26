@@ -3,6 +3,7 @@ import { createEditor, Editor, Transforms, Text } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import axios from "../axios";
 import { formateDateTime } from "../formateDate";
+import { socket } from "../socket";
 
 import { initialValue, afterSaveValue } from "./defaultTextValues";
 import { CustomEditor } from "./customEditor";
@@ -20,6 +21,7 @@ export default function Texteditor() {
     const [error, setError] = useState(false);
     const [latestTextes, setLatestTextes] = useState([]);
     const [updateList, setUpdateList] = useState(false);
+    let newTextValue;
 
     const renderElement = useCallback((props) => {
         if (props.element.type == "code") {
@@ -41,13 +43,25 @@ export default function Texteditor() {
         console.log("useEffect runs");
         // let abort;
 
+        socket.on("text writing", (textdata) => {
+            console.log("text writing", textdata);
+
+            newTextValue = [
+                {
+                    children: [{ textdata }],
+                },
+            ];
+
+            setValue(newTextValue);
+        });
+
         axios
             .get("/api/latest-textes")
             .then(({ data }) => {
                 if (data.success) {
                     setLatestTextes(data.latestTextes);
                     console.log(data, data.latestTextes);
-                    setUpdateList(true)
+                    setUpdateList(true);
                 } else {
                     setError(true);
                 }
@@ -57,36 +71,38 @@ export default function Texteditor() {
                 setError(true);
             });
 
-        //  socket.on("canvas drawing", (data) => {
-        //      //  console.log("canvas in useEffect");
-
-        //      let image = new Image();
-        //      image.onload = () => {
-        //          ctx.drawImage(image, 0, 0);
-        //      };
-        //      image.src = data.dataUrl;
-        //  });
-
         // return () => {
         //     abort = true;
         // };
-    }, [updateList]);
+    }, [updateList, newTextValue]);
 
     function handleChange(value) {
         setValue(value);
+        const text = { text: value[0].children[0].text };
+        socket.emit("text writing", text);
     }
 
     function submitText() {
         const text = { text: value[0].children[0].text };
         console.log(text);
-        axios.post("/api/save-text", text).then(({ data }) => {
-            console.log("data /api/save-text");
-            if (data.success) {
-                setTextSaved(true);
-                setValue(afterSaveValue);
-                setUpdateList(false);
-            }
-        });
+        axios
+            .post("/api/save-text", text)
+            .then(({ data }) => {
+                console.log("data /api/save-text");
+                if (data.success) {
+                    setTextSaved(true);
+                    setValue(afterSaveValue);
+                    setUpdateList(false);
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error in /api/delete-text", err);
+                this.setState({
+                    error: true,
+                });
+            });
     }
 
     function deleteText(idText) {
@@ -113,7 +129,7 @@ export default function Texteditor() {
 
     return (
         <div className="texteditor-container">
-            {error && <p className="error">Something went wrong,try again!</p>}
+            {error && <p className="error">Something went wrong, try again!</p>}
             <p>Latest Textes:</p>
             {latestTextes && (
                 <div className="latest-textes">
@@ -138,7 +154,6 @@ export default function Texteditor() {
                 onChange={(value) => {
                     setValue(value);
                     handleChange(value);
-
                     setTextSaved(false);
                 }}
             >

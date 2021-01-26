@@ -480,7 +480,7 @@ app.post("/api/update-whiteboard", (req, res) => {
         });
 });
 
-app.post("/api/delete-board",  (req, res) => {
+app.post("/api/delete-board", (req, res) => {
     const { boardId } = req.body;
     console.log("api/delete-whiteboard runs", boardId);
     dbworkspace
@@ -569,8 +569,6 @@ app.post("/api/delete-text", (req, res) => {
         });
 });
 
-
-
 //redirecting
 
 app.get("/welcome", (req, res) => {
@@ -655,6 +653,13 @@ io.on("connection", (socket) => {
         io.sockets.emit("canvas drawing", {
             dataUrl: dataUrl,
             edit: true,
+        });
+    });
+
+    socket.on("text writing", (text) => {
+        console.log("text writing data comes in", text);
+        socket.broadcast.emit("text writing", {
+            text
         });
     });
 
