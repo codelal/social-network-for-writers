@@ -47,6 +47,7 @@ export default function Texteditor() {
                 if (data.success) {
                     setLatestTextes(data.latestTextes);
                     console.log(data, data.latestTextes);
+                    setUpdateList(true)
                 } else {
                     setError(true);
                 }
@@ -69,7 +70,7 @@ export default function Texteditor() {
         // return () => {
         //     abort = true;
         // };
-    }, []);
+    }, [updateList]);
 
     function handleChange(value) {
         setValue(value);
@@ -83,6 +84,7 @@ export default function Texteditor() {
             if (data.success) {
                 setTextSaved(true);
                 setValue(afterSaveValue);
+                setUpdateList(false);
             }
         });
     }
@@ -96,7 +98,7 @@ export default function Texteditor() {
             .post("/api/delete-text", textId)
             .then(({ data }) => {
                 if (data.success) {
-                    setUpdateList(true);
+                    setUpdateList(false);
                 } else {
                     setError(true);
                 }
