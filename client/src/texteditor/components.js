@@ -1,10 +1,10 @@
 export const DefaultElement = (props) => {
-    return <p {...props.attributes}>{props.children}</p>;
+    return <div {...props.attributes}>{props.children}</div>;
 };
 
 // Define a React component renderer for our code blocks.
 export const CodeElement = (props) => {
-    console.log(props);
+    console.log("hh",props.children);
     return (
         <pre {...props.attributes}>
             <code>{props.children}</code>
@@ -12,9 +12,9 @@ export const CodeElement = (props) => {
     );
 };
 
-
 // Define a React component to render leaves with bold text.
 export const LeafBold = (props) => {
+   
     return (
         <span
             {...props.attributes}
@@ -27,11 +27,11 @@ export const LeafBold = (props) => {
 
 export const LeafItalic = (props) => {
     return (
-        <span
+        <em
             {...props.attributes}
             style={{ fontWeight: props.leaf.italic ? "italic" : "normal" }}
         >
             {props.children}
-        </span>
+        </em>
     );
 };

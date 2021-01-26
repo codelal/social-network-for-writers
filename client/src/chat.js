@@ -1,17 +1,7 @@
 import { useSelector } from "react-redux";
 import { socket } from "./socket";
 import { useEffect, useRef } from "react";
-
-const formateDateTime = (date) => {
-    return new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-    }).format(new Date(date));
-};
+import { formateDateTime } from "./formateDate";
 
 export default function Chat() {
     const mostRecentMessages = useSelector(

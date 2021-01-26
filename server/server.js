@@ -480,11 +480,11 @@ app.post("/api/update-whiteboard", (req, res) => {
         });
 });
 
-app.post("/api/delete-whiteboard", (req, res) => {
-    const { whiteboardId } = req.body;
-    console.log("api/delete-whiteboard runs", whiteboardId);
+app.post("/api/delete-board",  (req, res) => {
+    const { boardId } = req.body;
+    console.log("api/delete-whiteboard runs", boardId);
     dbworkspace
-        .deleteWhiteboard(whiteboardId)
+        .deleteWhiteboard(boardId)
         .then(() => {
             dbworkspace
                 .getDrawingUrl()
@@ -506,6 +506,70 @@ app.post("/api/delete-whiteboard", (req, res) => {
             });
         });
 });
+
+app.post("/api/save-text", (req, res) => {
+    const { text } = req.body;
+    console.log("/api/save-text", text);
+
+    dbworkspace
+        .insertText(req.session.userId, text)
+        .then(({ rows }) => {
+            console.log("rows in insertText", rows);
+            res.json({
+                success: true,
+            });
+        })
+        .catch((err) => {
+            console.log("error in insertText", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+app.get("/api/latest-textes", (req, res) => {
+    console.log("/api/latest-textes runs");
+    dbworkspace
+        .getText()
+        .then(({ rows }) => {
+            res.json({ success: true, latestTextes: rows });
+        })
+        .catch((err) => {
+            console.log("error in getText", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+app.post("/api/delete-text", (req, res) => {
+    const { textId } = req.body;
+    console.log("api/delete-whiteboard runs", textId);
+    dbworkspace
+        .deleteText(textId)
+        .then(() => {
+            dbworkspace
+                .getText()
+                .then(({ rows }) => {
+                    // console.log("getDrawingUrl comes");
+                    res.json({ success: true, latestText: rows });
+                })
+                .catch((err) => {
+                    console.log("error in getText", err);
+                    res.json({
+                        success: false,
+                    });
+                });
+        })
+        .catch((err) => {
+            console.log("error in deleteText", err);
+            res.json({
+                success: false,
+            });
+        });
+});
+
+
 
 //redirecting
 

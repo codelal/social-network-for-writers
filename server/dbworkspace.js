@@ -18,9 +18,9 @@ module.exports.getDrawingUrl = () => {
 };
 
 module.exports.deleteWhiteboard = (whiteboardId) => {
-    return db.query(
-        `DELETE FROM workspace_drawings WHERE id = $1`, [whiteboardId]
-    );
+    return db.query(`DELETE FROM workspace_drawings WHERE id = $1`, [
+        whiteboardId,
+    ]);
 };
 
 module.exports.updateDrawing = (dataUrl, whiteboardId) => {
@@ -28,4 +28,21 @@ module.exports.updateDrawing = (dataUrl, whiteboardId) => {
         `UPDATE workspace_drawings SET drawing_url = $1 WHERE id = $2`,
         [dataUrl, whiteboardId]
     );
+};
+
+module.exports.insertText = (userId, text) => {
+    return db.query(
+        `INSERT INTO workspace_text (user_id, text) VALUES($1, $2) RETURNING timestamp`,
+        [userId, text]
+    );
+};
+
+module.exports.getText = () => {
+    return db.query(
+        `SELECT text, id, timestamp FROM workspace_text ORDER BY timestamp DESC`
+    );
+};
+
+module.exports.deleteText = (textId) => {
+    return db.query(`DELETE FROM workspace_text WHERE id = $1`, [textId]);
 };

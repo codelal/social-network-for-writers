@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { createEditor, Editor, Transforms, Text } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
+import axios from "../axios";
+import { formateDateTime } from "../formateDate";
 
-import { initialValue } from "./slateInitialvalue";
+import { initialValue, afterSaveValue } from "./defaultTextValues";
 import { CustomEditor } from "./customEditor";
 import {
     DefaultElement,
@@ -14,9 +16,10 @@ import {
 export default function Texteditor() {
     const editor = useMemo(() => withReact(createEditor()), []);
     const [value, setValue] = useState(initialValue);
-
-    // Define a rendering function based on the element passed to `props`. We use
-    // `useCallback` here to memoize the function for subsequent renders.
+    const [textSaved, setTextSaved] = useState(false);
+    const [error, setError] = useState(false);
+    const [latestTextes, setLatestTextes] = useState([]);
+    const [updateList, setUpdateList] = useState(false);
 
     const renderElement = useCallback((props) => {
         if (props.element.type == "code") {
@@ -34,14 +37,107 @@ export default function Texteditor() {
         }
     }, []);
 
+    useEffect(() => {
+        console.log("useEffect runs");
+        // let abort;
+
+        axios
+            .get("/api/latest-textes")
+            .then(({ data }) => {
+                if (data.success) {
+                    setLatestTextes(data.latestTextes);
+                    console.log(data, data.latestTextes);
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error in api/latest-setLatestWritebaords", err);
+                setError(true);
+            });
+
+        //  socket.on("canvas drawing", (data) => {
+        //      //  console.log("canvas in useEffect");
+
+        //      let image = new Image();
+        //      image.onload = () => {
+        //          ctx.drawImage(image, 0, 0);
+        //      };
+        //      image.src = data.dataUrl;
+        //  });
+
+        // return () => {
+        //     abort = true;
+        // };
+    }, []);
+
+    function handleChange(value) {
+        setValue(value);
+    }
+
+    function submitText() {
+        const text = { text: value[0].children[0].text };
+        console.log(text);
+        axios.post("/api/save-text", text).then(({ data }) => {
+            console.log("data /api/save-text");
+            if (data.success) {
+                setTextSaved(true);
+                setValue(afterSaveValue);
+            }
+        });
+    }
+
+    function deleteText(idText) {
+        console.log("delete text runs");
+        const textId = {
+            textId: idText,
+        };
+        axios
+            .post("/api/delete-text", textId)
+            .then(({ data }) => {
+                if (data.success) {
+                    setUpdateList(true);
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error in /api/delete-text", err);
+                this.setState({
+                    error: true,
+                });
+            });
+    }
+
     return (
-        <div className="texteditor">
+        <div className="texteditor-container">
+            {error && <p className="error">Something went wrong,try again!</p>}
+            <p>Latest Textes:</p>
+            {latestTextes && (
+                <div className="latest-textes">
+                    {latestTextes.map((text) => (
+                        <div key={text.id}>
+                            <p>Text</p>
+                            {formateDateTime(text.timestamp)}
+                            <button
+                                onClick={() => {
+                                    deleteText(text.id);
+                                }}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
             <Slate
                 editor={editor}
                 value={value}
                 onChange={(value) => {
-                    console.log("change");
                     setValue(value);
+                    handleChange(value);
+
+                    setTextSaved(false);
                 }}
             >
                 <div className="toolbar">
@@ -69,27 +165,34 @@ export default function Texteditor() {
                     >
                         Italic
                     </button>
+                    <button onClick={submitText}>save Text</button>
+                    {textSaved && (
+                        <p className="text-saved"> You text is saved!</p>
+                    )}
                 </div>
 
-                <Editable
-                    renderElement={renderElement}
-                    renderLeaf={renderLeaf}
-                    onKeyDown={(event) => {
-                        if (!event.ctrlKey) {
-                            return;
-                        }
+                <div className="edit-area">
+                    {" "}
+                    <Editable
+                        renderElement={renderElement}
+                        renderLeaf={renderLeaf}
+                        onKeyDown={(event) => {
+                            if (!event.ctrlKey) {
+                                return;
+                            }
 
-                        if (event.key == "Dead") {
-                            event.preventDefault();
-                            CustomEditor.toggleCodeBlock(editor);
-                        }
+                            if (event.key == "Dead") {
+                                event.preventDefault();
+                                CustomEditor.toggleCodeBlock(editor);
+                            }
 
-                        if (event.key == "b") {
-                            event.preventDefault();
-                            CustomEditor.toggleBoldMark(editor);
-                        }
-                    }}
-                />
+                            if (event.key == "b") {
+                                event.preventDefault();
+                                CustomEditor.toggleBoldMark(editor);
+                            }
+                        }}
+                    />
+                </div>
             </Slate>
         </div>
     );

@@ -7,15 +7,18 @@ export const CustomEditor = {
             match: (n) => n.bold === true,
             universal: true,
         });
+       
         return !!match;
     },
-    // isItaclicMarkActive(editor) {
-    //     const [match] = Editor.nodes(editor, {
-    //         match: (n) => n.italic === true,
-    //         universal: true,
-    //     });
-    //     return !!match;
-    // },
+
+    isItaclicMarkActive(editor) {
+        const [match] = Editor.nodes(editor, {
+            match: (n) => n.italic === true,
+            universal: true,
+        });
+        return !!match;
+    },
+
     isCodeBlockActive(editor) {
         const [match] = Editor.nodes(editor, {
             match: (n) => n.type === "code",
@@ -31,14 +34,14 @@ export const CustomEditor = {
             { match: (n) => Text.isText(n), split: true }
         );
     },
-    // toggleItalicMark(editor) {
-    //     const isActive = CustomEditor.isItalicMarkActive(editor);
-    //     Transforms.setNodes(
-    //         editor,
-    //         { italic: isActive ? null : true },
-    //         { match: (n) => Text.isText(n), split: true }
-    //     );
-    // },
+    toggleItalicMark(editor) {
+        const isActive = CustomEditor.isItalicMarkActive(editor);
+        Transforms.setNodes(
+            editor,
+            { italic: isActive ? null : true },
+            { match: (n) => Text.isText(n), split: true }
+        );
+    },
     toggleCodeBlock(editor) {
         const isActive = CustomEditor.isCodeBlockActive(editor);
         Transforms.setNodes(

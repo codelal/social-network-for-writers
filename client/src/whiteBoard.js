@@ -2,17 +2,8 @@ import { useSelector } from "react-redux";
 import { socket } from "./socket";
 import axios from "./axios";
 import { useEffect, useState } from "react";
+import { formateDateTime } from "./formateDate";
 
-const formateDateTime = (date) => {
-    return new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-    }).format(new Date(date));
-};
 let dataUrl;
 let clickStart;
 let canvas;
@@ -127,16 +118,24 @@ export default function WhiteBoard() {
 
     function deleteWhiteboard(whiteboardId) {
         console.log("delete runs");
-        const id = {
-            whiteboardId: whiteboardId,
+        const boardId = {
+            boardId: whiteboardId,
         };
-        axios.post("/api/delete-whiteboard", id).then(({ data }) => {
-            if (data.success) {
-                setLatestWhiteboards(data.latestWhiteboards);
-            } else {
-                setError(true);
-            }
-        });
+        axios
+            .post("/api/delete-board", boardId)
+            .then(({ data }) => {
+                if (data.success) {
+                    setLatestWhiteboards(data.latestWhiteboards);
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error in /api/delete-board", err);
+                this.setState({
+                    error: true,
+                });
+            });
     }
 
     return (
@@ -192,7 +191,7 @@ export default function WhiteBoard() {
                         <option>18</option>
                     </select>
                 </div>
-                <div className="tool">Rubber: &nbsp;</div>
+            
             </div>
 
             <div className="drawing-surface">
