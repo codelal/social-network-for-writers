@@ -23,6 +23,7 @@ const multer = require("multer");
 const config = require("./config.json");
 const uidSafe = require("uid-safe");
 const cryptoRandomString = require("crypto-random-string");
+let onlineUsers = {};
 
 app.use(compression());
 
@@ -609,6 +610,44 @@ io.on("connection", (socket) => {
     console.log(`Socker with id ${socket.id} has connected`);
     const userId = socket.request.session.userId;
 
+    if (!userId) {
+        return socket.disconnect(true);
+    }
+
+    onlineUsers[socket.id] = userId;
+    console.log(onlineUsers);
+
+    let arrOfIds = [...new Set(Object.values(onlineUsers))];
+    db.getOnlineUsersByIds(arrOfIds)
+        .then(({ rows }) => {
+            // console.log("getOnlineUsersByIds", rows);
+            io.sockets.emit("online users", {
+                data: rows,
+            });
+        })
+        .catch((err) => console.log("getOnlineUsersByIds", err));
+
+    console.log(arrOfIds);
+
+    socket.on("user is drawing", () => {
+        console.log("user is drawing");
+        db.getProfileData(userId)
+            .then(({ rows }) => {
+                socket.broadcast.emit("user is drawing", {
+                    url: rows[0].url,
+                    isDrawing: true,
+                });
+            })
+            .catch((err) => console.log("error in getProfileData", err));
+    });
+
+    socket.on("user stops drawing", () => {
+        console.log("user stops drawing");
+        socket.broadcast.emit("user is drawing", {
+            isDrawing: false,
+        });
+    });
+
     socket.on("chat message", (message) => {
         db.insertChatMessages(userId, message)
             .then(({ rows }) => {
@@ -659,7 +698,7 @@ io.on("connection", (socket) => {
     socket.on("text writing", (text) => {
         console.log("text writing data comes in", text);
         socket.broadcast.emit("text writing", {
-            text
+            text,
         });
     });
 

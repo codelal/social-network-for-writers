@@ -10,7 +10,7 @@ import WhiteBoard from "./whiteBoard";
 import Friends from "./friends";
 import Chat from "./chat";
 import Texteditor from "./texteditor.js";
-// import OnlineUsers from "./OnlineUsers.js";
+import OnlineUsers from "./onlineUsers.js";
 
 export default class App extends Component {
     constructor() {
@@ -92,13 +92,12 @@ export default class App extends Component {
                                 {" "}
                                 <Link to="/texteditor">Texteditor</Link>
                             </li>
-
                             <li>
-                                <Link to="/logout">Logout</Link>
-                            </li>
-                            {/* <li>
                                 <Link to="/online">Online</Link>
-                            </li> */}
+                            </li>
+                            <li>
+                                <a href="/logout">Logout</a>
+                            </li>
                         </ul>
 
                         <ProfilePic
@@ -110,7 +109,7 @@ export default class App extends Component {
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
                     <Route exact path="/texteditor" component={Texteditor} />
-                    {/* <Route exact path="/online" component={OnlineUsers} /> */}
+                    <Route exact path="/online" component={OnlineUsers} />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

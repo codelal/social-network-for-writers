@@ -48,3 +48,11 @@ export function postRecentMesssages(mostRecentMessages) {
     };
 }
 
+export function receiveOnlineUsersList(data) {
+    console.log(data.data);
+
+    return {
+        type: "RECEIVE_ONLINE_USERS",
+        onlineUsersList: data.data,
+    };
+}

@@ -90,3 +90,10 @@ module.exports.getRecentMessages = (userId) => {
         [userId]
     );
 };
+
+module.exports.getOnlineUsersByIds = (arrayOfIds) => {
+    return db.query(
+        `SELECT id, first, last, url FROM users WHERE id = ANY($1)`,
+        [arrayOfIds]
+    );
+};

@@ -48,5 +48,12 @@ export function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "RECEIVE_ONLINE_USERS") {
+        state = {
+            ...state,
+            onlineUsersList: action.onlineUsersList,
+        };
+    }
+
     return state;
 }

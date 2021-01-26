@@ -732,7 +732,7 @@ canvas {
     border: 0.3rem solid rgb(15, 47, 232);
     width: auto;
     grid-area: 1/2/1/2;
-    display:flex;
+    display: flex;
     height: 1.5rem;
 }
 
@@ -748,4 +748,16 @@ canvas {
     border: 0.1rem solid rgb(15, 47, 232);
     margin-top: 0;
     margin-left: 1rem;
+}
+
+.drawing-user {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50px;
+}
+
+#online-user img {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50px;
 }

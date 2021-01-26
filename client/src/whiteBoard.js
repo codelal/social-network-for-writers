@@ -16,6 +16,7 @@ export default function WhiteBoard() {
     const [canvasInput, setCanvasInput] = useState("");
     const [latestWhiteboards, setLatestWhiteboards] = useState([]);
     const [updateList, setUpdateList] = useState(false);
+    const [drawingUser, setDrwaingUser] = useState();
 
     useEffect(() => {
         console.log("useEffect runs");
@@ -40,6 +41,7 @@ export default function WhiteBoard() {
         ctx = canvas.getContext("2d");
         ctx.strokeStyle = colorInput;
         ctx.lineWidth = size;
+        ctx.lineCap = "round";
 
         if (!abort) {
             socket.on("canvas drawing", (data) => {
@@ -51,7 +53,14 @@ export default function WhiteBoard() {
                 image.src = data.dataUrl;
             });
 
-            ctx.lineCap = "round";
+            socket.on("user is drawing", (data) => {
+                console.log("user is drawing", data);
+                if (data.isDrawing) {
+                    setDrwaingUser(data.url);
+                }else{
+                    //setDrwaingUser(null);
+                }
+            });
 
             function draw(e) {
                 ctx.lineTo(
@@ -59,12 +68,12 @@ export default function WhiteBoard() {
                     e.clientY - canvas.offsetTop
                 );
                 ctx.stroke();
-             
             }
 
             canvas.addEventListener("mousedown", function (e) {
                 clickStart = true;
                 draw(e);
+                socket.emit("user is drawing");
             });
 
             canvas.addEventListener("mousemove", function (e) {
@@ -82,6 +91,7 @@ export default function WhiteBoard() {
 
                 setCanvasInput(dataUrl);
                 socket.emit("canvas drawing", dataUrl);
+                socket.emit("user stops drawing");
             });
         }
 
@@ -189,6 +199,7 @@ export default function WhiteBoard() {
                         <option>18</option>
                     </select>
                 </div>
+                <img className="drawing-user"src={drawingUser}></img>
             </div>
 
             <div className="drawing-surface">
