@@ -640,6 +640,8 @@ io.on("connection", (socket) => {
         db.getProfileData(userId)
             .then(({ rows }) => {
                 socket.broadcast.emit("user is drawing", {
+                    first: rows[0].first,
+                    last: rows[0].first,
                     url: rows[0].url,
                     isDrawing: true,
                 });

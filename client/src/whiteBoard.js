@@ -17,7 +17,7 @@ export default function WhiteBoard() {
     const [canvasInput, setCanvasInput] = useState("");
     const [latestWhiteboards, setLatestWhiteboards] = useState([]);
     const [updateList, setUpdateList] = useState(false);
-    const [drawingUser, setDrwaingUser] = useState();
+    const [drawingUser, setDrwaingUser] = useState(false);
 
     useEffect(() => {
         console.log("useEffect runs");
@@ -58,8 +58,8 @@ export default function WhiteBoard() {
                 console.log("user is drawing", data);
                 if (data.isDrawing) {
                     setDrwaingUser(data.url);
-                }else{
-                    //setDrwaingUser(null);
+                } else {
+                    setDrwaingUser(false);
                 }
             });
 
@@ -150,15 +150,14 @@ export default function WhiteBoard() {
     return (
         <div className="whiteboard-container">
             <div className="latest-whitebaords">
-                <h2>Latest Whiteboards:</h2>
+                <h3>Latest Whiteboards:</h3>
                 {!latestWhiteboards.length && <p>no whiteboards yet</p>}
                 {latestWhiteboards && (
                     <div className="whiteboard">
                         {latestWhiteboards.map((whiteboard) => (
                             <div key={whiteboard.id}>
                                 <img src={whiteboard.drawing_url}></img>
-                                Whiteboard from{" "}
-                                {formateDateTime(whiteboard.timestamp)}
+
                                 <button
                                     onClick={() => {
                                         deleteWhiteboard(whiteboard.id);
@@ -171,7 +170,10 @@ export default function WhiteBoard() {
                     </div>
                 )}
             </div>
-            <div id ="onliners-whiteboard"> <OnlineUsers /></div>
+            <div id="onliners-whiteboard">
+                {" "}
+                <OnlineUsers />
+            </div>
             {error && <p className="error">Something went wrong,try again!</p>}
 
             <h1>Whiteoard</h1>
@@ -184,7 +186,7 @@ export default function WhiteBoard() {
                         type="color"
                     />
                 </div>
-                <div className="tool">
+                <div className="tool" id="brush">
                     Brash Size : &nbsp;
                     <select
                         value={size}
@@ -200,7 +202,10 @@ export default function WhiteBoard() {
                         <option>18</option>
                     </select>
                 </div>
-                <img className="drawing-user" src={drawingUser}></img>
+                {drawingUser &&
+                <div className="tool" id="is-drawing">
+                    <img src={drawingUser} /> <p>is drawing</p>
+                </div>}
             </div>
 
             <div className="drawing-surface">

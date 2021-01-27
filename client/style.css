@@ -706,7 +706,7 @@ a:link {
 }
 .online-chat {
     grid-area: 2/1/3/1;
-    background-color:#018a76;
+    background-color: #018a76;
     height: 80%;
     margin: 1rem;
 }
@@ -733,12 +733,11 @@ a:link {
     background-color: #032b75;
 }
 
-#onliners-whiteboard{
+#onliners-whiteboard {
     grid-area: 2/2/2/2;
-  
 }
 
-#onliners-whiteboard div{
+#onliners-whiteboard div {
     display: flex;
     align-items: flex-start;
 }
@@ -751,19 +750,43 @@ a:link {
 .tools-container {
     display: flex;
     grid-area: 3/2/3/2;
-    background-color: #018a76;
-    /* border: 0.3rem solid white; */
-    width: 820px;
-    height: 2rem;
+    color: white;
+    height: 1.5rem;
     border-radius: 5px;
     padding: 0.3rem;
-    color: #032b75;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    align-items: center;
 }
 
 .tool {
-    margin-left: 2rem;
+    margin-left: 1rem;
     width: 10rem;
+}
+
+#brush {
+    margin-top: 0.3rem;
+}
+
+#is-drawing {
+    text-align: center;
+    margin-top: 23px;
+    color: #dc0c61;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+#is-drawing p {
+    margin-bottom: 2rem;
+    margin-left: 1rem;
+}
+
+.tools-container img{
+    height: 1.7rem;
+    width: 1.7rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
 }
 
 .drawing-surface {
@@ -790,21 +813,19 @@ canvas {
     margin-right: 1rem;
 }
 
-.latest-whitebaords h2 {
+.latest-whitebaords h3 {
     margin-left: 1.5rem;
 }
 
 .latest-whitebaords {
-    grid-area: 3/1;
-    height: 500px;
+    grid-area: 4/1;
+    height: 450px;
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-    width: 20rem;
+    width: 10rem;
     border-radius: 3px;
     background-color: #018a76;
-    margin-left: 2rem;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    margin-left: 3rem;
+    margin-top: 1rem;
 }
 
 .whiteboard {
@@ -812,7 +833,7 @@ canvas {
     height: 5rem;
     margin-left: 1.5rem;
     width: 10rem;
-    display: flex;
+
     margin-right: 1rem;
 }
 
@@ -865,18 +886,19 @@ canvas {
 #online-texteditor {
     grid-area: 2/2/2/2;
     margin-left: 2rem;
-  
+    margin-bottom: 1rem;
 }
 
-#online-texteditor div{
-    display:flex;
+#online-texteditor div {
+    display: flex;
 }
 .texteditor-container textarea {
-    height: 400px;
+    height: 330px;
     width: 1000px;
     grid-area: 3/2/3/2;
     margin-left: 2rem;
     align-self: center;
+    margin-top: 1rem;
 }
 
 .latest-textes {
@@ -884,7 +906,7 @@ canvas {
     grid-area: 3/1/3/1;
     margin-left: 1.5rem;
     padding: 0.5rem;
-    height: 500px;
+    height: 350px;
 }
 .latest-textes button {
     height: 1.5rem;
@@ -901,14 +923,16 @@ canvas {
     border: 0.3rem solid rgb(15, 47, 232);
     font-family: Cambria serif;
     height: 70vh;
-}
+}*/
 
 .text-saved {
     height: 1.5rem;
-    border: 0.1rem solid rgb(15, 47, 232);
-    margin-top: 0;
-    margin-left: 1rem;
-} */
+    grid-area: 1/1/1/1;
+    align-self: center;
+    justify-self: center;
+    color: #ffb300;
+    font-size: 1.5rem;
+}
 
 .drawing-user {
     height: 2rem;

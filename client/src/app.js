@@ -93,12 +93,10 @@ export default class App extends Component {
                             </li>
                             <li>
                                 <Link to="/" className="find-people">
-                                   My Profile
+                                    My Profile
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/online">Online</Link>
-                            </li>
+
                             <li>
                                 <a href="/logout">Logout</a>
                             </li>
@@ -116,7 +114,7 @@ export default class App extends Component {
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
                     <Route exact path="/texteditor" component={Texteditor} />
-                    <Route exact path="/online" component={OnlineUsers} />
+
                     <Route exact path="/main" component={MainPage} />
 
                     {this.state.error && (

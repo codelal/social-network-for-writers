@@ -53,6 +53,10 @@ export default function Texteditor() {
         socket.emit("text writing", text);
     }
 
+    function handleClick() {
+        setTextSaved(false);
+    }
+
     function submitText() {
         const text = { text: textareaValue };
         console.log(text);
@@ -122,10 +126,13 @@ export default function Texteditor() {
                 </div>
             )}
             <h1>Collaborative Texteditor</h1>
-            <div id="online-texteditor"><OnlineUsers /></div>
+            <div id="online-texteditor">
+                <OnlineUsers />
+            </div>
             <textarea
                 value={textareaValue}
                 onChange={(e) => handleChange(e)}
+                onClick={handleClick}
             ></textarea>
             <button onClick={submitText}>save Text</button>
             {textSaved && <p className="text-saved"> You text is saved!</p>}
