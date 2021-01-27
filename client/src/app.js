@@ -73,7 +73,6 @@ export default class App extends Component {
             <BrowserRouter>
                 <div className="app-container">
                     <header>
-                      
                         <ul className="navbar">
                             <li>
                                 <Link to="/main">Main</Link>
@@ -94,7 +93,7 @@ export default class App extends Component {
                             </li>
                             <li>
                                 <Link to="/" className="find-people">
-                                    Privatspace
+                                   My Profile
                                 </Link>
                             </li>
                             <li>
@@ -106,6 +105,9 @@ export default class App extends Component {
                         </ul>
 
                         <ProfilePic
+                            first={this.state.first}
+                            last={this.state.last}
+                            email={this.state.email}
                             url={this.state.url}
                             toggleUploader={() => this.toggleUploader()}
                         />

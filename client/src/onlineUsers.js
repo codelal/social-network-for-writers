@@ -12,17 +12,14 @@ export default function OnlineUsers() {
     console.log("onlineUsersList", onlineUsersList);
 
     const onlineUsers = (
-        <div id="online-users">
+        <div className="online-users">
             {onlineUsersList &&
                 onlineUsersList.map((user) => (
-                    <div id="online-user" key={user.id}>
+                    <div className="online-user" key={user.id}>
                         <Link to={`/find-people/${user.id}`}>
                             {!user.url && <img src="../defaultpic.png" />}{" "}
                             {user.url && <img src={user.url} />}
                         </Link>
-                        <p>
-                            {user.first} {user.last}
-                        </p>
                     </div>
                 ))}
         </div>
@@ -30,7 +27,7 @@ export default function OnlineUsers() {
 
     return (
         <div className="online-users-container">
-            <h1>Online</h1>
+        
             <div>{onlineUsers}</div>
         </div>
     );

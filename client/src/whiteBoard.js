@@ -3,6 +3,7 @@ import { socket } from "./socket";
 import axios from "./axios";
 import { useEffect, useState } from "react";
 import { formateDateTime } from "./formateDate";
+import OnlineUsers from "./onlineUsers";
 
 let dataUrl;
 let clickStart;
@@ -170,7 +171,7 @@ export default function WhiteBoard() {
                     </div>
                 )}
             </div>
-            <div className="online-whiteboard">Online-users</div>
+            <div id ="onliners-whiteboard"> <OnlineUsers /></div>
             {error && <p className="error">Something went wrong,try again!</p>}
 
             <h1>Whiteoard</h1>

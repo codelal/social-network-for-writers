@@ -59,14 +59,14 @@ export default class bioEditor extends Component {
 
         return (
             <div className="bio-editor-container">
-                <h1>My Text</h1>
+                <h1>Notes</h1>
                 {this.state.error && (
                     <p className="error">Something went wrong, try again!</p>
                 )}
 
                 {noBio && (
                     <button onClick={() => this.toggleTextarea()}>
-                     add text
+                     Add Notes
                     </button>
                 )}
 

@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import axios from "./axios";
 import { formateDateTime } from "./formateDate";
 import { socket } from "./socket";
+import OnlineUsers from "./onlineUsers";
 
 export default function Texteditor() {
     const defaultText = "write you text here...";
@@ -97,22 +98,14 @@ export default function Texteditor() {
             });
     }
 
-    function boldText() {
-        if (document.getSelection) {
-            var text = document.getSelection().toString();
-            // let boldString = (textareaValue, text) =>
-            //     textareaValue.replace(RegExp(text, text), `<b>${text}</b>`);
-            console.log("ja", text);
-
-            //     setTextareaValue(boldString);
-        }
-    }
     return (
         <div className="texteditor-container">
             {error && <p className="error">Something went wrong, try again!</p>}
-           
+
             {latestTextes && (
-                <div className="latest-textes"> <h2>Latest Textes:</h2>
+                <div className="latest-textes">
+                    {" "}
+                    <h2>Latest Textes:</h2>
                     {latestTextes.map((text) => (
                         <div key={text.id}>
                             <p>Text</p>
@@ -129,7 +122,7 @@ export default function Texteditor() {
                 </div>
             )}
             <h1>Collaborative Texteditor</h1>
-            <div className="online">Online Users</div>
+            <div id="online-texteditor"><OnlineUsers /></div>
             <textarea
                 value={textareaValue}
                 onChange={(e) => handleChange(e)}
