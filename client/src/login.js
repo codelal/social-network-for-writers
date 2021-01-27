@@ -30,7 +30,7 @@ export default class Login extends Component {
             .then(({ data }) => {
                 if (data.success) {
                     location.replace("/");
-                } 
+                }
                 if (!data.success) {
                     if (data.error == "empty input") {
                         this.setState({
@@ -38,7 +38,8 @@ export default class Login extends Component {
                         });
                     } else {
                         this.setState({
-                            error: "Something went wrong, make sure you enter you data correctly!",
+                            error:
+                                "Something went wrong, make sure you enter you data correctly!",
                         });
                     }
                 }
@@ -55,6 +56,7 @@ export default class Login extends Component {
         return (
             <div className="childs-welcome-container">
                 <h2>login</h2>
+                <img className="work-img" src="../vector1.png"></img>
                 {this.state.error && (
                     <p className="error">{this.state.error}</p>
                 )}

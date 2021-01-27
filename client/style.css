@@ -2,7 +2,7 @@ body {
     margin: 0;
     box-sizing: border-box;
     /* font-family: 'Overlock'; */
-    font-family: "Boogaloo", cursive;
+    font-family: "Archivo Black", sans-serif;
 }
 
 /*//////Welcome-Component//////*/
@@ -12,41 +12,49 @@ body {
     display: grid;
     grid-template-areas:
         "head"
-        "title"
         "main"
         "footer";
     grid-template-rows: 14% 10% 75% 10%;
 }
 
 .parent-welcome-container header {
-    border-bottom: 0.2rem solid black;
     grid-area: head;
+    display: grid;
+    grid-template-columns: 60% 40%;
 }
 
-.parent-welcome-container h1 {
-    color: rgb(205, 45, 101);
-    grid-row-start: 2;
-    grid-area: title;
-    height: 2rem;
-    width: 100%;
-    text-align: center;
-    justify-self: start;
-    letter-spacing: 0.2rem;
+.parent-welcome-container header h1 {
+    color: #032b75;
+    letter-spacing: 0.1rem;
+    justify-self: center;
+    align-self: center;
+    font-size: 3.1rem;
+    margin-bottom: 0;
+    margin-top: 1rem;
 }
 
 .childs-welcome-container {
     grid-area: main;
     display: grid;
-    grid-template-columns: 40% 20% 40%;
-    grid-template-rows: 5rem 3rem 3rem 20rem 3rem;
-    /* border-top: 0.1rem solid rgb(46, 102, 110);
-    border-bottom: 0.1rem solid rgb(46, 102, 110);
-    background-color: rgb(252, 252, 236); */
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 5rem 3rem 3rem 25rem;
+    /* background-color: #018a76; */
+    background-color: #032b75;
+    color: white;
+}
+
+.work-img {
+    height: 38rem;
+    width: 38rem;
+    grid-area: 1/1/4/1;
+    justify-self: center;
 }
 
 .childs-welcome-container h2 {
     grid-area: 1/2/2/2;
     justify-self: center;
+    align-self: center;
+    margin: 0;
 }
 .childs-welcome-container h3 {
     grid-area: 1/1/1/4;
@@ -56,17 +64,20 @@ body {
 }
 
 .childs-welcome-container a {
-    grid-area: 2/1/2/4;
+    grid-area: 2/2/2/4;
     justify-self: center;
     text-align: center;
-    color: black;
+    color: white;
+    font-family: "Archivo Black";
+    font-size: 1rem;
+    margin: 0.1rem;
 }
 
 .childs-welcome-container .error {
-    color: rgb(251, 10, 10);
+    color: #dc0c61;
     font-size: 1.3rem;
     font-weight: bold;
-    grid-area: 3/1/3/4;
+    grid-area: 3/2/3/4;
     justify-self: center;
     align-self: center;
 }
@@ -78,11 +89,9 @@ body {
     width: 15rem;
     display: grid;
     align-items: center;
-    border-radius: 7px;
-    box-shadow: 0 14px 28px rgba(65, 64, 51, 0.3);
-    border: 0.12rem solid black;
-    /* border: 0.12rem solid rgb(240, 182, 23); */
-    /* background-color: white; */
+    border-radius: 10px;
+
+    background-color: white;
 }
 
 .childs-welcome-container input {
@@ -92,45 +101,49 @@ body {
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;
-    /* border-bottom: 0.12rem solid rgb(240, 182, 23); */
-
+    border-bottom: 0.2rem solid #032b75;
+    color: #032b75;
     background-color: white;
-    color: rgb(2, 55, 12);
+    font-family: "Archivo Black", sans-serif;
     font-size: 1rem;
 }
 
 .childs-welcome-container button {
-    height: 2rem;
-    width: 6rem;
+    height: 3rem;
+    width: 8rem;
     justify-self: center;
-    box-shadow: 0 14px 28px rgba(13, 22, 3, 0.3);
     border: hidden;
-    border-radius: 4px;
-    /* background-color: rgb(252, 246, 216); */
-
-    font-size: 1rem;
+    border-radius: 8px;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 1.2rem;
+    color: #032b75;
 }
 
 #h3-reset-password {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+    justify-self: end;
+    margin-right: 2rem;
 }
 
 #reset-password {
-    grid-area: 3/2 /10 /2;
+    grid-area: 4/2 /10 /2;
     height: 13rem;
-    border: 0.12rem solid rgb(46, 102, 110);
 }
-
+#h2-reset-pw {
+    grid-area: 2/2 /2/2;
+    align-self: center;
+    justify-self: center;
+}
 #h2-success {
-    color: rgb(50, 145, 61);
+    color: #018a76;
     font-size: 2rem;
     font-weight: bold;
     letter-spacing: 0.15rem;
 }
 
 #link-success-pw {
-    grid-area: 2/1/3/4;
+    grid-area: 2/2/3/3;
     justify-self: center;
     text-align: center;
     font-size: 1.3rem;
@@ -156,13 +169,9 @@ body {
     display: grid;
     grid-template-columns: 10% 80% 10%;
     grid-template-rows: 1;
-    border-bottom: 0.2rem solid rgb(46, 102, 110);
-    /* border-bottom: 0.2rem solid rgb(26, 65, 181); */
-    /* border-bottom: 0.3rem solid rgb(18, 150, 171); */
 }
 
 .navbar {
-    border-bottom: green;
     height: 1rem;
     align-self: end;
     justify-self: center;
@@ -178,7 +187,6 @@ body {
     margin-right: 0.5rem;
     margin-bottom: 0;
     display: inline-block;
-    color: rgb(4, 67, 77);
     border-radius: 6px;
     font-size: 1.2rem;
     letter-spacing: 0.5;
@@ -186,13 +194,16 @@ body {
 }
 
 .navbar li a {
-    color: rgb(4, 67, 77);
+    color: #032b75;
+    font-family: Verdana;
+    letter-spacing: 0;
+    font-size: 0.9rem;
 }
 
 .logo {
     /* border: 0.1rem solid black; */
-    width: 5rem;
-    height: 5.2rem;
+    width: 6rem;
+    height: 6rem;
     margin-left: 1rem;
     margin-top: 0.5rem;
     grid-area: 1/1;
@@ -204,14 +215,13 @@ header .profile-pic-container {
     width: 5rem;
     grid-area: 1/3;
     /* border: 0.1rem solid black; */
-
     justify-self: end;
     margin-right: 1rem;
     margin-top: 0.7rem;
 }
 
 header .profile-pic-container img {
-    border: 0.13rem solid rgb(3, 18, 94);
+    border: 0.13rem solid #032b75;
     height: 4.7rem;
     width: 4.7rem;
     border-radius: 40px;
@@ -233,7 +243,7 @@ header .profile-pic-container p {
     height: 10rem;
     width: 30rem;
     border: 0.1rem solid black;
-    background-color: rgb(196, 154, 168);
+    background-color: #dc0c61;
 }
 
 .uploader h3 {
@@ -249,6 +259,60 @@ header .profile-pic-container p {
     text-align: center;
     font-weight: bold;
     margin-left: 94%;
+}
+
+.mainPage {
+    background-color: #032b75;
+    grid-area: 3/1/2/2;
+    height: 100%;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+}
+
+.mainPage div {
+    height: 15rem;
+    width: 15rem;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.mainPage a {
+    text-align: center;
+    color: #032b75;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.main1 {
+    grid-area: 1/1;
+    background-color: #018a76;
+    align-self: end;
+    justify-self: end;
+}
+
+.main2 {
+    grid-area: 1/2;
+    background-color: #ede7e7;
+    align-self: end;
+    justify-self: start;
+}
+
+.main3 {
+    grid-area: 2/1;
+    background-color: #ffb300;
+    align-self: start;
+    justify-self: end;
+}
+
+.main4 {
+    grid-area: 2/2;
+    background-color: #dc0c61;
 }
 
 .profile-container {
@@ -398,7 +462,7 @@ header .profile-pic-container p {
     position: fixed;
     height: 100vh;
     width: 100vw;
-    color: rgb(165, 6, 85);
+    color: #dc0c61;
     letter-spacing: 1;
     font-weight: bold;
     font-size: 1.5rem;
@@ -407,7 +471,7 @@ header .profile-pic-container p {
     background-color: white;
 }
 .error-other-profile a {
-    color: rgb(165, 6, 85);
+    color: #dc0c61;
 }
 
 #friend-button {
@@ -590,32 +654,35 @@ header .profile-pic-container p {
 
 .chat-component {
     margin-top: 0.1rem;
-    border-top: 0.13rem solid rgb(122, 0, 71);
-    /* border-top: 0.15rem solid rgb(190, 8, 114); */
-    border-bottom: 0.15rem solid rgb(122, 0, 71);
+    color: #dc0c61;
     width: 100vw;
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(255, 254, 254);
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 10% 65% 25%;
+    background-color: #032b75;
 }
 
 .chat-component h1 {
     text-align: center;
+    grid-area: 1/2/1/2;
 }
 
 .chat-messages {
-    border: 0.1rem solid rgb(122, 0, 71);
-    width: 50%;
+    grid-area: 2/2/2/2;
+    width: 80%;
     align-self: center;
+    justify-self: center;
     overflow-y: scroll;
     height: 20rem;
     border-radius: 0.3rem;
     box-shadow: 0 10px 10px rgba(86, 90, 81, 0.3);
     background-color: #fff;
+    border: 0.5rem solid #018a76;
+    color: black;
 }
 
 #messages {
-    border: 1px solid rgb(122, 0, 71);
+    border: 1px solid #dc0c61;
     width: auto;
     display: grid;
     grid-template-columns: 95% 5%;
@@ -638,105 +705,193 @@ header .profile-pic-container p {
     object-fit: cover;
     grid-area: 1/2;
 }
+.online-chat {
+    grid-area: 2/1/3/1;
+    border: 0.5rem solid #018a76;
+    height: 80%;
+    margin: 1rem;
+}
 
 .chat-component textarea {
     margin-top: 1rem;
-    border: 0.1rem solid rgb(122, 0, 71);
+    border: 0.5rem solid #018a76;
     width: 50%;
     height: 6rem;
-    justify-content: center;
+
+    justify-self: center;
     align-self: center;
     border-radius: 0.3rem;
-    box-shadow: 0 10px 10px rgba(86, 90, 81, 0.3);
-}
-.chat-component button {
-    color: rgb(1, 46, 53);
-    background-color: rgb(245, 247, 243);
-    border-radius: 2px;
-    border: 0.1rem solid rgb(7, 1, 60);
-    align-self: center;
+    grid-area: 3/2/3/2;
 }
 
 .whiteboard-container {
     height: 100vh;
     width: 100vw;
-    border: 0.1rem solid black;
-    background-color: lavenderblush;
+    color: white;
     display: grid;
-    grid-template-columns: 25% 75%;
-    grid-template-rows: 10% 10% 80%;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 7% 10% 7% 60% 10%;
     align-items: start;
+    background-color: #032b75;
+}
+
+.online-whiteboard {
+    grid-area: 2/2/2/2;
+    border: 0.4rem solid white;
+    margin: 1rem;
+  
 }
 
 .whiteboard-container h1 {
     grid-area: 1/2/1/2;
+    letter-spacing: 0.3rem;
 }
 
 .tools-container {
-    border: 0.3rem solid rgb(49, 93, 53);
     display: flex;
-    grid-area: 2/2/2/2;
+    grid-area: 3/2/3/2;
+    background-color: #018a76;
+    /* border: 0.3rem solid white; */
+    width: 820px;
+    height: 2rem;
+    border-radius: 5px;
+    padding: 0.3rem;
+    color: #032b75;
+    margin-bottom: 1rem;
 }
 
 .tool {
-    border: 0.1rem solid rgb(0, 0, 0);
     margin-left: 2rem;
-    width: 8rem;
+    width: 10rem;
 }
 
 .drawing-surface {
-    border: 0.3rem solid rgb(15, 47, 232);
-    grid-area: 3/2/3/2;
-    height: 70%;
-    width: 90%;
+    grid-area: 4/2/4/2;
+    height: 400px;
+    width: 800px;
     margin-right: 2rem;
+    border-radius: 5px;
+    border: 1rem solid white;
+    margin-top: 1rem;
 }
 
 canvas {
-    height: 100%;
-    width: 100%;
     background-color: #fff;
 }
 
 .whiteboard-container button {
-    background-color: white;
+    background-color: #dc0c61;
+    height: 2rem;
+    font-family: "Archivo Black";
+    border-radius: 5px;
+    color: white;
+    margin-top: 1.5rem;
+    margin-right: 1rem;
+}
+
+.latest-whitebaords h2 {
+    margin-left: 1.5rem;
 }
 
 .latest-whitebaords {
-    border: 0.3rem solid rgb(15, 47, 232);
-    height: 30rem;
+    grid-area: 3/1;
+    height: 500px;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    width: 20rem;
+    border-radius: 3px;
+    background-color: #018a76;
+    margin-left: 2rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
-.latest-whitebaords div {
-    border: 0.3rem solid rgb(15, 47, 232);
+.whiteboard {
+    text-align: left;
     height: 5rem;
-    margin-left: 0rem;
+    margin-left: 1.5rem;
+    width: 10rem;
+    display: flex;
+    margin-right: 1rem;
+}
+
+.latest-whitebaords p {
+    margin-left: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .latest-whitebaords img {
     height: 3rem;
     width: 3rem;
+    border: 0.1rem solid white;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.latest-whitebaords button {
+    height: 1.5rem;
+    width: 3.3rem;
+    font-size: 0.9rem;
+    font-family: Cambria;
 }
 
 .texteditor-container {
-    border: 0.3rem solid rgb(15, 47, 232);
+    background-color: #032b75;
     width: 100vw;
     font-family: Cambria serif;
     display: grid;
-    grid-template-columns: 25% 75%;
-    grid-template-rows: 10% 10% 80%;
+    grid-template-columns: 20% 70%;
+    grid-template-rows: 10% 10% 70% 10%;
     align-items: start;
+    color: white;
 }
-
-.toolbar {
-    border: 0.3rem solid rgb(15, 47, 232);
-    width: auto;
+.texteditor-container h1 {
     grid-area: 1/2/1/2;
-    display: flex;
-    height: 1.5rem;
+    margin-left: 2rem;
+}
+.texteditor-container button {
+    grid-area: 4/2/4/2;
+    width: 5rem;
+    justify-self: center;
+    color: white;
+    font-size: 0.9rem;
+    padding: 0;
+    margin-left: 0.4rem;
+    background-color: #032b75;
+    border-radius: 5px;
 }
 
-.edit-area {
+.texteditor-container .online {
+    grid-area: 2/2/2/2;
+    margin-left: 2rem;
+    border: 0.5rem solid white;
+}
+.texteditor-container textarea {
+    height: 400px;
+    width: 1000px;
+    grid-area: 3/2/3/2;
+    margin-left: 2rem;
+    align-self: center;
+}
+
+.latest-textes {
+    border: 0.8rem solid white;
+    grid-area: 3/1/3/1;
+    margin-left: 1.5rem;
+    padding: 0.5rem;
+    height: 500px;
+}
+.latest-textes button {
+    height: 1.5rem;
+    width: 3.3rem;
+    font-size: 0.9rem;
+    padding: 0;
+    margin-left: 0.4rem;
+    background-color: #032b75;
+    border-radius: 5px;
+}
+
+/* .edit-area {
     grid-area: 2/2/2/2;
     border: 0.3rem solid rgb(15, 47, 232);
     font-family: Cambria serif;
@@ -748,7 +903,7 @@ canvas {
     border: 0.1rem solid rgb(15, 47, 232);
     margin-top: 0;
     margin-left: 1rem;
-}
+} */
 
 .drawing-user {
     height: 2rem;

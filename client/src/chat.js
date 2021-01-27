@@ -44,7 +44,7 @@ export default function Chat() {
     return (
         <div className="chat-component">
             <h1>Chat</h1>
-
+            <div className="online-chat">OnlineUsres</div>
             <div ref={elemRef} className="chat-messages">
                 <>{recentMessages}</>
             </div>

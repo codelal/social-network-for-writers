@@ -11,6 +11,7 @@ import Friends from "./friends";
 import Chat from "./chat";
 import Texteditor from "./texteditor.js";
 import OnlineUsers from "./onlineUsers.js";
+import MainPage from "./mainPage";
 
 export default class App extends Component {
     constructor() {
@@ -72,17 +73,10 @@ export default class App extends Component {
             <BrowserRouter>
                 <div className="app-container">
                     <header>
+                      
                         <ul className="navbar">
                             <li>
-                                <Link to="/" className="find-people">
-                                    My Workspace
-                                </Link>
-                            </li>
-                            <li>
-                                {" "}
-                                <Link to="/chat" className="chat">
-                                    Chat
-                                </Link>
+                                <Link to="/main">Main</Link>
                             </li>
                             <li>
                                 <Link to="/whiteBoard">WhiteBoard</Link>
@@ -91,6 +85,17 @@ export default class App extends Component {
                             <li>
                                 {" "}
                                 <Link to="/texteditor">Texteditor</Link>
+                            </li>
+                            <li>
+                                {" "}
+                                <Link to="/chat" className="chat">
+                                    Chat
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/" className="find-people">
+                                    Privatspace
+                                </Link>
                             </li>
                             <li>
                                 <Link to="/online">Online</Link>
@@ -110,6 +115,7 @@ export default class App extends Component {
                     <Route exact path="/chat" component={Chat} />
                     <Route exact path="/texteditor" component={Texteditor} />
                     <Route exact path="/online" component={OnlineUsers} />
+                    <Route exact path="/main" component={MainPage} />
 
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>

@@ -4,7 +4,7 @@ import { formateDateTime } from "./formateDate";
 import { socket } from "./socket";
 
 export default function Texteditor() {
-    const defaultText = "write here";
+    const defaultText = "write you text here...";
     const [error, setError] = useState(false);
     const [textareaValue, setTextareaValue] = useState(defaultText);
     const [textSaved, setTextSaved] = useState(false);
@@ -110,9 +110,9 @@ export default function Texteditor() {
     return (
         <div className="texteditor-container">
             {error && <p className="error">Something went wrong, try again!</p>}
-            <p>Latest Textes:</p>
+           
             {latestTextes && (
-                <div className="latest-textes">
+                <div className="latest-textes"> <h2>Latest Textes:</h2>
                     {latestTextes.map((text) => (
                         <div key={text.id}>
                             <p>Text</p>
@@ -128,18 +128,14 @@ export default function Texteditor() {
                     ))}
                 </div>
             )}
-
-            <div className="toolbar">
-                <button onMouseDown={boldText}>Bold</button>
-                <button onMouseDown={() => {}}>Code Block</button>
-                <button onMouseDown={() => {}}>Italic</button>
-                <button onClick={submitText}>save Text</button>
-                {textSaved && <p className="text-saved"> You text is saved!</p>}
-            </div>
-
-            <textarea value={textareaValue} onChange={(e) => handleChange(e)}>
-                <b> </b>
-            </textarea>
+            <h1>Collaborative Texteditor</h1>
+            <div className="online">Online Users</div>
+            <textarea
+                value={textareaValue}
+                onChange={(e) => handleChange(e)}
+            ></textarea>
+            <button onClick={submitText}>save Text</button>
+            {textSaved && <p className="text-saved"> You text is saved!</p>}
         </div>
     );
 }

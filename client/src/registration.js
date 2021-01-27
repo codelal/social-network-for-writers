@@ -69,6 +69,7 @@ export default class Registration extends Component {
         return (
             <div className="childs-welcome-container">
                 <h2>Registration</h2>
+                <img className="work-img" src="../vector1.png"></img>
                 <Link to="/login">
                     {" "}
                     Already a member? <br />

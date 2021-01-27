@@ -7,10 +7,9 @@ export default function Welcome() {
     return (
         <div className="parent-welcome-container">
             <header>
-                <p>Logo</p>
+                <h1>My Workspace</h1>
             </header>
 
-            <h1>Exchange Action, Thought and Things</h1>
             <HashRouter>
                 <div>
                     <Route exact path="/" component={Registration} />

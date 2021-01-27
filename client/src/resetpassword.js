@@ -10,7 +10,7 @@ export default class ResetPassword extends Component {
             email: "",
             code: "",
             password: "",
-            view: 1,
+            view: 3,
         };
     }
 
@@ -68,10 +68,11 @@ export default class ResetPassword extends Component {
     render() {
         return (
             <div className="childs-welcome-container">
-                <h1>Reset Password</h1>
-
+                <img className="work-img" src="../vector1.png"></img>
                 {this.state.view === 1 && (
                     <>
+                        {" "}
+                        <h2 id="h2-reset-pw">Reset Password</h2>
                         {this.state.error && (
                             <p className="error">
                                 Something went wrong, try again!
@@ -99,6 +100,7 @@ export default class ResetPassword extends Component {
 
                 {this.state.view === 2 && (
                     <>
+                        <h2 id="h2-reset-pw">Reset Password</h2>
                         {this.state.error && (
                             <p className="error">
                                 Something went wrong, try again!

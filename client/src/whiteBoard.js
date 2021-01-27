@@ -149,10 +149,10 @@ export default function WhiteBoard() {
     return (
         <div className="whiteboard-container">
             <div className="latest-whitebaords">
-                Latest Whiteboards:
+                <h2>Latest Whiteboards:</h2>
                 {!latestWhiteboards.length && <p>no whiteboards yet</p>}
                 {latestWhiteboards && (
-                    <div className="latest-whiteboards">
+                    <div className="whiteboard">
                         {latestWhiteboards.map((whiteboard) => (
                             <div key={whiteboard.id}>
                                 <img src={whiteboard.drawing_url}></img>
@@ -170,10 +170,10 @@ export default function WhiteBoard() {
                     </div>
                 )}
             </div>
-
+            <div className="online-whiteboard">Online-users</div>
             {error && <p className="error">Something went wrong,try again!</p>}
 
-            <h1>WhiteBoard</h1>
+            <h1>Whiteoard</h1>
             <div className="tools-container">
                 <div className="tool">
                     Color : &nbsp;
@@ -199,17 +199,11 @@ export default function WhiteBoard() {
                         <option>18</option>
                     </select>
                 </div>
-                <img className="drawing-user"src={drawingUser}></img>
+                <img className="drawing-user" src={drawingUser}></img>
             </div>
 
             <div className="drawing-surface">
-                <canvas width="500" height="150">
-                    <input
-                        className="canvasInput"
-                        type="hidden"
-                        name="canvasInput"
-                    />
-                </canvas>
+                <canvas height="400px" width="800px"></canvas>
 
                 <button
                     onClick={submitDrawing}

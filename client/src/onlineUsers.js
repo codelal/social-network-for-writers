@@ -1,20 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { receiveOnlineUsersList } from "./actions";
+
 import { Link } from "react-router-dom";
-import { socket } from "./socket";
 
 export default function OnlineUsers() {
     const dispatch = useDispatch();
-    const onlineUsersList = useSelector((state) => state && state.onlineUsersList);
-
-
-    useEffect(() => {
-        socket.on("online users", (data) => {
-            dispatch(receiveOnlineUsersList(data));
-            console.log("online users comes in", data);
-        });
-    },[]);
+    const onlineUsersList = useSelector(
+        (state) => state && state.onlineUsersList
+    );
 
     console.log("onlineUsersList", onlineUsersList);
 

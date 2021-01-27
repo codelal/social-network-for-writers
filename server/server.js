@@ -590,6 +590,7 @@ app.get("/login", (req, res) => {
 
 app.get("/logout", (req, res) => {
     req.session.userId = false;
+
     res.redirect("/api/registration");
 });
 
@@ -615,7 +616,7 @@ io.on("connection", (socket) => {
     }
 
     onlineUsers[socket.id] = userId;
-    console.log(onlineUsers);
+    //console.log(onlineUsers);
 
     let arrOfIds = [...new Set(Object.values(onlineUsers))];
     db.getOnlineUsersByIds(arrOfIds)
@@ -627,7 +628,12 @@ io.on("connection", (socket) => {
         })
         .catch((err) => console.log("getOnlineUsersByIds", err));
 
-    console.log(arrOfIds);
+    console.log("Array", arrOfIds);
+    console.log("onlineUsers", onlineUsers);
+
+    socket.on("user disconnect", () => {
+        delete onlineUsers[socket.id];
+    });
 
     socket.on("user is drawing", () => {
         console.log("user is drawing");
