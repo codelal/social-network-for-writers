@@ -4,6 +4,7 @@ import { Slate, Editable, withReact } from "slate-react";
 import axios from "../axios";
 import { formateDateTime } from "../formateDate";
 import { socket } from "../socket";
+import Texteditor from "../texteditor";
 
 import { initialValue, afterSaveValue } from "./defaultTextValues";
 import { CustomEditor } from "./customEditor";
@@ -14,13 +15,17 @@ import {
     LeafItalic,
 } from "./components";
 
-export default function Texteditor() {
+export default function SlateTexteditor() {
     const editor = useMemo(() => withReact(createEditor()), []);
     const [value, setValue] = useState(initialValue);
     const [textSaved, setTextSaved] = useState(false);
     const [error, setError] = useState(false);
     const [latestTextes, setLatestTextes] = useState([]);
     const [updateList, setUpdateList] = useState(false);
+    const [switchToCollaborativeMode, setSwitchToCollaborativeMode] = useState(
+        false
+    );
+
     let newTextValue;
 
     const renderElement = useCallback((props) => {
@@ -129,88 +134,102 @@ export default function Texteditor() {
 
     return (
         <div className="texteditor-container">
-            {error && <p className="error">Something went wrong, try again!</p>}
-            <p>Latest Textes:</p>
-            {latestTextes && (
-                <div className="latest-textes">
-                    {latestTextes.map((text) => (
-                        <div key={text.id}>
-                            <p>Text</p>
-                            {formateDateTime(text.timestamp)}
+            {!switchToCollaborativeMode && (
+                <>
+                    {error && (
+                        <p className="error-slate">
+                            Something went wrong, try again!
+                        </p>
+                    )}
+                    <h1 className="slate-h1">Private Texteditor</h1>
+                    {latestTextes && (
+                        <div className="latest-textes">
+                            <h2>Latest Textes:</h2>
+                            {latestTextes.map((text) => (
+                                <div key={text.id}>
+                                    <p>Text</p>
+                                    {formateDateTime(text.timestamp)}
+                                    <button
+                                        onClick={() => {
+                                            deleteText(text.id);
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <Slate
+                        editor={editor}
+                        value={value}
+                        onChange={(value) => {
+                            setValue(value);
+                            handleChange(value);
+                            setTextSaved(false);
+                        }}
+                        onClick={() => {
+                            setTextSaved(false);
+                        }}
+                    >
+                        <div className="toolbar">
                             <button
-                                onClick={() => {
-                                    deleteText(text.id);
+                                onMouseDown={(event) => {
+                                    event.preventDefault();
+                                    CustomEditor.toggleBoldMark(editor);
                                 }}
                             >
-                                Delete
+                                Bold
+                            </button>
+                            <button
+                                onMouseDown={(event) => {
+                                    event.preventDefault();
+                                    CustomEditor.toggleCodeBlock(editor);
+                                }}
+                            >
+                                Code Block
+                            </button>
+                            <button onClick={submitText}>save Text</button>
+                            {textSaved && (
+                                <p className="text-saved-slate">
+                                    {" "}
+                                    You text is saved!
+                                </p>
+                            )}
+                            <button
+                                onClick={() =>
+                                    setSwitchToCollaborativeMode(true)
+                                }
+                            >
+                                Switch to Collaborative Mode
                             </button>
                         </div>
-                    ))}
-                </div>
+                        <div className="edit-area">
+                            {" "}
+                            <Editable
+                                renderElement={renderElement}
+                                renderLeaf={renderLeaf}
+                                onKeyDown={(event) => {
+                                    if (!event.ctrlKey) {
+                                        return;
+                                    }
+
+                                    if (event.key == "Dead") {
+                                        event.preventDefault();
+                                        CustomEditor.toggleCodeBlock(editor);
+                                    }
+
+                                    if (event.key == "b") {
+                                        event.preventDefault();
+                                        CustomEditor.toggleBoldMark(editor);
+                                    }
+                                }}
+                            />
+                        </div>
+                    </Slate>
+                </>
             )}
-            <Slate
-                editor={editor}
-                value={value}
-                onChange={(value) => {
-                    setValue(value);
-                    handleChange(value);
-                    setTextSaved(false);
-                }}
-            >
-                <div className="toolbar">
-                    <button
-                        onMouseDown={(event) => {
-                            event.preventDefault();
-                            CustomEditor.toggleBoldMark(editor);
-                        }}
-                    >
-                        Bold
-                    </button>
-                    <button
-                        onMouseDown={(event) => {
-                            event.preventDefault();
-                            CustomEditor.toggleCodeBlock(editor);
-                        }}
-                    >
-                        Code Block
-                    </button>
-                    <button
-                        onMouseDown={(event) => {
-                            event.preventDefault();
-                            CustomEditor.toggleItalicMark(editor);
-                        }}
-                    >
-                        Italic
-                    </button>
-                    <button onClick={submitText}>save Text</button>
-                    {textSaved && (
-                        <p className="text-saved"> You text is saved!</p>
-                    )}
-                </div>
-
-                <div className="edit-area">
-                    {" "}
-                    <Editable
-                        renderElement={renderElement}
-                        renderLeaf={renderLeaf}
-                        onKeyDown={(event) => {
-                            if (!event.ctrlKey) {
-                                return;
-                            }
-
-                            if (event.key == "Dead") {
-                                event.preventDefault();
-                                CustomEditor.toggleCodeBlock(editor);
-                            }
-
-                            if (event.key == "b") {
-                                event.preventDefault();
-                                CustomEditor.toggleBoldMark(editor);
-                            }
-                        }}
-                    />
-                </div>
-            </Slate>
+            {switchToCollaborativeMode && <Texteditor />}
         </div>
     );
 }

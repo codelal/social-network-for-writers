@@ -12,6 +12,7 @@ import Chat from "./chat";
 import Texteditor from "./texteditor.js";
 import OnlineUsers from "./onlineUsers.js";
 import MainPage from "./mainPage";
+import SlateTexteditor from "./slate-texteditor/slate-texteditor";
 
 export default class App extends Component {
     constructor() {
@@ -78,7 +79,7 @@ export default class App extends Component {
                                 <Link to="/main">Main</Link>
                             </li>
                             <li>
-                                <Link to="/whiteBoard">WhiteBoard</Link>
+                                <Link to="/whiteBoard">Whiteboard</Link>
                             </li>
 
                             <li>
@@ -114,13 +115,16 @@ export default class App extends Component {
                     <Route exact path="/friends" component={Friends} />
                     <Route exact path="/chat" component={Chat} />
                     <Route exact path="/texteditor" component={Texteditor} />
+                    {/* <Route
+                        exact
+                        path="/texteditor"
+                        component={SlateTexteditor}
+                    /> */}
 
                     <Route exact path="/main" component={MainPage} />
-
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
                     )}
-
                     <Route
                         exact
                         path="/"
@@ -136,7 +140,6 @@ export default class App extends Component {
                             />
                         )}
                     />
-
                     <Route
                         path="/users/:id"
                         render={(props) => (
@@ -157,7 +160,6 @@ export default class App extends Component {
                             />
                         )}
                     />
-
                     {this.state.uploaderIsVisible && (
                         <Uploader
                             setImage={(url) => this.setImage(url)}

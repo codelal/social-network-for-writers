@@ -3,7 +3,6 @@ import { socket } from "./socket";
 import axios from "./axios";
 import { useEffect, useState } from "react";
 
-
 const formateDateTime = (date) => {
     return new Intl.DateTimeFormat("en-US", {
         year: "numeric",

@@ -3,6 +3,7 @@ import axios from "./axios";
 import { formateDateTime } from "./formateDate";
 import { socket } from "./socket";
 import OnlineUsers from "./onlineUsers";
+import SlateTexteditor from "./slate-texteditor/slate-texteditor";
 
 export default function Texteditor() {
     const defaultText = "write you text here...";
@@ -11,6 +12,7 @@ export default function Texteditor() {
     const [textSaved, setTextSaved] = useState(false);
     const [updateList, setUpdateList] = useState(false);
     const [latestTextes, setLatestTextes] = useState([]);
+    const [switchToPrivateMode, setSwitchToPrivateMode] = useState(false);
 
     let newTextValue;
 
@@ -104,38 +106,53 @@ export default function Texteditor() {
 
     return (
         <div className="texteditor-container">
-            {error && <p className="error">Something went wrong, try again!</p>}
-
-            {latestTextes && (
-                <div className="latest-textes">
-                    {" "}
-                    <h2>Latest Textes:</h2>
-                    {latestTextes.map((text) => (
-                        <div key={text.id}>
-                            <p>Text</p>
-                            {formateDateTime(text.timestamp)}
-                            <button
-                                onClick={() => {
-                                    deleteText(text.id);
-                                }}
-                            >
-                                Delete
-                            </button>
+            {!switchToPrivateMode && (
+                <>
+                    {error && (
+                        <p className="error">
+                            Something went wrong, try again!
+                        </p>
+                    )}
+                    {latestTextes && (
+                        <div className="latest-textes">
+                            {" "}
+                            <h2>Latest Textes:</h2>
+                            {latestTextes.map((text) => (
+                                <div key={text.id}>
+                                    <p>Text</p>
+                                    {formateDateTime(text.timestamp)}
+                                    <button
+                                        onClick={() => {
+                                            deleteText(text.id);
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
+                    )}
+                    <h1>Collaborative Texteditor</h1>
+                    <div id="online-texteditor">
+                        <OnlineUsers />
+                    </div>
+                    <textarea
+                        value={textareaValue}
+                        onChange={(e) => handleChange(e)}
+                        onClick={handleClick}
+                    ></textarea>
+
+                    <button onClick={submitText}>save Text</button>
+                    {textSaved && (
+                        <p className="text-saved"> You text is saved!</p>
+                    )}
+                    <button onClick={() => setSwitchToPrivateMode(true)}>
+                        Switch to private Mode
+                    </button>
+                </>
             )}
-            <h1>Collaborative Texteditor</h1>
-            <div id="online-texteditor">
-                <OnlineUsers />
-            </div>
-            <textarea
-                value={textareaValue}
-                onChange={(e) => handleChange(e)}
-                onClick={handleClick}
-            ></textarea>
-            <button onClick={submitText}>save Text</button>
-            {textSaved && <p className="text-saved"> You text is saved!</p>}
+
+            {switchToPrivateMode && <SlateTexteditor />}
         </div>
     );
 }

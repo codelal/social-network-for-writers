@@ -22,7 +22,7 @@ export default function MainPage() {
             <div className="main4">
                 {" "}
                 <Link to="/" className="find-people">
-                    Privatspace
+                    My Profil
                 </Link>
             </div>
         </div>

@@ -39,7 +39,7 @@ module.exports.insertText = (userId, text) => {
 
 module.exports.getText = () => {
     return db.query(
-        `SELECT text, id, timestamp FROM workspace_text ORDER BY timestamp DESC LIMIT 5`
+        `SELECT text, id, timestamp FROM workspace_text ORDER BY timestamp DESC LIMIT 3`
     );
 };
 

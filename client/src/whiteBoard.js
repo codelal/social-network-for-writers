@@ -12,12 +12,15 @@ let ctx;
 
 export default function WhiteBoard() {
     const [error, setError] = useState(false);
-    const [colorInput, setColorInput] = useState("#257788");
+    const [colorInput, setColorInput] = useState("#000");
     const [size, setSize] = useState("1");
     const [canvasInput, setCanvasInput] = useState("");
     const [latestWhiteboards, setLatestWhiteboards] = useState([]);
     const [updateList, setUpdateList] = useState(false);
     const [drawingUser, setDrwaingUser] = useState(false);
+    const [savedCanvas, setSavedCanvas] = useState(false);
+    const [editModus, setEditModus] = useState(false);
+    const [idForEditing, setIdForEditing] = useState();
 
     useEffect(() => {
         console.log("useEffect runs");
@@ -47,6 +50,10 @@ export default function WhiteBoard() {
         if (!abort) {
             socket.on("canvas drawing", (data) => {
                 //  console.log("canvas in useEffect");
+                if (data.edit) {
+                    setEditModus(true);
+                }
+
                 let image = new Image();
                 image.onload = () => {
                     ctx.drawImage(image, 0, 0);
@@ -113,6 +120,7 @@ export default function WhiteBoard() {
                 if (data.success) {
                     setUpdateList(true);
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    setSavedCanvas(true);
                 }
             })
             .catch((err) => {
@@ -147,6 +155,32 @@ export default function WhiteBoard() {
             });
     }
 
+    function editWhiteboard(dataUrl, whiteboardId) {
+        socket.emit("canvas edit", dataUrl);
+        setEditModus(true);
+        setIdForEditing(whiteboardId);
+        setCanvasInput(dataUrl);
+    }
+
+    function saveChanges() {
+        const data = {
+            whiteboardId: idForEditing,
+            drawingUrl: canvasInput,
+        };
+
+        console.log("update date", data);
+        axios.post("/api/update-whiteboard", data).then(({ data }) => {
+            console.log("/api/update-whiteboard", data);
+            if (data.success) {
+                setUpdateList(true);
+                clearWhiteboard();
+                setEditModus(false);
+            } else {
+                setError(true);
+            }
+        });
+    }
+
     return (
         <div className="whiteboard-container">
             <div className="latest-whitebaords">
@@ -157,14 +191,25 @@ export default function WhiteBoard() {
                         {latestWhiteboards.map((whiteboard) => (
                             <div key={whiteboard.id}>
                                 <img src={whiteboard.drawing_url}></img>
-
                                 <button
                                     onClick={() => {
-                                        deleteWhiteboard(whiteboard.id);
+                                        editWhiteboard(
+                                            whiteboard.drawing_url,
+                                            whiteboard.id
+                                        );
                                     }}
                                 >
-                                    Delete
+                                    Edit
                                 </button>
+                                {!editModus && (
+                                    <button
+                                        onClick={() => {
+                                            deleteWhiteboard(whiteboard.id);
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -174,9 +219,15 @@ export default function WhiteBoard() {
                 {" "}
                 <OnlineUsers />
             </div>
-            {error && <p className="error">Something went wrong,try again!</p>}
-
-            <h1>Whiteoard</h1>
+            {error && (
+                <p className="message-whiteboard">
+                    Something went wrong,try again!
+                </p>
+            )}
+            {savedCanvas && (
+                <p className="message-whiteboard">Whiteboard is saved!</p>
+            )}
+            <h1>Whiteboard</h1>
             <div className="tools-container">
                 <div className="tool">
                     Color : &nbsp;
@@ -202,22 +253,27 @@ export default function WhiteBoard() {
                         <option>18</option>
                     </select>
                 </div>
-                {drawingUser &&
-                <div className="tool" id="is-drawing">
-                    <img src={drawingUser} /> <p>is drawing</p>
-                </div>}
+                {drawingUser && (
+                    <div className="tool" id="is-drawing">
+                        <img src={drawingUser} /> <p>is drawing</p>
+                    </div>
+                )}
             </div>
-
             <div className="drawing-surface">
                 <canvas height="400px" width="800px"></canvas>
 
-                <button
-                    onClick={submitDrawing}
-                    className="button-save"
-                    type="submit"
-                >
-                    Save and Close
-                </button>
+                {!editModus && (
+                    <button
+                        onClick={submitDrawing}
+                        className="button-save"
+                        type="submit"
+                    >
+                        Save
+                    </button>
+                )}
+                {editModus && (
+                    <button onClick={saveChanges}>Save Changes</button>
+                )}
 
                 <button onClick={clearWhiteboard}>Clear Whiteboard</button>
             </div>

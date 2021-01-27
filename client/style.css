@@ -782,7 +782,14 @@ a:link {
     margin-left: 1rem;
 }
 
-.tools-container img{
+.message-whiteboard {
+    color: #dc0c61;
+    margin: 1rem;
+    grid-area: 3/1/3/1;
+    justify-self: center;
+}
+
+.tools-container img {
     height: 1.7rem;
     width: 1.7rem;
     border-radius: 50px;
@@ -804,7 +811,7 @@ canvas {
 }
 
 .whiteboard-container button {
-    background-color: #dc0c61;
+    background-color: #018a76;
     height: 2rem;
     font-family: "Archivo Black";
     border-radius: 5px;
@@ -821,19 +828,18 @@ canvas {
     grid-area: 4/1;
     height: 450px;
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-    width: 10rem;
+    width: 13rem;
     border-radius: 3px;
-    background-color: #018a76;
     margin-left: 3rem;
     margin-top: 1rem;
 }
 
-.whiteboard {
+.whiteboard div {
     text-align: left;
     height: 5rem;
     margin-left: 1.5rem;
     width: 10rem;
-
+    display: flex;
     margin-right: 1rem;
 }
 
@@ -848,6 +854,7 @@ canvas {
     border: 0.1rem solid white;
     background-color: #fff;
     border-radius: 5px;
+    margin-right: 0.5rem;
 }
 
 .latest-whitebaords button {
@@ -855,6 +862,8 @@ canvas {
     width: 3.3rem;
     font-size: 0.9rem;
     font-family: Cambria;
+    margin: 0;
+    align-self: center;
 }
 
 .texteditor-container {
@@ -906,7 +915,7 @@ canvas {
     grid-area: 3/1/3/1;
     margin-left: 1.5rem;
     padding: 0.5rem;
-    height: 350px;
+    height: auto;
 }
 .latest-textes button {
     height: 1.5rem;
@@ -917,13 +926,6 @@ canvas {
     background-color: #032b75;
     border-radius: 5px;
 }
-
-/* .edit-area {
-    grid-area: 2/2/2/2;
-    border: 0.3rem solid rgb(15, 47, 232);
-    font-family: Cambria serif;
-    height: 70vh;
-}*/
 
 .text-saved {
     height: 1.5rem;
@@ -954,4 +956,40 @@ canvas {
     width: 3.5rem;
     border-radius: 50px;
     background-color: #ffb300;
+}
+.edit-area {
+    grid-area: 3/2/3/2;
+   margin-left: 2rem;
+    font-family: Cambria serif;
+    height: 50vh;
+    background-color: #fff;
+    color: black;
+    align-self:center;
+
+}
+
+.texteditor-container .toolbar{
+     grid-area: 2/2/2/2;
+     margin-left: 2rem;
+     align-self: flex-end;
+}
+
+.text-saved-slate{
+    height: 1.2rem;
+    grid-area: 1/1/1/1;
+    align-self: center;
+    justify-self: center;
+    color: #ffb300;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;;
+}
+
+.error-slate{
+       color: #dc0c61;
+       margin-left: 2rem;
+       grid-area: 2/1/2/2
+}
+
+.slate-h1{
+    grid-area: 1/2/1/2
 }
