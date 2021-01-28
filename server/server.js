@@ -459,7 +459,6 @@ app.post("/api/update-whiteboard", (req, res) => {
             dbworkspace
                 .getDrawingUrl()
                 .then(({ rows }) => {
-                 
                     res.json({ success: true, latestWhiteboards: rows });
                 })
                 .catch((err) => {
@@ -690,6 +689,43 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("canvas drawing", {
             dataUrl: dataUrl,
         });
+    });
+
+    socket.on("canvas collaborative changes", (whiteBoardChanges) => {
+        console.log("canvas collaborative changes comes in");
+        db.getProfileData(userId)
+            .then(({ rows }) => {
+                console.log("rows getProfileData", rows);
+                socket.broadcast.emit("canvas collaborative changes", {
+                    whiteBoardChanges,
+                    first: rows[0].first,
+                    last: rows[0].last,
+                });
+            })
+            .catch((err) => console.log("error in socket getProfileData", err));
+    });
+
+    socket.on("clear whiteboard", (affirmation) => {
+        console.log("clear whiteboard comes in", affirmation);
+        if (affirmation.affirm) {
+            console.log("affirm", affirmation.affirm);
+            io.sockets.emit("clear whiteboard", {
+                affirmation,
+            });
+        } else {
+            db.getProfileData(userId)
+                .then(({ rows }) => {
+                    console.log("rows getProfileData", rows);
+                    socket.broadcast.emit("clear whiteboard", {
+                        affirmation,
+                        first: rows[0].first,
+                        last: rows[0].last,
+                    });
+                })
+                .catch((err) =>
+                    console.log("error in socket getProfileData", err)
+                );
+        }
     });
 
     socket.on("canvas edit", (dataUrl) => {

@@ -21,6 +21,11 @@ export default function WhiteBoard() {
     const [savedCanvas, setSavedCanvas] = useState(false);
     const [editModus, setEditModus] = useState(false);
     const [idForEditing, setIdForEditing] = useState();
+    const [collaborativeChanges, setCollaborativeChanges] = useState("");
+    const [
+        answerCollaborativeChanges,
+        setAnswerCollaborativeChanges,
+    ] = useState("");
 
     useEffect(() => {
         console.log("useEffect runs");
@@ -70,10 +75,30 @@ export default function WhiteBoard() {
                 }
             });
 
+            socket.on("canvas collaborative changes", (data) => {
+                console.log("collaborative changes");
+                setCollaborativeChanges(
+                    `${data.first} ${data.last} ${data.whiteBoardChanges.change}`
+                );
+            });
+
+            socket.on("clear whiteboard", (data) => {
+                console.log("clear whiteboard comes in", data);
+                if (data.affirmation.affirm) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    setCollaborativeChanges("");
+                    setAnswerCollaborativeChanges("confirmed! :)");
+                } else {
+                    setAnswerCollaborativeChanges(
+                        `${data.first} ${data.last} is not ok with clearing the whiteboard`
+                    );
+                }
+            });
+
             function draw(e) {
                 ctx.lineTo(
-                    e.clientX - canvas.offsetLeft,
-                    e.clientY - canvas.offsetTop
+                    e.pageX - canvas.offsetLeft,
+                    e.pageY - canvas.offsetTop
                 );
                 ctx.stroke();
             }
@@ -130,7 +155,32 @@ export default function WhiteBoard() {
     }
 
     function clearWhiteboard() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let whiteboardChanges = {
+            change: "wants to clear the Whiteboard, are you ok with that?",
+        };
+
+        socket.emit("canvas collaborative changes", whiteboardChanges);
+        setAnswerCollaborativeChanges(
+            "please wait until you drawing-partner agrees :) "
+        );
+    }
+
+    function handleChanges(answer) {
+        console.log(answer);
+        if (answer == "yes") {
+            let affirmation = {
+                affirm: true,
+            };
+            socket.emit("clear whiteboard", affirmation);
+        } else if (answer == "no") {
+            let affirmation = {
+                affirm: false,
+            };
+            socket.emit("clear whiteboard", affirmation);
+            setCollaborativeChanges("");
+        } else if (answer == "close") {
+            setAnswerCollaborativeChanges("");
+        }
     }
 
     function deleteWhiteboard(whiteboardId) {
@@ -231,7 +281,7 @@ export default function WhiteBoard() {
                 </p>
             )}
             {savedCanvas && (
-                <p className="message-whiteboard">Whiteboard is saved!</p>
+                <p className="saved-whiteboard">Whiteboard is saved!</p>
             )}
             <h1>Whiteboard</h1>
             <div className="tools-container">
@@ -265,6 +315,22 @@ export default function WhiteBoard() {
                     </div>
                 )}
             </div>
+            {collaborativeChanges && (
+                <div className="coll-changes">
+                    <p>{collaborativeChanges}</p>
+                    <button onClick={() => handleChanges("yes")}>yes</button>
+                    <button onClick={() => handleChanges("no")}>no</button>
+                </div>
+            )}
+            {answerCollaborativeChanges && (
+                <div className="coll-changes">
+                    <p>{answerCollaborativeChanges}</p>
+                    <button onClick={() => handleChanges("close")}>
+                        close
+                    </button>
+                </div>
+            )}
+
             <div className="drawing-surface">
                 <canvas height="400px" width="800px"></canvas>
 
