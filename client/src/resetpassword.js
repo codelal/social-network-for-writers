@@ -10,7 +10,7 @@ export default class ResetPassword extends Component {
             email: "",
             code: "",
             password: "",
-            view: 3,
+            view: 1,
         };
     }
 
