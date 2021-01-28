@@ -13,7 +13,7 @@ module.exports.insertDrawingUrl = (userId, drawingUrl) => {
 
 module.exports.getDrawingUrl = () => {
     return db.query(
-        `SELECT drawing_url, id, timestamp FROM workspace_drawings ORDER BY timestamp DESC LIMIT 5`
+        `SELECT drawing_url, id FROM workspace_drawings ORDER BY id DESC LIMIT 5`
     );
 };
 

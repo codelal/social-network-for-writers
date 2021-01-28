@@ -12,7 +12,7 @@ let ctx;
 
 export default function WhiteBoard() {
     const [error, setError] = useState(false);
-    const [colorInput, setColorInput] = useState("#000");
+    const [colorInput, setColorInput] = useState("#000000");
     const [size, setSize] = useState("1");
     const [canvasInput, setCanvasInput] = useState("");
     const [latestWhiteboards, setLatestWhiteboards] = useState([]);
@@ -169,16 +169,22 @@ export default function WhiteBoard() {
         };
 
         console.log("update date", data);
-        axios.post("/api/update-whiteboard", data).then(({ data }) => {
-            console.log("/api/update-whiteboard", data);
-            if (data.success) {
-                setUpdateList(true);
-                clearWhiteboard();
-                setEditModus(false);
-            } else {
+        axios
+            .post("/api/update-whiteboard", data)
+            .then(({ data }) => {
+                console.log("/api/update-whiteboard", data);
+                if (data.success) {
+                    setLatestWhiteboards(data.latestWhiteboards);
+                    clearWhiteboard();
+                    setEditModus(false);
+                } else {
+                    setError(true);
+                }
+            })
+            .catch((err) => {
+                console.log("error /api/update-whiteboard", err);
                 setError(true);
-            }
-        });
+            });
     }
 
     return (

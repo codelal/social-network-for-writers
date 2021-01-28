@@ -459,11 +459,7 @@ app.post("/api/update-whiteboard", (req, res) => {
             dbworkspace
                 .getDrawingUrl()
                 .then(({ rows }) => {
-                    console.log(
-                        "getDrawingUrl comes",
-                        rows[0].timestamp,
-                        rows[1].timestamp
-                    );
+                 
                     res.json({ success: true, latestWhiteboards: rows });
                 })
                 .catch((err) => {
