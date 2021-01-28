@@ -866,6 +866,12 @@ canvas {
     align-self: center;
 }
 
+.drawing-user {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50px;
+}
+
 .texteditor-container {
     background-color: #032b75;
     width: 100vw;
@@ -934,12 +940,22 @@ canvas {
     justify-self: center;
     color: #ffb300;
     font-size: 1.5rem;
+    margin-left: 2rem;
 }
 
-.drawing-user {
-    height: 2rem;
-    width: 2rem;
-    border-radius: 50px;
+.error-colltext{
+    color: #dc0c61;
+    margin-left: 2rem;
+    grid-area: 2/1/2/2;
+}
+
+
+
+#switch-texteditor {
+    width: 12rem;
+    color: #ffb300;
+    justify-self: start;
+    margin-left: 2rem;
 }
 
 .online-user {
@@ -958,38 +974,47 @@ canvas {
     background-color: #ffb300;
 }
 .edit-area {
-    grid-area: 3/2/3/2;
-   margin-left: 2rem;
+    grid-area: 3/2/4/2;
+    margin-left: 2rem;
+    margin-top: 2rem;
     font-family: Cambria serif;
     height: 50vh;
     background-color: #fff;
     color: black;
-    align-self:center;
-
+    align-self: end;
 }
 
-.texteditor-container .toolbar{
-     grid-area: 2/2/2/2;
-     margin-left: 2rem;
-     align-self: flex-end;
+.texteditor-container .toolbar {
+    grid-area: 2/2/2/2;
+    margin-left: 2rem;
+    align-self: flex-end;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 }
 
-.text-saved-slate{
+.text-saved-slate {
     height: 1.2rem;
     grid-area: 1/1/1/1;
     align-self: center;
     justify-self: center;
     color: #ffb300;
     font-size: 1.5rem;
-    margin-bottom: 1rem;;
+    margin-left: 2rem;
 }
 
-.error-slate{
-       color: #dc0c61;
-       margin-left: 2rem;
-       grid-area: 2/1/2/2
+.error-slate {
+    color: #dc0c61;
+    margin-left: 2rem;
+    grid-area: 2/1/2/2;
 }
 
-.slate-h1{
-    grid-area: 1/2/1/2
+.slate-h1 {
+    grid-area: 1/2/1/2;
+    margin: 1rem;
+}
+
+#slate-button {
+    width: 15rem;
+    color: red;
+    color: #ffb300;
 }

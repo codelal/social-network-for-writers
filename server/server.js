@@ -509,11 +509,11 @@ app.post("/api/delete-board", (req, res) => {
 });
 
 app.post("/api/save-text", (req, res) => {
-    const { text } = req.body;
-    console.log("/api/save-text", text);
+    const { text, pmodus } = req.body;
+    console.log("/api/save-text", text, pmodus);
 
     dbworkspace
-        .insertText(req.session.userId, text)
+        .insertText(req.session.userId, text, pmodus)
         .then(({ rows }) => {
             console.log("rows in insertText", rows);
             res.json({
@@ -528,10 +528,11 @@ app.post("/api/save-text", (req, res) => {
         });
 });
 
-app.get("/api/latest-textes", (req, res) => {
-    console.log("/api/latest-textes runs");
+app.get("/api/latest-textes/:pmodus", (req, res) => {
+    const { pmodus } = req.params;
+    console.log("/api/latest-textes runs", pmodus, req.params);
     dbworkspace
-        .getText()
+        .getText(req.session.userId, pmodus)
         .then(({ rows }) => {
             res.json({ success: true, latestTextes: rows });
         })

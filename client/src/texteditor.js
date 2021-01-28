@@ -15,6 +15,7 @@ export default function Texteditor() {
     const [switchToPrivateMode, setSwitchToPrivateMode] = useState(false);
 
     let newTextValue;
+    let modus = false;
 
     useEffect(() => {
         console.log("useEffect runs");
@@ -26,7 +27,7 @@ export default function Texteditor() {
         });
 
         axios
-            .get("/api/latest-textes")
+            .get("/api/latest-textes/" + modus)
             .then(({ data }) => {
                 if (data.success) {
                     setLatestTextes(data.latestTextes);
@@ -60,7 +61,7 @@ export default function Texteditor() {
     }
 
     function submitText() {
-        const text = { text: textareaValue };
+        const text = { text: textareaValue, pmodus: false };
         console.log(text);
         axios
             .post("/api/save-text", text)
@@ -86,6 +87,7 @@ export default function Texteditor() {
         console.log("delete text runs");
         const textId = {
             textId: idText,
+            modus: false,
         };
         axios
             .post("/api/delete-text", textId)
@@ -109,17 +111,17 @@ export default function Texteditor() {
             {!switchToPrivateMode && (
                 <>
                     {error && (
-                        <p className="error">
+                        <p className="error-colltext">
                             Something went wrong, try again!
                         </p>
                     )}
                     {latestTextes && (
                         <div className="latest-textes">
                             {" "}
-                            <h2>Latest Textes:</h2>
+                            <h2>Our Textes:</h2>
                             {latestTextes.map((text) => (
                                 <div key={text.id}>
-                                    <p>Text</p>
+                                    <p>Our Text</p>
                                     {formateDateTime(text.timestamp)}
                                     <button
                                         onClick={() => {
@@ -146,7 +148,10 @@ export default function Texteditor() {
                     {textSaved && (
                         <p className="text-saved"> You text is saved!</p>
                     )}
-                    <button onClick={() => setSwitchToPrivateMode(true)}>
+                    <button
+                        id="switch-texteditor"
+                        onClick={() => setSwitchToPrivateMode(true)}
+                    >
                         Switch to private Mode
                     </button>
                 </>

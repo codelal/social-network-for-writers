@@ -27,6 +27,7 @@ export default function SlateTexteditor() {
     );
 
     let newTextValue;
+    let modus = true;
 
     const renderElement = useCallback((props) => {
         if (props.element.type == "code") {
@@ -48,24 +49,13 @@ export default function SlateTexteditor() {
         console.log("useEffect runs");
         // let abort;
 
-        socket.on("text writing", (textdata) => {
-            console.log("text writing", textdata);
-
-            newTextValue = [
-                {
-                    children: [{ textdata }],
-                },
-            ];
-
-            setValue(newTextValue);
-        });
-
         axios
-            .get("/api/latest-textes")
+            .get("/api/latest-textes/" + modus)
             .then(({ data }) => {
+                console.log("modus", modus);
                 if (data.success) {
                     setLatestTextes(data.latestTextes);
-                    console.log(data, data.latestTextes);
+                   // console.log(data, data.latestTextes);
                     setUpdateList(true);
                 } else {
                     setError(true);
@@ -83,17 +73,15 @@ export default function SlateTexteditor() {
 
     function handleChange(value) {
         setValue(value);
-        const text = { text: value[0].children[0].text };
-        socket.emit("text writing", text);
     }
 
     function submitText() {
-        const text = { text: value[0].children[0].text };
+        const text = { text: value[0].children[0].text, pmodus: true };
         console.log(text);
         axios
             .post("/api/save-text", text)
             .then(({ data }) => {
-                console.log("data /api/save-text");
+                console.log("/api/save-text");
                 if (data.success) {
                     setTextSaved(true);
                     setValue(afterSaveValue);
@@ -114,6 +102,7 @@ export default function SlateTexteditor() {
         console.log("delete text runs");
         const textId = {
             textId: idText,
+            pmodus: true,
         };
         axios
             .post("/api/delete-text", textId)
@@ -144,10 +133,10 @@ export default function SlateTexteditor() {
                     <h1 className="slate-h1">Private Texteditor</h1>
                     {latestTextes && (
                         <div className="latest-textes">
-                            <h2>Latest Textes:</h2>
+                            <h2>My Textes:</h2>
                             {latestTextes.map((text) => (
                                 <div key={text.id}>
-                                    <p>Text</p>
+                                    <p>My Text</p>
                                     {formateDateTime(text.timestamp)}
                                     <button
                                         onClick={() => {
@@ -190,13 +179,9 @@ export default function SlateTexteditor() {
                                 Code Block
                             </button>
                             <button onClick={submitText}>save Text</button>
-                            {textSaved && (
-                                <p className="text-saved-slate">
-                                    {" "}
-                                    You text is saved!
-                                </p>
-                            )}
+
                             <button
+                                id="slate-button"
                                 onClick={() =>
                                     setSwitchToCollaborativeMode(true)
                                 }
@@ -204,6 +189,12 @@ export default function SlateTexteditor() {
                                 Switch to Collaborative Mode
                             </button>
                         </div>
+                        {textSaved && (
+                            <p className="text-saved-slate">
+                                {" "}
+                                You text is saved!
+                            </p>
+                        )}
                         <div className="edit-area">
                             {" "}
                             <Editable
