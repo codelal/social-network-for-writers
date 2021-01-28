@@ -55,7 +55,7 @@ export default function SlateTexteditor() {
                 console.log("modus", modus);
                 if (data.success) {
                     setLatestTextes(data.latestTextes);
-                   // console.log(data, data.latestTextes);
+                    // console.log(data, data.latestTextes);
                     setUpdateList(true);
                 } else {
                     setError(true);
@@ -136,8 +136,8 @@ export default function SlateTexteditor() {
                             <h2>My Textes:</h2>
                             {latestTextes.map((text) => (
                                 <div key={text.id}>
-                                    <p>My Text</p>
                                     {formateDateTime(text.timestamp)}
+                                    <button>Edit</button>
                                     <button
                                         onClick={() => {
                                             deleteText(text.id);

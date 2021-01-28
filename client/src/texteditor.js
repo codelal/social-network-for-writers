@@ -19,33 +19,43 @@ export default function Texteditor() {
 
     useEffect(() => {
         console.log("useEffect runs");
-        // let abort;
+        let abort;
 
-        socket.on("text writing", ({ text }) => {
-            console.log("text writing");
-            setTextareaValue(text.text);
-        });
-
-        axios
-            .get("/api/latest-textes/" + modus)
-            .then(({ data }) => {
-                if (data.success) {
-                    setLatestTextes(data.latestTextes);
-
-                    setUpdateList(true);
-                } else {
-                    setError(true);
-                }
-            })
-            .catch((err) => {
-                console.log("error in api/latest-setLatestWritebaords", err);
-                setError(true);
+        if (!abort) {
+            socket.on("text writing", ({ text }) => {
+                console.log("text writing");
+                setTextareaValue(text.text);
             });
 
-        // return () => {
-        //     abort = true;
-        // };
+            axios
+                .get("/api/latest-textes/" + modus)
+                .then(({ data }) => {
+                    console.log("latest coll textes", data);
+                    if (data.success) {
+                        setLatestTextes(data.latestTextes);
+
+                        setUpdateList(true);
+                    } else {
+                        setError(true);
+                    }
+                })
+                .catch((err) => {
+                    console.log(
+                        "error in api/latest-setLatestWritebaords",
+                        err
+                    );
+                    setError(true);
+                });
+        }
+        return () => {
+            abort = true;
+        };
     }, [updateList, newTextValue]);
+
+    // socket.on("text-list-update", () => {
+    //     console.log("text-list-update comes in");
+    //     setUpdateList(true);
+    // });
 
     function handleChange(event) {
         setTextareaValue(event.target.value);
@@ -94,6 +104,7 @@ export default function Texteditor() {
             .then(({ data }) => {
                 if (data.success) {
                     setUpdateList(false);
+                    // socket.emit("text-list-update"());
                 } else {
                     setError(true);
                 }
@@ -121,8 +132,9 @@ export default function Texteditor() {
                             <h2>Our Textes:</h2>
                             {latestTextes.map((text) => (
                                 <div key={text.id}>
-                                    <p>Our Text</p>
+                                
                                     {formateDateTime(text.timestamp)}
+                                    <button>Edit</button>
                                     <button
                                         onClick={() => {
                                             deleteText(text.id);

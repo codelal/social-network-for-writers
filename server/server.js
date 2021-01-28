@@ -526,17 +526,36 @@ app.post("/api/save-text", (req, res) => {
 app.get("/api/latest-textes/:pmodus", (req, res) => {
     const { pmodus } = req.params;
     console.log("/api/latest-textes runs", pmodus, req.params);
-    dbworkspace
-        .getText(req.session.userId, pmodus)
-        .then(({ rows }) => {
-            res.json({ success: true, latestTextes: rows });
-        })
-        .catch((err) => {
-            console.log("error in getText", err);
-            res.json({
-                success: false,
+
+    if (!pmodus) {
+        console.log("privat");
+        dbworkspace
+            .getText(req.session.userId, pmodus)
+            .then(({ rows }) => {
+                res.json({ success: true, latestTextes: rows });
+            })
+            .catch((err) => {
+                console.log("error in getText", err);
+                res.json({
+                    success: false,
+                });
             });
-        });
+    } else {
+        console.log("public");
+        dbworkspace
+            .getAllText(pmodus)
+            .then(({ rows }) => {
+                console.log("rows11", rows);
+
+                res.json({ success: true, latestTextes: rows });
+            })
+            .catch((err) => {
+                console.log("error in getText", err);
+                res.json({
+                    success: false,
+                });
+            });
+    }
 });
 
 app.post("/api/delete-text", (req, res) => {
@@ -740,6 +759,12 @@ io.on("connection", (socket) => {
         console.log("text writing data comes in", text);
         socket.broadcast.emit("text writing", {
             text,
+        });
+    });
+
+    socket.on("text-list-update", () => {
+        socket.broadcast.emit("text writing", {
+            textlistUpdate: true,
         });
     });
 

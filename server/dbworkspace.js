@@ -32,17 +32,25 @@ module.exports.updateDrawing = (dataUrl, whiteboardId) => {
 
 module.exports.insertText = (userId, text, modus) => {
     return db.query(
-        `INSERT INTO workspace_text (user_id, text, private) VALUES($1, $2, $3) RETURNING timestamp`,[userId, text, modus]
+        `INSERT INTO workspace_text (user_id, text, private) VALUES($1, $2, $3) RETURNING timestamp`,
+        [userId, text, modus]
     );
 };
 
 module.exports.getText = (id, pmodus) => {
     return db.query(
-        `SELECT text, id, timestamp FROM workspace_text WHERE (user_id = $1 AND private = $2) ORDER BY timestamp DESC LIMIT 3`, [id, pmodus]
+        `SELECT text, id, timestamp FROM workspace_text WHERE (user_id = $1 AND private = $2) ORDER BY timestamp DESC LIMIT 3`,
+        [id, pmodus]
+    );
+};
+
+module.exports.getAllText = (pmodus) => {
+    return db.query(
+        `SELECT text, id, timestamp FROM workspace_text WHERE private = $1 ORDER BY timestamp DESC LIMIT 3`,
+        [pmodus]
     );
 };
 
 module.exports.deleteText = (textId) => {
     return db.query(`DELETE FROM workspace_text WHERE id = $1`, [textId]);
 };
-

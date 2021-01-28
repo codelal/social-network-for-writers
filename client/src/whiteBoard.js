@@ -106,7 +106,7 @@ export default function WhiteBoard() {
             canvas.addEventListener("mousedown", function (e) {
                 clickStart = true;
                 draw(e);
-                socket.emit("user is drawing");
+                setSavedCanvas(false);
             });
 
             canvas.addEventListener("mousemove", function (e) {
@@ -114,6 +114,7 @@ export default function WhiteBoard() {
                     return;
                 } else {
                     draw(e);
+                    socket.emit("user is drawing");
                 }
             });
 
@@ -131,7 +132,7 @@ export default function WhiteBoard() {
         return () => {
             abort = true;
         };
-    }, [canvasInput, colorInput, size, updateList]);
+    }, [canvasInput, colorInput, size, updateList, savedCanvas, drawingUser]);
 
     function submitDrawing() {
         let data = {
@@ -154,15 +155,19 @@ export default function WhiteBoard() {
             });
     }
 
-    function clearWhiteboard() {
-        let whiteboardChanges = {
-            change: "wants to clear the Whiteboard, are you ok with that?",
-        };
+    function clearWhiteboard(permission) {
+        if (permission == "permission") {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        } else if (permission == "no-permission") {
+            let whiteboardChanges = {
+                change: "wants to clear the Whiteboard, are you ok with that?",
+            };
 
-        socket.emit("canvas collaborative changes", whiteboardChanges);
-        setAnswerCollaborativeChanges(
-            "please wait until you drawing-partner agrees :) "
-        );
+            socket.emit("canvas collaborative changes", whiteboardChanges);
+            setAnswerCollaborativeChanges(
+                "please wait until you drawing-partner agrees :) "
+            );
+        }
     }
 
     function handleChanges(answer) {
@@ -222,11 +227,12 @@ export default function WhiteBoard() {
         axios
             .post("/api/update-whiteboard", data)
             .then(({ data }) => {
-                console.log("/api/update-whiteboard", data);
+                // console.log("/api/update-whiteboard", data);
                 if (data.success) {
                     setLatestWhiteboards(data.latestWhiteboards);
-                    clearWhiteboard();
+                    clearWhiteboard("permission");
                     setEditModus(false);
+                    setSavedCanvas(true);
                 } else {
                     setError(true);
                 }
@@ -281,7 +287,12 @@ export default function WhiteBoard() {
                 </p>
             )}
             {savedCanvas && (
-                <p className="saved-whiteboard">Whiteboard is saved!</p>
+                <p
+                    onClick={() => setSavedCanvas(false)}
+                    className="saved-whiteboard"
+                >
+                    Whiteboard is saved!
+                </p>
             )}
             <h1>Whiteboard</h1>
             <div className="tools-container">
@@ -347,7 +358,9 @@ export default function WhiteBoard() {
                     <button onClick={saveChanges}>Save Changes</button>
                 )}
 
-                <button onClick={clearWhiteboard}>Clear Whiteboard</button>
+                <button onClick={() => clearWhiteboard("no-permission")}>
+                    Clear Whiteboard
+                </button>
             </div>
         </div>
     );
