@@ -4,3 +4,4 @@ A social network for writers with a personal profil, image upload, sending, rece
 
 # Technologies: 
 React, Redux, Canvas, Node, PostgreSQL, Socket.IO, AWS S3
+The implementation of a texteditor with slate.js is on progress.
