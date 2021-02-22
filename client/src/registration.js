@@ -72,8 +72,7 @@ export default class Registration extends Component {
                 <img className="work-img" src="../vector1.png"></img>
                 <Link to="/login">
                     {" "}
-                    Already a member? <br />
-                    Click here to Log in!
+                    Already a member?Click here to Log in!
                 </Link>
 
                 {this.state.error && (
