@@ -7,7 +7,7 @@ export default function Welcome() {
     return (
         <div className="parent-welcome-container">
             <header>
-                <h1>Writing-Workspace</h1>
+                <h1>Social Network for Writers</h1>
             </header>
 
             <HashRouter>

@@ -6,13 +6,12 @@ import ProfilePic from "./profilePic";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./otherProfile";
-import WhiteBoard from "./whiteBoard";
+import FindPeople from "./findPeople";
 import Friends from "./friends";
+import WhiteBoard from "./whiteBoard";
 import Chat from "./chat";
 import Texteditor from "./texteditor.js";
-import OnlineUsers from "./onlineUsers.js";
 import MainPage from "./mainPage";
-import SlateTexteditor from "./slate-texteditor/slate-texteditor";
 
 export default class App extends Component {
     constructor() {
@@ -56,14 +55,12 @@ export default class App extends Component {
     }
 
     setImage(url) {
-        // console.log("in App image from uploader", url);
         this.setState({
             url: url,
         });
     }
 
     setBio(bio) {
-        console.log("bio in App", bio);
         this.setState({
             bio: bio,
         });
@@ -79,9 +76,23 @@ export default class App extends Component {
                                 <Link to="/main">Main</Link>
                             </li>
                             <li>
+                                <Link to="/" className="find-people">
+                                    My Profile
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/find-people" className="find-people">
+                                    Find People
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/friends" className="friends">
+                                    Friends
+                                </Link>
+                            </li>
+                            <li>
                                 <Link to="/whiteBoard">Whiteboard</Link>
                             </li>
-
                             <li>
                                 {" "}
                                 <Link to="/texteditor">Texteditor</Link>
@@ -92,12 +103,6 @@ export default class App extends Component {
                                     Chat
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/" className="find-people">
-                                    My Profile
-                                </Link>
-                            </li>
-
                             <li>
                                 <a href="/logout">Logout</a>
                             </li>
@@ -111,20 +116,16 @@ export default class App extends Component {
                             toggleUploader={() => this.toggleUploader()}
                         />
                     </header>
-                    <Route exact path="/whiteBoard" component={WhiteBoard} />
-                    <Route exact path="/friends" component={Friends} />
-                    <Route exact path="/chat" component={Chat} />
-                    <Route exact path="/texteditor" component={Texteditor} />
-                    {/* <Route
-                        exact
-                        path="/texteditor"
-                        component={SlateTexteditor}
-                    /> */}
-
-                    <Route exact path="/main" component={MainPage} />
                     {this.state.error && (
                         <p>Something went wrong, try again!</p>
                     )}
+
+                    <Route exact path="/friends" component={Friends} />
+                    <Route exact path="/find-people" component={FindPeople} />
+                    <Route exact path="/whiteBoard" component={WhiteBoard} />
+                    <Route exact path="/chat" component={Chat} />
+                    <Route exact path="/texteditor" component={Texteditor} />
+                    <Route exact path="/main" component={MainPage} />
                     <Route
                         exact
                         path="/"

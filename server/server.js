@@ -5,7 +5,7 @@ const server = require("http").Server(app);
 const io = require("socket.io")(server, {
     allowRequest: (req, callback) =>
         callback(null, req.headers.referer.startsWith("http://localhost:3000")),
-}); //here include url, if I deploy to f.e. heroku
+}); //include url here for deploying f.e. at heroku
 
 const compression = require("compression");
 const csurf = require("csurf");
@@ -642,9 +642,6 @@ io.on("connection", (socket) => {
             });
         })
         .catch((err) => console.log("getOnlineUsersByIds", err));
-
-    console.log("Array", arrOfIds);
-    console.log("onlineUsers", onlineUsers);
 
     socket.on("user disconnect", () => {
         delete onlineUsers[socket.id];
