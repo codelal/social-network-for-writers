@@ -1,5 +1,3 @@
-# social-network-for-writers
-
 ![screenshot socialnetwork](client/public/socialnetwork.png)
 
 A social network for writers with a personal profil, image upload, sending, receiving and accepting friend requests, real-time chat, collaborative whiteboard and a collaborative texteditor
