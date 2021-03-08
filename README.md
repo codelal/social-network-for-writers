@@ -9,4 +9,4 @@ React, Redux, Canvas, Node, PostgreSQL, Socket.IO, AWS S3, an extension of the t
 ![screenshot socialnetwork](client/public/socialnetwork.png)
 
 # Socialnetwork - GIF:
-A GIF is coming soon. I am still working on some style-changes.
+A GIF is coming soon. I am working on some style-changes right now.
