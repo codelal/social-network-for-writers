@@ -9,7 +9,7 @@ export default function OnlineUsers() {
         (state) => state && state.onlineUsersList
     );
 
-    console.log("onlineUsersList", onlineUsersList);
+    //console.log("onlineUsersList", onlineUsersList);
 
     const onlineUsers = (
         <div className="online-users">

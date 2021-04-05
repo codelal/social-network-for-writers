@@ -18,7 +18,7 @@ export default function Chat() {
 
     const handleKeyDown = (e) => {
         if (e.key === "Enter") {
-            console.log("user pressed enter");
+            //console.log("user pressed enter");
             socket.emit("chat message", e.target.value);
             e.target.value = "";
         }

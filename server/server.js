@@ -15,7 +15,6 @@ const cookieSession = require("cookie-session");
 const db = require("./db");
 const dbfriends = require("./dbfriends");
 const dbworkspace = require("./dbworkspace");
-
 const btn = require("./getButtonText");
 const ses = require("./ses");
 const s3 = require("./s3");
@@ -724,7 +723,7 @@ io.on("connection", (socket) => {
     socket.on("clear whiteboard", (affirmation) => {
         console.log("clear whiteboard comes in", affirmation);
         if (affirmation.affirm) {
-            console.log("affirm", affirmation.affirm);
+            // console.log("affirm", affirmation.affirm);
             io.sockets.emit("clear whiteboard", {
                 affirmation,
             });
